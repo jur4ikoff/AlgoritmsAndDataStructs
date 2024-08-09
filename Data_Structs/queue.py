@@ -42,6 +42,3 @@ class Queue:
 
         self.size -= 1
         return pop_result.data
-
-
-print(a)
