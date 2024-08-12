@@ -19,6 +19,7 @@ array = list(map(int, input().split()))
 to_search = int(input())
 
 res = binary_search(array, n, to_search)
+
 if (res):
     print("true")
 else:
