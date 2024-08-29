@@ -6,6 +6,8 @@ class Node:
         self.value = data
         self.left = None
         self.right = None
+        self.parent = None
+        self.bf = 0
 
 
 class BinaryTree:
