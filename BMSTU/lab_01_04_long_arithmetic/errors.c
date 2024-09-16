@@ -31,5 +31,8 @@ void print_error(int arg)
     case ERR_EMPTY_INPUT:
         printf("Error, input is empty");
         break;
+    case ERR_DIVISION_ON_ZERO:
+        printf("Erorr, division on zero\n");
+        break;
     }
 }

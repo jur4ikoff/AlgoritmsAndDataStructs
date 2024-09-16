@@ -49,6 +49,20 @@ int is_symbol(char c)
     }
 }
 
+void check_sign(number_t *number, char *string)
+{
+    if (*string == '+')
+    {
+        number->sign = 1;
+        string++;
+    }
+    else if (*string == '-')
+    {
+        number->sign = 0;
+        string++;
+    }
+}
+
 int find_exp(number_t *number, char *string)
 {
     size_t len = strlen(string);
@@ -89,13 +103,14 @@ int find_exp(number_t *number, char *string)
 int process_number(number_t *number, char *string)
 {
     size_t len = strlen(string);
+    // size_t point_index = 0;
     for (size_t i = 0; i < len; i++)
     {
         if (number->mantise_size > MAX_MANTISE)
             return ERR_MANTISE_SIZE;
 
-        if (number->order > MAX_ORDER)
-            return ERR_ORDER_SIZE;
+        // if (number->order > MAX_ORDER)
+        //     return ERR_ORDER_SIZE;
 
         if (string[i] != '.')
         {
@@ -106,14 +121,26 @@ int process_number(number_t *number, char *string)
         else
         {
             char *ptr = string + i + 1;
+            // point_index = i;
             while (*ptr != 0)
             {
                 number->mantise[number->mantise_size] = *ptr - '0';
                 number->mantise_size++;
+                // number->order--;
                 ptr++;
             }
+            // number->order = len - point_index - 1;
             return ERR_OK;
         }
     }
+
+    return ERR_OK;
+}
+
+int validate_number(number_t number)
+{
+    if (number.mantise[0] == 0)
+        return ERR_DIVISION_ON_ZERO;
+
     return ERR_OK;
 }

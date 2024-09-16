@@ -13,7 +13,7 @@
 
 typedef struct
 {
-    short sign; // 0 - минус, 1 - плюс
+    unsigned short sign; // 0 - минус, 1 - плюс
     short mantise[MAX_MANTISE];
     short mantise_size;
     short order;

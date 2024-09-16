@@ -17,33 +17,36 @@ int input_string(char *string)
     return ERR_OK;
 }
 
-int input_number(number_t *number)
+int input_number(number_t *number, char *message)
 {
     int rc = ERR_OK;
     char buffer[MAX_STRING_LEN];
 
+    printf("%s\n", message);
+    printf(">");
     if ((rc = input_string(buffer)) != ERR_OK)
         return rc;
-
+    check_sign(number, buffer);
+    printf("%s\n", buffer);
     int point_count = count_symbols(buffer, '.');
     if (point_count > 1)
         return ERR_POINTS_COUNT;
-
     if ((rc = find_exp(number, buffer)) != ERR_OK)
         return rc;
-
+    printf("1");
     if ((rc = process_number(number, buffer)) != ERR_OK)
         return rc;
-
+    printf("1");
     return rc;
 }
 
 void print_number(number_t number)
 {
-    printf("%hd %hd %hd\n", number.sign, number.mantise_size, number.order);
+    printf("sign - %hd mant_size = %hd order = %hd\n", number.sign, number.mantise_size, number.order);
+    printf("0.");
     for (int i = 0; i < number.mantise_size; i++)
     {
         printf("%hd", number.mantise[i]);
     }
-    printf("\n");
+    printf("e%hd\n", number.order);
 }
