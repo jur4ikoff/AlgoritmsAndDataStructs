@@ -49,17 +49,17 @@ int is_symbol(char c)
     }
 }
 
-void check_sign(number_t *number, char *string)
+void check_sign(number_t *number, char **string)
 {
-    if (*string == '+')
+    if (**string == '+')
     {
         number->sign = 1;
-        string++;
+        (*string)++;
     }
-    else if (*string == '-')
+    else if (**string == '-')
     {
         number->sign = 0;
-        string++;
+        (*string)++;
     }
 }
 
@@ -104,6 +104,7 @@ int process_number(number_t *number, char *string)
 {
     size_t len = strlen(string);
     // size_t point_index = 0;
+    bool is_start = true;
     for (size_t i = 0; i < len; i++)
     {
         if (number->mantise_size > MAX_MANTISE)
@@ -114,8 +115,15 @@ int process_number(number_t *number, char *string)
 
         if (string[i] != '.')
         {
-            number->mantise[number->mantise_size] = string[i] - '0';
-            number->mantise_size++;
+            if (string[i] != '0')
+            {
+                is_start = false;
+            }
+            if (!is_start)
+            {
+                number->mantise[number->mantise_size] = string[i] - '0';
+                number->mantise_size++;
+            }
             number->order++;
         }
         else
@@ -124,8 +132,15 @@ int process_number(number_t *number, char *string)
             // point_index = i;
             while (*ptr != 0)
             {
-                number->mantise[number->mantise_size] = *ptr - '0';
-                number->mantise_size++;
+                if (string[i] != '0')
+                {
+                    is_start = false;
+                }
+                if (!is_start)
+                {
+                    number->mantise[number->mantise_size] = *ptr - '0';
+                    number->mantise_size++;
+                }
                 // number->order--;
                 ptr++;
             }

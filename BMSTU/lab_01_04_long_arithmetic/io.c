@@ -26,17 +26,17 @@ int input_number(number_t *number, char *message)
     printf(">");
     if ((rc = input_string(buffer)) != ERR_OK)
         return rc;
-    check_sign(number, buffer);
-    printf("%s\n", buffer);
-    int point_count = count_symbols(buffer, '.');
+
+    char *ptr = buffer;
+    check_sign(number, &ptr);
+    // printf("%s\n", ptr);
+    int point_count = count_symbols(ptr, '.');
     if (point_count > 1)
         return ERR_POINTS_COUNT;
-    if ((rc = find_exp(number, buffer)) != ERR_OK)
+    if ((rc = find_exp(number, ptr)) != ERR_OK)
         return rc;
-    printf("1");
-    if ((rc = process_number(number, buffer)) != ERR_OK)
+    if ((rc = process_number(number, ptr)) != ERR_OK)
         return rc;
-    printf("1");
     return rc;
 }
 

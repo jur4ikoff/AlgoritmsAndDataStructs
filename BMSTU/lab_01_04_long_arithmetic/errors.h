@@ -13,6 +13,7 @@
 #define ERR_POINTS_COUNT 8
 #define ERR_EMPTY_INPUT 9
 #define ERR_DIVISION_ON_ZERO 10
+#define UNKNOWN_ERROR 11
 
 void print_error(int arg);
 #endif

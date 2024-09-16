@@ -10,6 +10,7 @@
 #define MAX_MANTISE 40
 #define MAX_ORDER 5
 #define MAX_STRING_LEN 64
+#define ERR_EPS = 10e-40
 
 typedef struct
 {

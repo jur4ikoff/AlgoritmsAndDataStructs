@@ -34,5 +34,8 @@ void print_error(int arg)
     case ERR_DIVISION_ON_ZERO:
         printf("Erorr, division on zero\n");
         break;
+    case UNKNOWN_ERROR:
+        printf("UNKNOWN_ERROR\n");
+        break;
     }
 }
