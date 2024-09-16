@@ -3,6 +3,9 @@
 #include "errors.h"
 #include "stdio.h"
 #include "string.h"
+#include "stdlib.h"
+#include <errno.h>  
+#include "math.h"
 
 #define MAX_MANTISE 40
 #define MAX_ORDER 5
@@ -11,7 +14,8 @@
 typedef struct
 {
     short sign;
-    char mantise[MAX_MANTISE];
+    short mantise[MAX_MANTISE];
+    short mantise_size;
     short order;
 
 } number_t;

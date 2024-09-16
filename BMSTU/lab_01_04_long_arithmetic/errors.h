@@ -8,5 +8,7 @@
 #define ERR_OVERFLOW 4
 #define ERR_INPUT 5
 #define ERR_NOT_FLOAT 6
+#define ERR_ORDER_CHAR 7
+#define ERR_POINTS_COUNT 8
 
 #endif

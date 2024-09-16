@@ -37,6 +37,12 @@ void print_error(int arg)
     case ERR_NOT_FLOAT:
         printf("Error, input number not a real number\n");
         break;
+    case ERR_ORDER_CHAR:
+        printf("Error, order contain char\n");
+        break;
+    case ERR_POINTS_COUNT:
+        printf("Error, point must be only one\n");
+        break;
     }
 }
 
@@ -48,8 +54,15 @@ int input_number(number_t *number)
     if ((rc = input_string(buffer)) != ERR_OK)
         return rc;
 
+    int point_count = count_symbols(buffer, '.');
+    if (point_count > 1)
+        return ERR_POINTS_COUNT;
+
     if ((rc = find_exp(number, buffer)) != ERR_OK)
         return rc;
-        
+
+    if ((rc = process_number(number, buffer)) != ERR_OK)
+        return rc;
+
     return rc;
 }
