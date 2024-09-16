@@ -1,4 +1,13 @@
+*.exe
+*.o
+*.gcno
+*.gcda
 .DS_Store
+*.exec
+*.vscode
+test*.txt
+**/temp.txt
+test*.txt
+*gcov
+*bin
 .idea
-.vscode
-.venv

@@ -71,7 +71,7 @@ int find_exp(number_t *number, char *string)
 
                 if (abs((int)value) > MAX_ORDER)
                     return ERR_ORDER_SIZE;
-                number->sign = value;
+                number->order = value;
 
                 ptr = string + i;
                 *ptr = '\0';
@@ -89,7 +89,6 @@ int find_exp(number_t *number, char *string)
 int process_number(number_t *number, char *string)
 {
     size_t len = strlen(string);
-    printf("%s\n", string);
     for (size_t i = 0; i < len; i++)
     {
         if (number->mantise_size > MAX_MANTISE)
@@ -109,10 +108,11 @@ int process_number(number_t *number, char *string)
             char *ptr = string + i + 1;
             while (*ptr != 0)
             {
-                number->mantise[number->mantise_size] = string[i] - '0';
+                number->mantise[number->mantise_size] = *ptr - '0';
                 number->mantise_size++;
                 ptr++;
             }
+            return ERR_OK;
         }
     }
     return ERR_OK;
