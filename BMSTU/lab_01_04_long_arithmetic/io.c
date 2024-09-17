@@ -46,6 +46,7 @@ void print_number(number_t number)
     printf("0.");
     for (int i = 0; i < number.mantise_size; i++)
     {
+        // if number.mantise[i] == 0;
         printf("%hd", number.mantise[i]);
     }
     printf("e%hd\n", number.order);
