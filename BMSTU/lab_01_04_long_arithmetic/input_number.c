@@ -51,16 +51,18 @@ int is_symbol(char c)
 
 void check_sign(number_t *number, char **string)
 {
-    if (**string == '+')
-    {
-        number->sign = 1;
-        (*string)++;
-    }
-    else if (**string == '-')
+    if (**string == '-')
     {
         number->sign = 0;
         (*string)++;
     }
+    else if (**string == '+')
+    {
+        number->sign = 1;
+        (*string)++;
+    }
+    else
+        number->sign = 1;
 }
 
 int find_exp(number_t *number, char *string)

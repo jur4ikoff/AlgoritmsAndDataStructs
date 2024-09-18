@@ -42,7 +42,11 @@ int input_number(number_t *number, char *message)
 
 void print_number(number_t number)
 {
-    printf("sign - %hd mant_size = %hd order = %hd\n", number.sign, number.mantise_size, number.order);
+    printf("mant_size = %hd order = %hd\n", number.mantise_size, number.order);
+    if (number.sign == 0)
+        printf("-");
+    // else
+    //      printf("+");
     printf("0.");
     for (int i = 0; i < number.mantise_size; i++)
     {

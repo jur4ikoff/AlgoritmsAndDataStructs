@@ -128,26 +128,24 @@ void find_part_divisible(number_t *part_divisible, number_t divisible, number_t 
 
 void calculate_sign(number_t divisible, number_t divider, number_t *result)
 {
-    if (divisible.order == divider.order)
-        result->order = 1;
+    // printf("signs = %u %u\n", divisible.order, divider.order);
+    if (divisible.sign == divider.sign)
+        result->sign = 1;
     else
-        result->order = 0;
+        result->sign = 0;
 }
 
 int long_div(number_t divisible, number_t divider, number_t *result)
 {
     result->order = divisible.order - divider.order;
     calculate_sign(divisible, divider, result);
-    // int rc = ERR_OK;
-    number_t part_divisible = {0};
+    number_t part_divisible = {.sign = 1};
     find_part_divisible(&part_divisible, divisible, divider, result);
     print_number(part_divisible);
 
-    return 0;
     int last_index = part_divisible.mantise_size;
     do
     {
-        // print_number(part_divisible);
         long long int t1, t2, t;
         copy_to_number(&t1, part_divisible, 0, part_divisible.order - divider.mantise_size + 1);
         copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
@@ -195,6 +193,7 @@ int long_div(number_t divisible, number_t divider, number_t *result)
 
         print_number(part_divisible);
         // break;
+        printf("result: ");
         print_number(*result);
     } while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE);
 

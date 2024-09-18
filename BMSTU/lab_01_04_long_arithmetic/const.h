@@ -4,7 +4,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "stdlib.h"
-#include <errno.h>  
+#include <errno.h>
 #include "math.h"
 #include "stdbool.h"
 
@@ -16,8 +16,8 @@
 typedef struct
 {
     unsigned short sign; // 0 - минус, 1 - плюс
-    short mantise[MAX_MANTISE];
     short mantise_size;
+    short mantise[MAX_MANTISE];
     short order;
 
 } number_t;
