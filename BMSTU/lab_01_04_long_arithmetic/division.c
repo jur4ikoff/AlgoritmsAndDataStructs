@@ -106,22 +106,23 @@ int long_div(number_t divisible, number_t divider, number_t *result)
     result->order = divisible.order - divider.order;
     calculate_sign(divisible, divider, result);
     number_t part_divisible = {.sign = 1};
-
     // Получаем неполное делимое
     find_part_divisible(&part_divisible, divisible, divider, result);
     int last_index = part_divisible.mantise_size;
 
+    long long int t1, t2, t;
+    copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
+
     while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
     {
-        long long int t1, t2, t;
-        printf("PART_DIV  ");
-        print_number(part_divisible);
-        copy_to_number(&t1, part_divisible, 0, part_divisible.order - divider.mantise_size + 1);
-        copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
+
+        // printf("PART_DIV  ");
+        //print_number(part_divisible);
+        copy_to_number(&t1, part_divisible, 0, part_divisible.mantise_size - divider.mantise_size + 1);
         t = t1 / t2;
 
-        long long int mantise_divider, mantise_part_divisible; // TO DO МОЖЕТ БЫТЬ ПЕРЕПОЛНЕНИЕ
-        copy_to_number(&mantise_divider, divider, 0, divider.mantise_size);
+        long long int mantise_divider, mantise_part_divisible;              // TO DO МОЖЕТ БЫТЬ ПЕРЕПОЛНЕНИЕ
+        copy_to_number(&mantise_divider, divider, 0, divider.mantise_size); // STATIC
         copy_to_number(&mantise_part_divisible, part_divisible, 0, part_divisible.mantise_size);
         long long int mult = t * mantise_divider;
 
@@ -134,7 +135,7 @@ int long_div(number_t divisible, number_t divider, number_t *result)
             }
         }
 
-        printf("mult = %lld, t = %lld, part_mant_div = %lld\n", mult, t, mantise_part_divisible);
+        // printf("mult = %lld, t = %lld, part_mant_div = %lld\n", mult, t, mantise_part_divisible);
         // printf("%lld\n", t);
         result->mantise[result->mantise_size] = t;
         result->mantise_size++;
@@ -158,6 +159,8 @@ int long_div(number_t divisible, number_t divider, number_t *result)
         // printf("RES  ");
         // print_number(*result);
     }
+
+    print_number(*result);
 
     return ERR_OK;
 }
