@@ -17,10 +17,15 @@ void copy(number_t stream, number_t *destination, int start, int end)
     for (int i = start; i < end; i++)
     {
         if (i < stream.mantise_size)
+        {
             destination->mantise[i] = stream.mantise[i];
-        // else
-        // destination->mantise_size++;
-        destination->order++;
+            destination->order++;
+        }
+        else
+        {
+            destination->mantise[i] = 0;
+            destination->order++;
+        }
     }
 }
 
@@ -53,20 +58,33 @@ void find_part_divisible(number_t *part_divisible, number_t divisible, number_t 
 {
     int i = 0; // rc = ERR_OK;
     int size_mantise_to_copy = 0;
-    while (i < divider.mantise_size && size_mantise_to_copy == 0)
+    if (divisible.mantise_size < divider.mantise_size)
     {
-        if (divisible.mantise[i] > divider.mantise[i])
-            size_mantise_to_copy = divider.mantise_size + i;
-        else if (divisible.mantise[i] < divider.mantise[i])
-            size_mantise_to_copy = divider.mantise_size + i + 1;
-        else
+        size_mantise_to_copy = divider.mantise_size; // TO DO
+        bool is_only_zero = true;
+        for (size_t j = divisible.mantise_size; j < (size_t)divider.mantise_size; j++)
         {
-            if (i + 1 == divider.mantise_size)
-                size_mantise_to_copy = divider.mantise_size + 1;
+            if (divider.mantise[j] != 0)
+                is_only_zero = false;
+        }
+        if (!is_only_zero)
+            size_mantise_to_copy += 1;
+    }
+    else
+    {
+        while (i < divider.mantise_size && size_mantise_to_copy == 0)
+        {
+            if (divisible.mantise[i] > divider.mantise[i])
+                size_mantise_to_copy = divider.mantise_size + i;
+            else if (divisible.mantise[i] < divider.mantise[i])
+                size_mantise_to_copy = divider.mantise_size + i + 1;
             else
                 i++;
         }
     }
+
+    if (i == divider.mantise_size)
+        size_mantise_to_copy = divider.mantise_size;
 
     part_divisible->mantise_size = size_mantise_to_copy;
     copy(divisible, part_divisible, 0, size_mantise_to_copy);

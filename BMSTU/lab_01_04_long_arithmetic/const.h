@@ -6,6 +6,7 @@
 #include "stdlib.h"
 #include <errno.h>  
 #include "math.h"
+#include "stdbool.h"
 
 #define MAX_MANTISE 40
 #define MAX_ORDER 5
