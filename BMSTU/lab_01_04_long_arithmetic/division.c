@@ -11,6 +11,7 @@ int i_len(long long value)
 
     return count;
 }
+
 void copy(number_t stream, number_t *destination, int start, int end)
 {
 
@@ -115,9 +116,6 @@ int long_div(number_t divisible, number_t divider, number_t *result)
 
     while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
     {
-
-        // printf("PART_DIV  ");
-        //print_number(part_divisible);
         copy_to_number(&t1, part_divisible, 0, part_divisible.mantise_size - divider.mantise_size + 1);
         t = t1 / t2;
 
@@ -135,8 +133,6 @@ int long_div(number_t divisible, number_t divider, number_t *result)
             }
         }
 
-        // printf("mult = %lld, t = %lld, part_mant_div = %lld\n", mult, t, mantise_part_divisible);
-        // printf("%lld\n", t);
         result->mantise[result->mantise_size] = t;
         result->mantise_size++;
         result->order++;

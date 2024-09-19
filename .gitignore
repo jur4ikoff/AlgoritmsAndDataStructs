@@ -11,3 +11,4 @@ test*.txt
 *gcov
 *bin
 .idea
+.dSYM
