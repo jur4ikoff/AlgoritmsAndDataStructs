@@ -61,6 +61,7 @@ void find_part_divisible(number_t *part_divisible, number_t divisible, number_t 
     int size_mantise_to_copy = 0;
     if (divisible.mantise_size < divider.mantise_size)
     {
+        // printf("1\n");
         size_mantise_to_copy = divider.mantise_size;
         bool is_only_zero = true;
         for (size_t j = divisible.mantise_size; j < (size_t)divider.mantise_size; j++)
@@ -104,13 +105,15 @@ void calculate_sign(number_t divisible, number_t divider, number_t *result)
 int long_div(number_t divisible, number_t divider, number_t *result)
 {
     // Вычисление нового порядка и знака
-    result->order = divisible.order - divider.order;
+    // result->order = divisible.order - divider.order;
     calculate_sign(divisible, divider, result);
+    bool is_first_add = true;
     number_t part_divisible = {.sign = 1};
     // Получаем неполное делимое
     find_part_divisible(&part_divisible, divisible, divider, result);
     int last_index = part_divisible.mantise_size;
-
+    print_number(part_divisible);
+    print_number(*result);
     long long int t1, t2, t;
     copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
 
@@ -133,22 +136,28 @@ int long_div(number_t divisible, number_t divider, number_t *result)
             }
         }
 
+
+        // TO DO ПЕРЕПИСАТЬ
+
         result->mantise[result->mantise_size] = t;
         result->mantise_size++;
         result->order++;
+        
         copy_to_struct(mantise_part_divisible - mult, &part_divisible);
         if (last_index < divisible.mantise_size)
         {
             part_divisible.mantise[part_divisible.mantise_size] = divisible.mantise[last_index];
             part_divisible.mantise_size++;
-            part_divisible.order++;
             last_index++;
         }
         else
         {
             part_divisible.mantise[part_divisible.mantise_size] = 0;
             part_divisible.mantise_size++;
-            result->order--;
+            if (!is_first_add)
+                result->order--;
+            else
+                is_first_add = false;
             last_index++;
         }
 

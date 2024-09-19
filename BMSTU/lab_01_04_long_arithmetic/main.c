@@ -34,7 +34,10 @@ int main(void)
     {
         print_error(ERR_DIVISION_ON_ZERO);
         return ERR_DIVISION_ON_ZERO;
-    }
+    }   
+
+    print_number(first_number);
+    print_number(second_number);
 
     if ((rc =  long_div(first_number, second_number, &answer)) != ERR_OK)
     {
