@@ -30,14 +30,18 @@ void copy(number_t stream, number_t *destination, int start, int end)
     }
 }
 
-void copy_to_number(long long int *value, number_t number, size_t start, size_t end)
+int copy_to_number(long long int *value, number_t number, size_t start, size_t end)
 {
+    if (start > MAX_MANTISE || end > MAX_MANTISE)
+        return 1;
+
     *value = 0;
     // printf("%zu %zu\n", start, end);
     for (size_t i = start; i < end; i++)
     {
         *value = *value * 10 + number.mantise[i];
     }
+    return ERR_OK;
 }
 
 void copy_to_struct(long long value, number_t *dest)
@@ -106,23 +110,27 @@ void calculate_sign(number_t divisible, number_t divider, number_t *result)
 int long_div(number_t divisible, number_t divider, number_t *result)
 {
     // Вычисление нового порядка и знака
-    result->order = divisible.order - divider.order;
-
+    // result->order = divisible.order - divider.order;
     calculate_sign(divisible, divider, result);
-    bool is_first_add = true;
+    // bool is_first_add = true;
     number_t part_divisible = {.sign = 1};
     // Получаем неполное делимое
     find_part_divisible(&part_divisible, divisible, divider, result);
     int last_index = part_divisible.mantise_size;
     print_number(part_divisible);
-    print_number(*result);
     long long int t1, t2, t;
     copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
 
     while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
     {
-        copy_to_number(&t1, part_divisible, 0, part_divisible.mantise_size - divider.mantise_size + 1);
-        t = t1 / t2;
+        if (copy_to_number(&t1, part_divisible, 0, part_divisible.mantise_size - divider.mantise_size + 1) == 1) // ПЕРЕПОЛНЕНИЕ САЙЗТ ПРИ 1234.56 1234 TO DO
+        {
+            t1 = 0;
+        }
+        if (t2 != 0)
+            t = t1 / t2;
+        else
+            t = 1;
 
         long long int mantise_divider, mantise_part_divisible;              // TO DO МОЖЕТ БЫТЬ ПЕРЕПОЛНЕНИЕ
         copy_to_number(&mantise_divider, divider, 0, divider.mantise_size); // STATIC
@@ -149,17 +157,18 @@ int long_div(number_t divisible, number_t divider, number_t *result)
         {
             part_divisible.mantise[part_divisible.mantise_size] = divisible.mantise[last_index];
             part_divisible.mantise_size++;
+            // result->order++;
             last_index++;
         }
         else
         {
             part_divisible.mantise[part_divisible.mantise_size] = 0;
             part_divisible.mantise_size++;
-            if (!is_first_add)
-                ;
-            // result->order--;
-            else
-                is_first_add = false;
+            // if (!is_first_add)
+            //     ;
+            //  result->order--;
+            // else
+            //     is_first_add = false;
             last_index++;
         }
 

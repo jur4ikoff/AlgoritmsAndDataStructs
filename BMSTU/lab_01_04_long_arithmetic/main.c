@@ -19,7 +19,7 @@ int main(void)
     }
 
     printf("\n");
-    //print_number(first_number);
+    // print_number(first_number);
 
     printf(">> Введите второе число\n");
     if ((rc = input_number(&second_number, line)) != ERR_OK)
@@ -28,18 +28,25 @@ int main(void)
         return rc;
     }
 
-    //print_number(second_number);
+    // print_number(second_number);
 
     if (second_number.mantise[0] == 0)
     {
         print_error(ERR_DIVISION_ON_ZERO);
         return ERR_DIVISION_ON_ZERO;
-    }   
+    }
 
-    print_number(first_number);
-    print_number(second_number);
+    //number_t first = {.mantise = {2, 2}, .order = 2, .sign = 1, .mantise_size = 2};
+    //number_t second = {.mantise = {2, 2}, .order = 1, .sign = 1, .mantise_size = 2};
 
-    if ((rc =  long_div(first_number, second_number, &answer)) != ERR_OK)
+    /*print_number(first_number);
+    printf("2  ");
+    print_number(second_number);*/
+
+    //print_number(first);
+    //printf("2  ");
+    //print_number(second);
+    if ((rc = long_div(first_number, second_number, &answer)) != ERR_OK)
     {
         print_error(rc);
         return rc;
