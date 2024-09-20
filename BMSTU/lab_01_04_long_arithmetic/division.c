@@ -64,11 +64,12 @@ void find_part_divisible(number_t *part_divisible, number_t divisible, number_t 
         // printf("1\n");
         size_mantise_to_copy = divider.mantise_size;
         bool is_only_zero = true;
+        (void)*result;
         for (size_t j = divisible.mantise_size; j < (size_t)divider.mantise_size; j++)
         {
             if (divider.mantise[j] != 0)
                 is_only_zero = false;
-            result->order--; // TO DO ПРОВЕРИТЬ
+            // result->order--; // TO DO ПРОВЕРИТЬ
         }
         if (!is_only_zero)
             size_mantise_to_copy += 1;
@@ -105,7 +106,8 @@ void calculate_sign(number_t divisible, number_t divider, number_t *result)
 int long_div(number_t divisible, number_t divider, number_t *result)
 {
     // Вычисление нового порядка и знака
-    // result->order = divisible.order - divider.order;
+    result->order = divisible.order - divider.order;
+
     calculate_sign(divisible, divider, result);
     bool is_first_add = true;
     number_t part_divisible = {.sign = 1};
@@ -136,13 +138,12 @@ int long_div(number_t divisible, number_t divider, number_t *result)
             }
         }
 
-
         // TO DO ПЕРЕПИСАТЬ
 
         result->mantise[result->mantise_size] = t;
         result->mantise_size++;
-        result->order++;
-        
+        // result->order++;
+
         copy_to_struct(mantise_part_divisible - mult, &part_divisible);
         if (last_index < divisible.mantise_size)
         {
@@ -155,7 +156,8 @@ int long_div(number_t divisible, number_t divider, number_t *result)
             part_divisible.mantise[part_divisible.mantise_size] = 0;
             part_divisible.mantise_size++;
             if (!is_first_add)
-                result->order--;
+                ;
+            // result->order--;
             else
                 is_first_add = false;
             last_index++;
