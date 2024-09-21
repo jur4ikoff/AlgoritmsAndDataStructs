@@ -114,7 +114,12 @@ void delete_nulls_from_divider(number_t *divisible, number_t *divider)
 {
     if (divider->mantise_size != divider->order)
     {
-        printf("1");
+        // divider->mantise[divider->mantise_size] = 0;
+        // divider->mantise_size++;
+        divider->order++;
+        divisible->mantise[divisible->mantise_size] = 0;
+        divisible->mantise_size++;
+        divisible->order++;
     }
     (void)*divisible;
 }
@@ -125,11 +130,12 @@ int long_div(number_t divisible, number_t divider, number_t *result)
     // result->order = divisible.order - divider.order;
     calculate_sign(divisible, divider, result);
     // bool is_first_add = true;
-    number_t part_divisible = {.sign = 1};
+
+    delete_nulls_from_divider(&divisible, &divider);
     // Получаем неполное делимое
+    number_t part_divisible = {.sign = 1};
     find_part_divisible(&part_divisible, divisible, divider, result);
     int last_index = part_divisible.mantise_size;
-
     result->order = divisible.order - part_divisible.order + 1;
     print_number(part_divisible);
     long long int t1, t2, t;
