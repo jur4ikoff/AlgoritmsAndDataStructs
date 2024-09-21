@@ -69,10 +69,12 @@ void find_part_divisible(number_t *part_divisible, number_t divisible, number_t 
         size_mantise_to_copy = divider.mantise_size;
         bool is_only_zero = true;
         (void)*result;
+
         for (size_t j = divisible.mantise_size; j < (size_t)divider.mantise_size; j++)
         {
             if (divider.mantise[j] != 0)
                 is_only_zero = false;
+
             // result->order--; // TO DO ПРОВЕРИТЬ
         }
         if (!is_only_zero)
@@ -82,6 +84,7 @@ void find_part_divisible(number_t *part_divisible, number_t divisible, number_t 
     {
         while (i < divider.mantise_size && size_mantise_to_copy == 0)
         {
+            // result->order--;
             if (divisible.mantise[i] > divider.mantise[i])
                 size_mantise_to_copy = divider.mantise_size + i;
             else if (divisible.mantise[i] < divider.mantise[i])
@@ -107,6 +110,15 @@ void calculate_sign(number_t divisible, number_t divider, number_t *result)
         result->sign = 0;
 }
 
+void delete_nulls_from_divider(number_t *divisible, number_t *divider)
+{
+    if (divider->mantise_size != divider->order)
+    {
+        printf("1");
+    }
+    (void)*divisible;
+}
+
 int long_div(number_t divisible, number_t divider, number_t *result)
 {
     // Вычисление нового порядка и знака
@@ -117,6 +129,8 @@ int long_div(number_t divisible, number_t divider, number_t *result)
     // Получаем неполное делимое
     find_part_divisible(&part_divisible, divisible, divider, result);
     int last_index = part_divisible.mantise_size;
+
+    result->order = divisible.order - part_divisible.order + 1;
     print_number(part_divisible);
     long long int t1, t2, t;
     copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
