@@ -146,19 +146,36 @@ int validate_number(long_number number)
     return ERR_OK;
 }
 
-
-int input_number(long_number *number, char *message)
+int input_real_number(long_number *number)
 {
+    // Определение переменных
     int rc = ERR_OK;
     char buffer[MAX_STRING_LEN];
 
-    printf("%s\n", message);
+    // Приглашение к вводу
+    printf(">Input long integer number\n");
+    print_line();
     printf(">");
+
+    // Получаем строку с числом
     if ((rc = input_string(buffer)) != ERR_OK)
         return rc;
 
     char *ptr = buffer;
-    sign_defenition(number, &ptr);
+    if ((rc = sign_defenition(number, &ptr)) != ERR_OK)
+    {
+        if (*ptr == '.')
+        {
+            number->sign = 1;
+            ptr++;
+        }
+        else
+        {
+            print_error(rc);
+            return rc;
+        }
+    }
+    
     // printf("%s\n", ptr);
     int point_count = count_symbols(ptr, '.');
     if (point_count > 1)

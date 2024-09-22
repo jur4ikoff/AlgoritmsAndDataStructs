@@ -54,9 +54,11 @@ int input_int_number(long_number *number)
     if ((rc = sign_defenition(number, &ptr)) != ERR_OK)
         return rc;
 
+    // Проверяем на содержание символов
     if ((rc = (checking_for_non_digits(ptr))) != ERR_OK)
         return rc;
 
+    // Запись в структуру
     while (*ptr)
     {
         number->mantise[number->mantise_size] = *ptr - '0';

@@ -7,7 +7,7 @@
 int main(void)
 {
     // long_number first_number = {0}; second_number = {0}, answer = {0}; // second_number;
-    long_number second = {0};
+    long_number second_number = {0};
     int rc = ERR_OK;
 
     /*
@@ -18,9 +18,13 @@ int main(void)
         return rc;
     }*/
 
+    if ((rc = input_real_number(&second_number)) != ERR_OK)
+    {
+        print_error(rc);
+        return rc;
+    }
+    print_number(second_number);
     /*
-    printf("\n");
-    // print_number(first_number);
 
     printf(">> Введите второе число\n");
     if ((rc = input_number(&second_number, line)) != ERR_OK)
