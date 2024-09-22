@@ -36,6 +36,34 @@ int input_string(char *string)
     return ERR_OK;
 }
 
+// Функция подсчитывает количество символов в строке
+size_t count_symbols(char *string)
+{
+    size_t count = 0;
+    while (*string)
+    {
+        count++;
+        string++;
+    }
+
+    return count;
+}
+
+size_t count_eq_symbols(char *string, char c)
+{
+    size_t count = 0;
+    char *ptr = string;
+    while (*ptr != 0)
+    {
+        if (*ptr == c)
+            count++;
+
+        ptr++;
+    }
+
+    return count;
+}
+
 void copy(long_number stream, long_number *destination, int start, int end)
 {
 

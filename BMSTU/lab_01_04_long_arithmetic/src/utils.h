@@ -9,4 +9,6 @@ void copy_to_struct(long long value, long_number *dest);
 void print_number(long_number number);
 int input_string(char *string);
 void print_line(void);
+size_t count_symbols(char *string);
+size_t count_eq_symbols(char *string, char c);
 #endif

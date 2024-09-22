@@ -7,21 +7,6 @@ void swap(char *string, size_t index1, size_t index2)
     string[index2] = buffer;
 }
 
-int count_symbols(char *string, char c)
-{
-    int count = 0;
-    char *ptr = string;
-    while (*ptr != 0)
-    {
-        if (*ptr == c)
-            count++;
-
-        ptr++;
-    }
-
-    return count;
-}
-
 int is_symbol(char c)
 {
     // Проверяем, является ли символ буквой
@@ -160,8 +145,9 @@ int input_real_number(long_number *number)
     // Получаем строку с числом
     if ((rc = input_string(buffer)) != ERR_OK)
         return rc;
-
+    
     char *ptr = buffer;
+    // 
     if ((rc = sign_defenition(number, &ptr)) != ERR_OK)
     {
         if (*ptr == '.')
@@ -170,19 +156,19 @@ int input_real_number(long_number *number)
             ptr++;
         }
         else
-        {
-            print_error(rc);
             return rc;
-        }
     }
-    
-    // printf("%s\n", ptr);
-    int point_count = count_symbols(ptr, '.');
+
+    int point_count = count_eq_symbols(ptr, '.');
     if (point_count > 1)
         return ERR_POINTS_COUNT;
+
+    if (count_symbols(ptr) == 0)
+        return ERR_EMPTY_INPUT;
     if ((rc = find_exp(number, ptr)) != ERR_OK)
         return rc;
     if ((rc = process_number(number, ptr)) != ERR_OK)
         return rc;
     return rc;
 }
+ 
