@@ -112,7 +112,7 @@ void calculate_sign(number_t divisible, number_t divider, number_t *result)
 
 void delete_nulls_from_divider(number_t *divisible, number_t *divider)
 {
-    if (divider->mantise_size != divider->order)
+    while (divider->mantise_size != divider->order)
     {
         // divider->mantise[divider->mantise_size] = 0;
         // divider->mantise_size++;
@@ -121,7 +121,7 @@ void delete_nulls_from_divider(number_t *divisible, number_t *divider)
         divisible->mantise_size++;
         divisible->order++;
     }
-    (void)*divisible;
+    // (void)*divisible;
 }
 
 int long_div(number_t divisible, number_t divider, number_t *result)
@@ -131,12 +131,17 @@ int long_div(number_t divisible, number_t divider, number_t *result)
     calculate_sign(divisible, divider, result);
     // bool is_first_add = true;
 
+    print_number(divisible);
+    print_number(divider);
+    
     delete_nulls_from_divider(&divisible, &divider);
     // Получаем неполное делимое
     number_t part_divisible = {.sign = 1};
     find_part_divisible(&part_divisible, divisible, divider, result);
     int last_index = part_divisible.mantise_size;
     result->order = divisible.order - part_divisible.order + 1;
+    print_number(divisible);
+    print_number(divider);
     print_number(part_divisible);
     long long int t1, t2, t;
     copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
