@@ -1,4 +1,4 @@
-#include "input_number.h"
+#include "input_real_number.h"
 
 void swap(char *string, size_t index1, size_t index2)
 {
@@ -160,4 +160,28 @@ int validate_number(number_t number)
         return ERR_DIVISION_ON_ZERO;
 
     return ERR_OK;
+}
+
+
+int input_number(number_t *number, char *message)
+{
+    int rc = ERR_OK;
+    char buffer[MAX_STRING_LEN];
+
+    printf("%s\n", message);
+    printf(">");
+    if ((rc = input_string(buffer)) != ERR_OK)
+        return rc;
+
+    char *ptr = buffer;
+    check_sign(number, &ptr);
+    // printf("%s\n", ptr);
+    int point_count = count_symbols(ptr, '.');
+    if (point_count > 1)
+        return ERR_POINTS_COUNT;
+    if ((rc = find_exp(number, ptr)) != ERR_OK)
+        return rc;
+    if ((rc = process_number(number, ptr)) != ERR_OK)
+        return rc;
+    return rc;
 }

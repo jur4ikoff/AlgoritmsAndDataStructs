@@ -10,7 +10,7 @@
 
 #define MAX_MANTISE 40
 #define MANTISE_DEFINE 60
-#define MAX_ORDER 9999
+#define MAX_ORDER 10000
 #define MAX_STRING_LEN 64
 #define ERR_EPS = 10e-40
 

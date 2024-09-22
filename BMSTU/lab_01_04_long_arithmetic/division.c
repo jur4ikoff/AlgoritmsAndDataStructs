@@ -1,64 +1,5 @@
 #include "division.h"
 
-int i_len(long long value)
-{
-    int count = 0;
-    while (value > 0)
-    {
-        count++;
-        value /= 10;
-    }
-
-    return count;
-}
-
-void copy(number_t stream, number_t *destination, int start, int end)
-{
-
-    for (int i = start; i < end; i++)
-    {
-        if (i < stream.mantise_size)
-        {
-            destination->mantise[i] = stream.mantise[i];
-            destination->order++;
-        }
-        else
-        {
-            destination->mantise[i] = 0;
-            destination->order++;
-        }
-    }
-}
-
-int copy_to_number(long long int *value, number_t number, size_t start, size_t end)
-{
-    if (start > MAX_MANTISE || end > MAX_MANTISE)
-        return 1;
-
-    *value = 0;
-    // printf("%zu %zu\n", start, end);
-    for (size_t i = start; i < end; i++)
-    {
-        *value = *value * 10 + number.mantise[i];
-    }
-    return ERR_OK;
-}
-
-void copy_to_struct(long long value, number_t *dest)
-{
-    // printf("%lld\n", value);
-    dest->order = 0, dest->mantise_size = 0;
-    char buffer[MAX_STRING_LEN];
-    snprintf(buffer, sizeof(buffer), "%lld", value);
-
-    for (size_t i = 0; i < (size_t)i_len(value); i++)
-    {
-        dest->mantise[dest->mantise_size] = buffer[i] - '0';
-        dest->mantise_size++;
-        dest->order++;
-    }
-}
-
 void find_part_divisible(number_t *part_divisible, number_t divisible, number_t divider, number_t *result)
 {
     int i = 0;
@@ -133,7 +74,7 @@ int long_div(number_t divisible, number_t divider, number_t *result)
 
     print_number(divisible);
     print_number(divider);
-    
+
     delete_nulls_from_divider(&divisible, &divider);
     // Получаем неполное делимое
     number_t part_divisible = {.sign = 1};
