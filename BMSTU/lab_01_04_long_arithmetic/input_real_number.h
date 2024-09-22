@@ -5,10 +5,10 @@
 #include "utils.h"
 #include "stdbool.h"
 
-int find_exp(number_t *number, char *string);
+int find_exp(long_number *number, char *string);
 int count_symbols(char *string, char c);
-int process_number(number_t *number, char *string);
-int validate_number(number_t number);
-void check_sign(number_t *number, char **string);
-int input_number(number_t *number, char *message);
+int process_number(long_number *number, char *string);
+int validate_number(long_number number);
+void check_sign(long_number *number, char **string);
+int input_number(long_number *number, char *message);
 #endif

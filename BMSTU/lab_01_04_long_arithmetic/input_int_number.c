@@ -1,7 +1,7 @@
 #include "input_int_number.h"
 
 // Функция реализует ввод целого числа в тип данных 
-int input_int_in_struct(number_t *number, char *message)
+int input_int_in_struct(long_number *number, char *message)
 {
     int rc = ERR_OK;
     char buffer[MAX_STRING_LEN];

@@ -49,7 +49,7 @@ int is_symbol(char c)
     }
 }
 
-void check_sign(number_t *number, char **string)
+void check_sign(long_number *number, char **string)
 {
     if (**string == '-')
     {
@@ -65,7 +65,7 @@ void check_sign(number_t *number, char **string)
         number->sign = 1;
 }
 
-int find_exp(number_t *number, char *string)
+int find_exp(long_number *number, char *string)
 {
     size_t len = strlen(string);
     for (size_t i = 0; i < len; i++)
@@ -102,7 +102,7 @@ int find_exp(number_t *number, char *string)
     return ERR_OK;
 }
 
-int process_number(number_t *number, char *string)
+int process_number(long_number *number, char *string)
 {
     size_t len = strlen(string);
     // size_t point_index = 0;
@@ -154,7 +154,7 @@ int process_number(number_t *number, char *string)
     return ERR_OK;
 }
 
-int validate_number(number_t number)
+int validate_number(long_number number)
 {
     if (number.mantise[0] == 0)
         return ERR_DIVISION_ON_ZERO;
@@ -163,7 +163,7 @@ int validate_number(number_t number)
 }
 
 
-int input_number(number_t *number, char *message)
+int input_number(long_number *number, char *message)
 {
     int rc = ERR_OK;
     char buffer[MAX_STRING_LEN];

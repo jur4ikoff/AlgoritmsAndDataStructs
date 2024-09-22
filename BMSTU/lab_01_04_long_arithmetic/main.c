@@ -6,7 +6,7 @@
 
 int main(void)
 {
-    number_t first_number = {0}, second_number = {0}, answer = {0}; // second_number;
+    long_number first_number = {0}, second_number = {0}, answer = {0}; // second_number;
     int rc = ERR_OK;
 
     char line[] = {">>---------1---------2---------3---------4"}; // без \n
@@ -36,8 +36,8 @@ int main(void)
         return ERR_DIVISION_ON_ZERO;
     }
 
-    //number_t first = {.mantise = {2, 2}, .order = 2, .sign = 1, .mantise_size = 2};
-    //number_t second = {.mantise = {2, 2}, .order = 1, .sign = 1, .mantise_size = 2};
+    //long_number first = {.mantise = {2, 2}, .order = 2, .sign = 1, .mantise_size = 2};
+    //long_number second = {.mantise = {2, 2}, .order = 1, .sign = 1, .mantise_size = 2};
 
     /*print_number(first_number);
     printf("2  ");

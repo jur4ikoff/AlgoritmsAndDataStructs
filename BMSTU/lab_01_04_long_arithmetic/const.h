@@ -21,5 +21,6 @@ typedef struct
     short mantise[MANTISE_DEFINE];
     short order;
 
-} number_t;
+} long_number;
+
 #endif

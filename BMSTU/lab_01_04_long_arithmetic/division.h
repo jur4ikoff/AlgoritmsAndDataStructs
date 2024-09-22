@@ -3,6 +3,6 @@
 #include "const.h"
 #include "utils.h"
 
-int long_div(number_t divisible, number_t divider, number_t *result);
+int long_div(long_number divisible, long_number divider, long_number *result);
 
 #endif

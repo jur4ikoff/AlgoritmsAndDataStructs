@@ -1,6 +1,6 @@
 #include "division.h"
 
-void find_part_divisible(number_t *part_divisible, number_t divisible, number_t divider, number_t *result)
+void find_part_divisible(long_number *part_divisible, long_number divisible, long_number divider, long_number *result)
 {
     int i = 0;
     int size_mantise_to_copy = 0;
@@ -42,7 +42,7 @@ void find_part_divisible(number_t *part_divisible, number_t divisible, number_t 
     copy(divisible, part_divisible, 0, size_mantise_to_copy);
 }
 
-void calculate_sign(number_t divisible, number_t divider, number_t *result)
+void calculate_sign(long_number divisible, long_number divider, long_number *result)
 {
     // printf("signs = %u %u\n", divisible.order, divider.order);
     if (divisible.sign == divider.sign)
@@ -51,7 +51,7 @@ void calculate_sign(number_t divisible, number_t divider, number_t *result)
         result->sign = 0;
 }
 
-void delete_nulls_from_divider(number_t *divisible, number_t *divider)
+void delete_nulls_from_divider(long_number *divisible, long_number *divider)
 {
     while (divider->mantise_size != divider->order)
     {
@@ -65,7 +65,7 @@ void delete_nulls_from_divider(number_t *divisible, number_t *divider)
     // (void)*divisible;
 }
 
-int long_div(number_t divisible, number_t divider, number_t *result)
+int long_div(long_number divisible, long_number divider, long_number *result)
 {
     // Вычисление нового порядка и знака
     // result->order = divisible.order - divider.order;
@@ -77,7 +77,7 @@ int long_div(number_t divisible, number_t divider, number_t *result)
 
     delete_nulls_from_divider(&divisible, &divider);
     // Получаем неполное делимое
-    number_t part_divisible = {.sign = 1};
+    long_number part_divisible = {.sign = 1};
     find_part_divisible(&part_divisible, divisible, divider, result);
     int last_index = part_divisible.mantise_size;
     result->order = divisible.order - part_divisible.order + 1;

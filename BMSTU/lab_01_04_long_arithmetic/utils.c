@@ -12,7 +12,7 @@ int i_len(long long value)
     return count;
 }
 
-void copy(number_t stream, number_t *destination, int start, int end)
+void copy(long_number stream, long_number *destination, int start, int end)
 {
 
     for (int i = start; i < end; i++)
@@ -30,7 +30,7 @@ void copy(number_t stream, number_t *destination, int start, int end)
     }
 }
 
-int copy_to_number(long long int *value, number_t number, size_t start, size_t end)
+int copy_to_number(long long int *value, long_number number, size_t start, size_t end)
 {
     if (start > MAX_MANTISE || end > MAX_MANTISE)
         return 1;
@@ -44,7 +44,7 @@ int copy_to_number(long long int *value, number_t number, size_t start, size_t e
     return ERR_OK;
 }
 
-void copy_to_struct(long long value, number_t *dest)
+void copy_to_struct(long long value, long_number *dest)
 {
     // printf("%lld\n", value);
     dest->order = 0, dest->mantise_size = 0;
@@ -74,7 +74,8 @@ int input_string(char *string)
         return ERR_EMPTY_INPUT;
     return ERR_OK;
 }
-void print_number(number_t number)
+
+void print_number(long_number number)
 {
     printf("mant_size = %hd order = %hd\n", number.mantise_size, number.order);
     if (number.sign == 0)
