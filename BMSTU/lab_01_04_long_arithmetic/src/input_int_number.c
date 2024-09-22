@@ -1,12 +1,12 @@
 #include "input_int_number.h"
 
 // Функция реализует ввод целого числа в тип данных 
-int input_int_in_struct(long_number *number, char *message)
+int input_int_number(long_number *number)
 {
     int rc = ERR_OK;
     char buffer[MAX_STRING_LEN];
 
-    printf("%s\n", message);
+    printf("Input long integer number\n");
     printf(">");
     if ((rc = input_string(buffer)) != ERR_OK)
         return rc;

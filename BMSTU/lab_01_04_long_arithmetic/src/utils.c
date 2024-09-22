@@ -90,3 +90,8 @@ void print_number(long_number number)
     }
     printf("e%hd\n", number.order);
 }
+
+void print_line(void)
+{
+    printf(">>---------1---------2---------3---------4");
+}

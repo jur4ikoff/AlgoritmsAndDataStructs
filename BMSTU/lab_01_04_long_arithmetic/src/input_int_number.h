@@ -3,4 +3,6 @@
 #include "const.h"
 #include "input_real_number.h"
 #include "utils.h"
+int input_int_number(long_number *number);
+
 #endif
