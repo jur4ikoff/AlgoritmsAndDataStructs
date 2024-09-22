@@ -6,19 +6,18 @@
 
 int main(void)
 {
-    long_number first_number = {0}; // second_number = {0}, answer = {0}; // second_number;
+    // long_number first_number = {0}; second_number = {0}, answer = {0}; // second_number;
+    long_number second = {0};
     int rc = ERR_OK;
 
+    /*
     printf(">> Введите первое число\n");
     if ((rc = input_int_number(&first_number)) != ERR_OK)
     {
         print_error(rc);
         return rc;
-    }
+    }*/
 
-    print_number(first_number);
-    
-    return 0;
     /*
     printf("\n");
     // print_number(first_number);

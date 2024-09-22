@@ -1,6 +1,7 @@
 #include "utils.h"
 
-int i_len(long long value)
+// Получение порядка целочисленного числа
+int int_len(long long value)
 {
     int count = 0;
     while (value > 0)
@@ -10,6 +11,29 @@ int i_len(long long value)
     }
 
     return count;
+}
+
+// Вывод линейки
+void print_line(void)
+{
+    printf(">>---------1---------2---------3---------4\n");
+}
+
+// Ввод строки
+int input_string(char *string)
+{
+    if (!fgets(string, MAX_STRING_LEN, stdin))
+        return ERR_INPUT;
+
+    char *newline = strchr(string, '\n');
+    if (!newline)
+        return ERR_OVERFLOW;
+
+    *newline = 0;
+
+    if (strlen(string) < 1)
+        return ERR_EMPTY_INPUT;
+    return ERR_OK;
 }
 
 void copy(long_number stream, long_number *destination, int start, int end)
@@ -51,28 +75,12 @@ void copy_to_struct(long long value, long_number *dest)
     char buffer[MAX_STRING_LEN];
     snprintf(buffer, sizeof(buffer), "%lld", value);
 
-    for (size_t i = 0; i < (size_t)i_len(value); i++)
+    for (size_t i = 0; i < (size_t)int_len(value); i++)
     {
         dest->mantise[dest->mantise_size] = buffer[i] - '0';
         dest->mantise_size++;
         dest->order++;
     }
-}
-
-int input_string(char *string)
-{
-    if (!fgets(string, MAX_STRING_LEN, stdin))
-        return ERR_INPUT;
-
-    char *newline = strchr(string, '\n');
-    if (!newline)
-        return ERR_OVERFLOW;
-
-    *newline = 0;
-
-    if (strlen(string) < 1)
-        return ERR_EMPTY_INPUT;
-    return ERR_OK;
 }
 
 void print_number(long_number number)
@@ -89,9 +97,4 @@ void print_number(long_number number)
         printf("%hd", number.mantise[i]);
     }
     printf("e%hd\n", number.order);
-}
-
-void print_line(void)
-{
-    printf(">>---------1---------2---------3---------4");
 }

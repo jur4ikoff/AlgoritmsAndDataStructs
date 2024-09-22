@@ -49,22 +49,6 @@ int is_symbol(char c)
     }
 }
 
-void check_sign(long_number *number, char **string)
-{
-    if (**string == '-')
-    {
-        number->sign = 0;
-        (*string)++;
-    }
-    else if (**string == '+')
-    {
-        number->sign = 1;
-        (*string)++;
-    }
-    else
-        number->sign = 1;
-}
-
 int find_exp(long_number *number, char *string)
 {
     size_t len = strlen(string);
@@ -174,7 +158,7 @@ int input_number(long_number *number, char *message)
         return rc;
 
     char *ptr = buffer;
-    check_sign(number, &ptr);
+    sign_defenition(number, &ptr);
     // printf("%s\n", ptr);
     int point_count = count_symbols(ptr, '.');
     if (point_count > 1)
