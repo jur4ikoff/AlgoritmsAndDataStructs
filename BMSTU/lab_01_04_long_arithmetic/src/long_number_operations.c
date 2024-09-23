@@ -73,22 +73,22 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
 
     // Вычисление порядка результата
     result->order = divisible.order - part_divisible.mantise_size + 1;
-    
+
     // Служебные переменные
-    mantise_t t1, t2;// t;
+    mantise_t t1, t2; // t;
     copy_from_long_number_to_mantise_t(divider, &t2, 0, divider.order - divider.mantise_size + 1);
 
     while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
     {
-        struct_copy(part_divisible, &t1, 0, part_divisible.mantise_size - divider.mantise_size + 1); // TO DO ПРОВЕРИТЬ
-        
+        struct_copy(part_divisible, &t1, 0, part_divisible.mantise_size - divider.mantise_size + 1);
+
         /*
         if (t2.mantise[0] != 0)
             t = t1 / t2;
         else
             t = 1;
         break;
-        
+
         long long int mantise_divider, mantise_part_divisible;              // TO DO МОЖЕТ БЫТЬ ПЕРЕПОЛНЕНИЕ
         copy_to_number(&mantise_divider, divider, 0, divider.mantise_size); // STATIC
         copy_to_number(&mantise_part_divisible, part_divisible, 0, part_divisible.mantise_size);

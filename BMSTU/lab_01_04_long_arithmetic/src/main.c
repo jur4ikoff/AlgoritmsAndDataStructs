@@ -27,6 +27,7 @@ int main(void)
         return ERR_DIVISION_ON_ZERO;
     }
     
+    return 0;
     if ((rc = long_divisible(first_number, second_number, &answer)) != ERR_OK)
     {
         print_error(rc);

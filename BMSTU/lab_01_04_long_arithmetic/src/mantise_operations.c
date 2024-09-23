@@ -53,6 +53,11 @@ int equivalent(long long value, mantise_t number) {
     }  
 }  
 
+int mantise_subtraction(mantise_t first, mantise_t second)
+{
+    
+}
+
 // Деление нацело
 int divide_mantise(mantise_t first, mantise_t second)
 {
