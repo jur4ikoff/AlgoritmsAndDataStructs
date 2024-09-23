@@ -6,8 +6,7 @@
 #include "stdbool.h"
 #include "input_int_number.h"
 
-int find_exp(long_number *number, char *string);
-int process_number(long_number *number, char *string);
-int validate_number(long_number number);
+int find_exponent_part(long_number *number, char *string);
+int process_real_number(long_number *number, char *string);
 int input_real_number(long_number *number);
 #endif

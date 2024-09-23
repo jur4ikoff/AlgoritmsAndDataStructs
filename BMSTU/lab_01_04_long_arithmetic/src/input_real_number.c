@@ -1,17 +1,12 @@
 #include "input_real_number.h"
 
-void swap(char *string, size_t index1, size_t index2)
-{
-    char buffer = string[index1];
-    string[index1] = string[index2];
-    string[index2] = buffer;
-}
-
+// Функция проверяет, является ли символ спецсимволов или буквой
+// 1 - Является, иначе 0
 int is_symbol(char c)
 {
-    // Проверяем, является ли символ буквой
+    // Является ли символ буквой
     if (isalpha(c))
-        return 1; // Это буква
+        return 1;
 
     // Проверяем, является ли символ знаком операции
     switch (c)
@@ -28,13 +23,41 @@ int is_symbol(char c)
     case '|':
     case '^':
     case '!':
-        return 1; // Это оператор
+        return 1;
     default:
-        return 0; // Ни буква, ни оператор
+        return 0;
     }
 }
 
-int find_exp(long_number *number, char *string)
+// Функция нормализует чило к стандартному виду
+void long_number_normalization(long_number *number)
+{
+    size_t i = 0, shift = 0;
+    bool is_start = true;
+    // Поиск количества незначащих нулей
+    while (i < (size_t)number->mantise_size)
+    {
+        if (is_start && number->mantise[i] == 0)
+            shift++;
+        else if (is_start && number->mantise[i] != 0)
+            is_start = false;
+
+        i++;
+    }
+
+    // Изменение порядка
+    number->order -= shift;
+
+    // Удаление незначащих нулей
+    for (size_t i = shift; i < (size_t)number->mantise_size; i++)
+    {
+        number->mantise[i - shift] = number->mantise[i];
+    }
+    number->mantise_size -= shift;
+}
+
+// Поиск экспоненциальной части числа
+int find_exponent_part(long_number *number, char *string)
 {
     size_t len = strlen(string);
     for (size_t i = 0; i < len; i++)
@@ -71,18 +94,16 @@ int find_exp(long_number *number, char *string)
     return ERR_OK;
 }
 
-int process_number(long_number *number, char *string)
+// Запись числа в структуру
+int process_real_number(long_number *number, char *string)
 {
     size_t len = strlen(string);
-    // size_t point_index = 0;
     bool is_start = true;
+
     for (size_t i = 0; i < len; i++)
     {
         if (number->mantise_size > MAX_MANTISE)
             return ERR_MANTISE_SIZE;
-
-        // if (number->order > MAX_ORDER)
-        //     return ERR_ORDER_SIZE;
 
         if (string[i] != '.')
         {
@@ -94,13 +115,12 @@ int process_number(long_number *number, char *string)
             {
                 number->mantise[number->mantise_size] = string[i] - '0';
                 number->mantise_size++;
+                number->order++;
             }
-            number->order++;
         }
         else
         {
             char *ptr = string + i + 1;
-            // point_index = i;
             while (*ptr != 0)
             {
                 if (string[i] != '0')
@@ -112,21 +132,11 @@ int process_number(long_number *number, char *string)
                     number->mantise[number->mantise_size] = *ptr - '0';
                     number->mantise_size++;
                 }
-                // number->order--;
                 ptr++;
             }
-            // number->order = len - point_index - 1;
             return ERR_OK;
         }
     }
-
-    return ERR_OK;
-}
-
-int validate_number(long_number number)
-{
-    if (number.mantise[0] == 0)
-        return ERR_DIVISION_ON_ZERO;
 
     return ERR_OK;
 }
@@ -138,16 +148,17 @@ int input_real_number(long_number *number)
     char buffer[MAX_STRING_LEN];
 
     // Приглашение к вводу
-    printf(">Input long integer number\n");
+    printf(">Input long real number\n");
     print_line();
     printf(">");
 
     // Получаем строку с числом
     if ((rc = input_string(buffer)) != ERR_OK)
         return rc;
-    
+
     char *ptr = buffer;
-    // 
+
+    // Определение знака
     if ((rc = sign_defenition(number, &ptr)) != ERR_OK)
     {
         if (*ptr == '.')
@@ -159,16 +170,22 @@ int input_real_number(long_number *number)
             return rc;
     }
 
+    // Проверка на то что число существует
     int point_count = count_eq_symbols(ptr, '.');
     if (point_count > 1)
         return ERR_POINTS_COUNT;
-
     if (count_symbols(ptr) == 0)
         return ERR_EMPTY_INPUT;
-    if ((rc = find_exp(number, ptr)) != ERR_OK)
+
+    // Поиск части, стоящей за экспонентой и ее обработка
+    if ((rc = find_exponent_part(number, ptr)) != ERR_OK)
         return rc;
-    if ((rc = process_number(number, ptr)) != ERR_OK)
+
+    // Обработка мантисы
+    if ((rc = process_real_number(number, ptr)) != ERR_OK)
         return rc;
+
+    // Нормализация числа
+    long_number_normalization(number);
     return rc;
 }
- 

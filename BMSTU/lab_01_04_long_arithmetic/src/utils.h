@@ -11,4 +11,5 @@ int input_string(char *string);
 void print_line(void);
 size_t count_symbols(char *string);
 size_t count_eq_symbols(char *string, char c);
+void swap(char *string, size_t index1, size_t index2);
 #endif

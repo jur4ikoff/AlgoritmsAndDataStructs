@@ -64,6 +64,13 @@ size_t count_eq_symbols(char *string, char c)
     return count;
 }
 
+void swap(char *string, size_t index1, size_t index2)
+{
+    char buffer = string[index1];
+    string[index1] = string[index2];
+    string[index2] = buffer;
+}
+
 void copy(long_number stream, long_number *destination, int start, int end)
 {
 
