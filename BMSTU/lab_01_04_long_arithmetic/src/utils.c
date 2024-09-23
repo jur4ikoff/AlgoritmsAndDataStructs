@@ -1,4 +1,6 @@
 #include "utils.h"
+#include <string.h>
+#include <assert.h>
 
 // Получение порядка целочисленного числа
 int int_len(long long value)
@@ -49,6 +51,7 @@ size_t count_symbols(char *string)
     return count;
 }
 
+// Функция считает количество символов в строке равных символу c
 size_t count_eq_symbols(char *string, char c)
 {
     size_t count = 0;
@@ -64,12 +67,14 @@ size_t count_eq_symbols(char *string, char c)
     return count;
 }
 
+// Функция меняет местами 2 симвала в строке
 void swap(char *string, size_t index1, size_t index2)
 {
     char buffer = string[index1];
     string[index1] = string[index2];
     string[index2] = buffer;
 }
+
 
 void copy(long_number stream, long_number *destination, int start, int end)
 {
@@ -136,3 +141,4 @@ void print_number(long_number number)
     }
     printf("e%hd\n", number.order);
 }
+#include <ctype.h>

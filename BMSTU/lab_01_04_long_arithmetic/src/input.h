@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 #include "const.h"
-#include "utils.h"
+#include "long_types.h"
 
 int find_exponent_part(long_number *number, char *string);
 int process_real_number(long_number *number, char *string);

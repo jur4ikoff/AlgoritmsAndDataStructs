@@ -1,4 +1,9 @@
 #include "input.h"
+#include <ctype.h>
+#include <stdbool.h>
+#include <string.h>
+#include <errno.h>
+#include <stdlib.h>
 
 // Функция проверяет, является ли символ спецсимволов или буквой
 // 1 - Является, иначе 0

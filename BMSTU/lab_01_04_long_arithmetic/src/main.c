@@ -1,7 +1,8 @@
 // Вариант 4
 #include "const.h"
-#include "division.h"
+#include "long_types.h"
 #include "input.h"
+#include "utils.h"
 
 int main(void)
 {

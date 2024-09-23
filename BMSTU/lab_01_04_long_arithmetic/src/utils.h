@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 #include "const.h"
+#include "long_types.h"
 
 int int_len(long long value);
 void copy(long_number stream, long_number *destination, int start, int end);

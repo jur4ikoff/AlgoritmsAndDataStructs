@@ -1,5 +1,6 @@
-#ifndef DIV_H
-#define DIV_H
+#ifndef LONG_TYPES_H
+#define LONG_TYPES_H
+
 #include "const.h"
 #include "utils.h"
 

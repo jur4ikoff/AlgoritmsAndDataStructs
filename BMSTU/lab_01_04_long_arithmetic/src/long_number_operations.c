@@ -1,4 +1,6 @@
-#include "division.h"
+#include "long_types.h"
+#include <stdbool.h>
+#include "utils.h"
 
 void find_part_divisible(long_number *part_divisible, long_number divisible, long_number divider)
 {
