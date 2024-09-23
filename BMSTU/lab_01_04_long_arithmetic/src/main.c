@@ -34,7 +34,7 @@ int main(void)
     }
 
     printf("\nResult: ");
-    print_number(answer);
+    // print_number(answer);
     // printf("\n");
     return rc;
 }

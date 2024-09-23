@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "utils.h"
 
-void find_part_divisible(long_number *part_divisible, long_number divisible, long_number divider)
+void find_part_divisible(mantise_t *part_divisible, long_number divisible, long_number divider)
 {
     int i = 0;
     int size_mantise_to_copy = 0;
@@ -24,9 +24,9 @@ void find_part_divisible(long_number *part_divisible, long_number divisible, lon
         while (i < divider.mantise_size && size_mantise_to_copy == 0)
         {
             if (divisible.mantise[i] > divider.mantise[i])
-                size_mantise_to_copy = divider.mantise_size; // + i;
+                size_mantise_to_copy = divider.mantise_size; 
             else if (divisible.mantise[i] < divider.mantise[i])
-                size_mantise_to_copy = divider.mantise_size + 1; // + i + 1;
+                size_mantise_to_copy = divider.mantise_size + 1; 
             else
                 i++;
         }
@@ -35,8 +35,8 @@ void find_part_divisible(long_number *part_divisible, long_number divisible, lon
     if (i == divider.mantise_size)
         size_mantise_to_copy = divider.mantise_size;
 
-    part_divisible->mantise_size = size_mantise_to_copy;
-    copy(divisible, part_divisible, 0, size_mantise_to_copy);
+    printf("%d\n", size_mantise_to_copy);
+    copy_to_part_divisible(divisible, part_divisible, 0, size_mantise_to_copy);
 }
 
 void calculate_sign(long_number divisible, long_number divider, long_number *result)
@@ -64,23 +64,25 @@ void delete_nulls_from_divider(long_number *divisible, long_number *divider)
 
 int long_div(long_number divisible, long_number divider, long_number *result)
 {
-
+    // Нормализуем данные на входе
     calculate_sign(divisible, divider, result);
     delete_nulls_from_divider(&divisible, &divider);
 
     // Получаем неполное делимое
-    long_number part_divisible = {.sign = 1};
+    mantise_t part_divisible = {.mantise_size = 0};
     find_part_divisible(&part_divisible, divisible, divider);
     int last_index = part_divisible.mantise_size;
     result->order = divisible.order - part_divisible.mantise_size + 1;
+    printf("%d\n", last_index);
+    print_mantise_t(part_divisible);
 
     //print_number(divisible);
     //print_number(divider);
     // print_number(part_divisible);
-    long long int t1, t2, t;
-    copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
+    /*long long int t1, t2, t;
+    copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);*/
 
-    while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
+    /*while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
     {
         if (copy_to_number(&t1, part_divisible, 0, part_divisible.mantise_size - divider.mantise_size + 1) == 1)
         {
@@ -133,6 +135,6 @@ int long_div(long_number divisible, long_number divider, long_number *result)
 
         // printf("RES  ");
         // print_number(*result);
-    }
+    }*/
     return ERR_OK;
 }

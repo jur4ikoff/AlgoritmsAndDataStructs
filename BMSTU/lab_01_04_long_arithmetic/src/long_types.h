@@ -5,5 +5,6 @@
 #include "utils.h"
 
 int long_div(long_number divisible, long_number divider, long_number *result);
+void copy_to_part_divisible(long_number stream, mantise_t *destination, int start, int end);
 
 #endif
