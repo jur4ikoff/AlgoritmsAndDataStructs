@@ -1,4 +1,9 @@
-#include "input_real_number.h"
+#include "input.h"
+#include <ctype.h>
+#include <stdbool.h>
+#include <string.h>
+#include <errno.h>
+#include <stdlib.h>
 
 // Функция проверяет, является ли символ спецсимволов или буквой
 // 1 - Является, иначе 0
@@ -181,10 +186,14 @@ int input_real_number(long_number *number)
     if ((rc = find_exponent_part(number, ptr)) != ERR_OK)
         return rc;
 
+    if (count_symbols(ptr) > MAX_MANTISE)
+        return ERR_OVERFLOW;
+
     // Обработка мантисы
     if ((rc = process_real_number(number, ptr)) != ERR_OK)
         return rc;
 
+    
     // Нормализация числа
     long_number_normalization(number);
     return rc;
