@@ -75,21 +75,6 @@ void swap(char *string, size_t index1, size_t index2)
     string[index2] = buffer;
 }
 
-
-int copy_to_number(long long int *value, long_number number, size_t start, size_t end)
-{
-    if (start > MAX_MANTISE || end > MAX_MANTISE)
-        return 1;
-
-    *value = 0;
-    // printf("%zu %zu\n", start, end);
-    for (size_t i = start; i < end; i++)
-    {
-        *value = *value * 10 + number.mantise[i];
-    }
-    return ERR_OK;
-}
-
 void copy_to_struct(long long value, long_number *dest)
 {
     // printf("%lld\n", value);
@@ -112,10 +97,10 @@ void print_number(long_number number)
     // printf("mant_size = %hd order = %hd\n", number.mantise_size, number.order);
     if (number.sign == 0)
         printf("-");
-    
+
     if (number.mantise[0] != 0)
         printf("0.");
-        
+
     for (int i = 0; i < number.mantise_size; i++)
     {
         // if number.mantise[i] == 0;
@@ -127,9 +112,10 @@ void print_number(long_number number)
 void print_mantise_t(mantise_t number)
 {
     printf("mant_size = %hd\n", number.mantise_size);
-        
+
     for (int i = 0; i < number.mantise_size; i++)
     {
         printf("%hd", number.mantise[i]);
     }
+    printf("\n");
 }
