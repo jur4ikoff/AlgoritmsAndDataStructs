@@ -18,11 +18,5 @@ typedef struct
     short mantise[MANTISE_DEFINE];
 } long_number; // Структура для записи делимого, делителя и частного
 
-typedef struct
-{
-    unsigned short mantise_size;
-    short mantise[MANTISE_DEFINE];
-} mantise_t; // Структура для записи промежуточных результатов
-
 
 #endif

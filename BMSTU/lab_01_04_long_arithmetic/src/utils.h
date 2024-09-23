@@ -4,8 +4,10 @@
 #include "long_types.h"
 
 int int_len(long long value);
-void print_mantise_t(mantise_t number);
+
+void copy_structs(long_number number, long_number *value, size_t start, size_t end);
 void copy_to_struct(long long value, long_number *dest);
+void copy_to_variable(long_number number, long long *value, size_t start, size_t end);
 void print_number(long_number number);
 int input_string(char *string);
 void print_line(void);

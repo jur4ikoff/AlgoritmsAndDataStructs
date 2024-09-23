@@ -92,7 +92,6 @@ void copy_to_struct(long long value, long_number *dest)
 
 void print_number(long_number number)
 {
-    assert(number.mantise_size > 0);
 
     // printf("mant_size = %hd order = %hd\n", number.mantise_size, number.order);
     if (number.sign == 0)
@@ -109,13 +108,30 @@ void print_number(long_number number)
     printf("e%hd\n", number.order);
 }
 
-void print_mantise_t(mantise_t number)
+void copy_structs(long_number stream, long_number *dest, size_t start, size_t end)
 {
-    printf("mant_size = %hd\n", number.mantise_size);
-
-    for (int i = 0; i < number.mantise_size; i++)
+    dest->mantise_size = 0;
+    for (size_t i = start; i < end; i++)
     {
-        printf("%hd", number.mantise[i]);
+        if (i < stream.mantise_size)
+            dest->mantise[dest->mantise_size] = stream.mantise[i];
+        else
+            dest->mantise[dest->mantise_size] = 0;
+
+        dest->mantise_size++;
     }
-    printf("\n");
+}
+
+void copy_to_variable(long_number number, long long *value, size_t start, size_t end)
+{
+    *value = 0;
+    for (size_t i = start; i < end; i++)
+    {
+        if (i < number.mantise_size)
+        {
+            *value = *value * 10 + number.mantise[i];
+        }
+        else
+            *value *= 10;
+    }
 }
