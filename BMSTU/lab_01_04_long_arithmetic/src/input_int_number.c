@@ -1,4 +1,4 @@
-#include "input_int_number.h"
+#include "input.h"
 
 // Определение знака введенного числа
 int sign_defenition(long_number *number, char **string)

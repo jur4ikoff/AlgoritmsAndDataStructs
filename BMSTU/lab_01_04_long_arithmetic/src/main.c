@@ -1,8 +1,7 @@
 // Вариант 4
 #include "const.h"
 #include "division.h"
-#include "input_int_number.h"
-#include "input_real_number.h"
+#include "input.h"
 
 int main(void)
 {

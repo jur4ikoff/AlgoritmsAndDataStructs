@@ -62,16 +62,15 @@ void delete_nulls_from_divider(long_number *divisible, long_number *divider)
 
 int long_div(long_number divisible, long_number divider, long_number *result)
 {
-    // Вычисление нового порядка и знака
-    // result->order = divisible.order - divider.order;
+
     calculate_sign(divisible, divider, result);
-    // bool is_first_add = true;
     delete_nulls_from_divider(&divisible, &divider);
+
     // Получаем неполное делимое
     long_number part_divisible = {.sign = 1};
     find_part_divisible(&part_divisible, divisible, divider);
     int last_index = part_divisible.mantise_size;
-    result->order = divisible.order - part_divisible.order + 1;
+    result->order = divisible.order - part_divisible.mantise_size + 1;
 
     //print_number(divisible);
     //print_number(divider);
