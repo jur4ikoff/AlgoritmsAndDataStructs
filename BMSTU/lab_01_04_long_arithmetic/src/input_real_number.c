@@ -181,10 +181,14 @@ int input_real_number(long_number *number)
     if ((rc = find_exponent_part(number, ptr)) != ERR_OK)
         return rc;
 
+    if (count_symbols(ptr) > MAX_MANTISE)
+        return ERR_OVERFLOW;
+
     // Обработка мантисы
     if ((rc = process_real_number(number, ptr)) != ERR_OK)
         return rc;
 
+    
     // Нормализация числа
     long_number_normalization(number);
     return rc;

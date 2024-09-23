@@ -26,11 +26,15 @@ int main(void)
         print_error(ERR_DIVISION_ON_ZERO);
         return ERR_DIVISION_ON_ZERO;
     }
+    
     if ((rc = long_div(first_number, second_number, &answer)) != ERR_OK)
     {
         print_error(rc);
         return rc;
     }
+
+    printf("\nResult: ");
     print_number(answer);
+    // printf("\n");
     return rc;
 }

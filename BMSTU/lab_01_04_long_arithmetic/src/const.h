@@ -7,11 +7,12 @@
 #include <errno.h>
 #include "math.h"
 #include "stdbool.h"
+#include "assert.h"
 
 #define MAX_MANTISE 40
 #define MANTISE_DEFINE 60
 #define MAX_ORDER 10000
-#define MAX_STRING_LEN 50
+#define MAX_STRING_LEN 49
 #define ERR_EPS = 10e-40
 
 typedef struct

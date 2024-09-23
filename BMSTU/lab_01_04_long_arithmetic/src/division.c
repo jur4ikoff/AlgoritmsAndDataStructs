@@ -1,22 +1,18 @@
 #include "division.h"
 
-void find_part_divisible(long_number *part_divisible, long_number divisible, long_number divider, long_number *result)
+void find_part_divisible(long_number *part_divisible, long_number divisible, long_number divider)
 {
     int i = 0;
     int size_mantise_to_copy = 0;
     if (divisible.mantise_size < divider.mantise_size)
     {
-        // printf("1\n");
         size_mantise_to_copy = divider.mantise_size;
         bool is_only_zero = true;
-        (void)*result;
 
         for (size_t j = divisible.mantise_size; j < (size_t)divider.mantise_size; j++)
         {
             if (divider.mantise[j] != 0)
                 is_only_zero = false;
-
-            // result->order--; // TO DO ПРОВЕРИТЬ
         }
         if (!is_only_zero)
             size_mantise_to_copy += 1;
@@ -25,11 +21,10 @@ void find_part_divisible(long_number *part_divisible, long_number divisible, lon
     {
         while (i < divider.mantise_size && size_mantise_to_copy == 0)
         {
-            // result->order--;
             if (divisible.mantise[i] > divider.mantise[i])
-                size_mantise_to_copy = divider.mantise_size + i;
+                size_mantise_to_copy = divider.mantise_size; // + i;
             else if (divisible.mantise[i] < divider.mantise[i])
-                size_mantise_to_copy = divider.mantise_size + i + 1;
+                size_mantise_to_copy = divider.mantise_size + 1; // + i + 1;
             else
                 i++;
         }
@@ -71,25 +66,22 @@ int long_div(long_number divisible, long_number divider, long_number *result)
     // result->order = divisible.order - divider.order;
     calculate_sign(divisible, divider, result);
     // bool is_first_add = true;
-
-    print_number(divisible);
-    print_number(divider);
-
     delete_nulls_from_divider(&divisible, &divider);
     // Получаем неполное делимое
     long_number part_divisible = {.sign = 1};
-    find_part_divisible(&part_divisible, divisible, divider, result);
+    find_part_divisible(&part_divisible, divisible, divider);
     int last_index = part_divisible.mantise_size;
     result->order = divisible.order - part_divisible.order + 1;
-    print_number(divisible);
-    print_number(divider);
-    print_number(part_divisible);
+
+    //print_number(divisible);
+    //print_number(divider);
+    // print_number(part_divisible);
     long long int t1, t2, t;
     copy_to_number(&t2, divider, 0, divider.order - divider.mantise_size + 1);
 
     while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
     {
-        if (copy_to_number(&t1, part_divisible, 0, part_divisible.mantise_size - divider.mantise_size + 1) == 1) // ПЕРЕПОЛНЕНИЕ САЙЗТ ПРИ 1234.56 1234 TO DO
+        if (copy_to_number(&t1, part_divisible, 0, part_divisible.mantise_size - divider.mantise_size + 1) == 1)
         {
             t1 = 0;
         }

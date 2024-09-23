@@ -120,12 +120,15 @@ void copy_to_struct(long long value, long_number *dest)
 
 void print_number(long_number number)
 {
-    printf("mant_size = %hd order = %hd\n", number.mantise_size, number.order);
+    assert(number.mantise_size > 0);
+
+    // printf("mant_size = %hd order = %hd\n", number.mantise_size, number.order);
     if (number.sign == 0)
         printf("-");
-    // else
-    //      printf("+");
-    printf("0.");
+    
+    if (number.mantise[0] != 0)
+        printf("0.");
+        
     for (int i = 0; i < number.mantise_size; i++)
     {
         // if number.mantise[i] == 0;
