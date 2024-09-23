@@ -1,5 +1,6 @@
 #include "errors.h"
 
+// Функция обработки ошибок
 void print_error(int arg)
 {
     switch (arg)

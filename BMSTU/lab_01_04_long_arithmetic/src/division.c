@@ -141,8 +141,5 @@ int long_div(long_number divisible, long_number divider, long_number *result)
         // printf("RES  ");
         // print_number(*result);
     }
-
-    print_number(*result);
-
     return ERR_OK;
 }
