@@ -82,17 +82,16 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
     while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
     {
         copy_to_variable(part_divisible, &t1, 0, part_divisible.mantise_size - divider.mantise_size + 1);
-
         if (t2 != 0)
             t = t1 / t2;
         else
             t = 1;
 
-        long long int mantise_divider, mantise_part_divisible;                // TO DO МОЖЕТ БЫТЬ ПЕРЕПОЛНЕНИЕ
-        copy_to_variable(divider, &mantise_divider, 0, divider.mantise_size); 
+        long long int mantise_divider, mantise_part_divisible; // TO DO МОЖЕТ БЫТЬ ПЕРЕПОЛНЕНИЕ
+        copy_to_variable(divider, &mantise_divider, 0, divider.mantise_size);
         copy_to_variable(part_divisible, &mantise_part_divisible, 0, part_divisible.mantise_size);
-        long long int mult = t * mantise_divider;
 
+        long long int mult = t * mantise_divider;
         if (mantise_part_divisible - mult <= 0)
         {
             while (mantise_part_divisible - mult < 0)
@@ -105,8 +104,8 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
         result->mantise[result->mantise_size] = t;
         result->mantise_size++;
 
-
         copy_to_struct(mantise_part_divisible - mult, &part_divisible);
+
         if (last_index < divisible.mantise_size)
         {
             part_divisible.mantise[part_divisible.mantise_size] = divisible.mantise[last_index];

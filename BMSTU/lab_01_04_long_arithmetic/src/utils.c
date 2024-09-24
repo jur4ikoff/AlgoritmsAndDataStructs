@@ -124,6 +124,8 @@ void copy_structs(long_number stream, long_number *dest, size_t start, size_t en
 
 void copy_to_variable(long_number number, long long *value, size_t start, size_t end)
 {
+    if (end > MANTISE_DEFINE)
+        end = 0;
     *value = 0;
     for (size_t i = start; i < end; i++)
     {
