@@ -23,6 +23,7 @@ void print_line(void)
 
 /**
  * @brief Ввод строки из stdin
+ * 
  */
 int input_string(char *string)
 {
