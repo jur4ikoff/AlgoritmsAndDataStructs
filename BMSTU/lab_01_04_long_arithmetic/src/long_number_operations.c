@@ -3,7 +3,7 @@
 #include "utils.h"
 #include "inttypes.h"
 
-// Функция округдения
+// Функция округления
 void rounding(long_number *result, int last_number)
 {
     // Если последняя цифра меньше 5, округление не запускается
