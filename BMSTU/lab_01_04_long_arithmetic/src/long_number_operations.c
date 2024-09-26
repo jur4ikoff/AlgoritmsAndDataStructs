@@ -3,67 +3,35 @@
 #include "utils.h"
 #include "inttypes.h"
 
-/**  Проверяет, является ли все числа массива одинаковыми
- * @param array массив целочисленных цифр
- * @param n Длина массива
- * @param out 1 - Все цифры одинаковы, 0 - в ином случае
- */
-int is_array_digits_equivalent(short array[], size_t n)
+void rounding(long_number *result, int last_number)
 {
-    for (size_t i = 0; i < n; i++)
-    {
-        for (size_t j = i + 1; j < n; j++)
-        {
-            if (array[i] != array[j])
-                return 0;
-        }
-    }
-    return 1;
-}
+    // Если последняя цифра меньше 5, округление не запускается
+    if (last_number < 5)
+        return;
 
-// Округление мантисы
-void rounding(long_number *number)
-{
-    if (number->mantise_size == 39)
-        printf("1");
-    if (is_array_digits_equivalent(number->mantise, number->mantise_size) == 1)
-        number->mantise[number->mantise_size - 1] += 1;
-}
-
-/*int rounding(long_number *result, int current_number)
-{
-    // Остановка функции в случае если 41-ая цифра меньше 5
-    if (current_number < 5)
-    {
-        return 0;
-    }
+    // Запускаем округление в цикле
     int i = 39;
-    // Цикл округления
     while (i >= 0)
     {
-        // Увеличение первой цифры, не являющеся девяткой, на единицу и остановка округления
-        if (result->mantise[i] != '9')
+        if (result->mantise[i] != 9)
         {
             result->mantise[i] += 1;
-            return 0;
+            return;
         }
-        // В случае если несколько последних цифр ялвяются двеятками - уменьшение длины мантиссы и переход к более ранней цифре
         else
         {
-            result->mantise[i--] = '\0';
+            result->mantise[i] = 0;
+            i--;
             result->mantise_size -= 1;
         }
     }
-    // Резервная проверка случае числа 0.(9); в теории делением в данном варианте недостижима
-    // Устанавливает мантиссу на 0.1, её длину на 1 и увеличивает экспоненту на 1
     if (i < 0)
     {
-        result->mantise[0] = '1';
+        result->mantise[0] = 1;
         result->order += 1;
         result->mantise_size += 1;
     }
-    return 0;
-}*/
+}
 
 // Вычисление знака результата
 void calculate_sign(long_number divisible, long_number divider, long_number *result)
@@ -134,6 +102,8 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
     find_part_divisible(&part_divisible, divisible, divider);
     int last_index = part_divisible.mantise_size;
 
+    print_number(divisible);
+    print_number(part_divisible);
     // Вычисление порядка результата
     result->order = divisible.order - part_divisible.mantise_size + 1;
 
@@ -141,7 +111,7 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
     long long t1, t2, t;
     copy_to_variable(divider, &t2, 0, divider.order - divider.mantise_size + 1);
 
-    while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE)
+    while (part_divisible.mantise[0] != 0 && result->mantise_size < MAX_MANTISE + 1)
     {
         copy_to_variable(part_divisible, &t1, 0, part_divisible.mantise_size - divider.mantise_size + 1);
         if (t2 != 0)
@@ -156,7 +126,7 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
         long long int mult = t * mantise_divider;
         if (mantise_part_divisible - mult <= 0)
         {
-            while (mantise_part_divisible - mult < 0 && t >= 10)
+            while (mantise_part_divisible - mult < 0)
             {
                 t -= 1;
                 mult = t * mantise_divider;
@@ -164,13 +134,17 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
         }
 
         if (t < 0)
-            mult = 0;
+            mult = 9 * mantise_part_divisible;
+
+        if (result->mantise_size == MAX_MANTISE)
+        {
+            // rounding(result, t);
+            break;
+        }
 
         result->mantise[result->mantise_size] = t;
         result->mantise_size++;
-
         copy_to_struct(mantise_part_divisible - mult, &part_divisible);
-
         if (last_index < divisible.mantise_size)
         {
             part_divisible.mantise[part_divisible.mantise_size] = divisible.mantise[last_index];
@@ -185,6 +159,5 @@ int long_divisible(long_number divisible, long_number divider, long_number *resu
         }
     }
 
-    rounding(result);
     return ERR_OK;
 }
