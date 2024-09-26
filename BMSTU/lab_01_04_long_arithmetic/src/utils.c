@@ -15,13 +15,15 @@ int int_len(long long value)
     return count;
 }
 
-// Вывод линейки
+// Вывод экранной линейки
 void print_line(void)
 {
-    printf(">>---------1---------2---------3---------4\n");
+    printf(">>----|----1----|----2----|----3----|----4\n");
 }
 
-// Ввод строки
+/**
+ * @brief Ввод строки из stdin
+ */
 int input_string(char *string)
 {
     if (!fgets(string, MAX_STRING_LEN, stdin))
