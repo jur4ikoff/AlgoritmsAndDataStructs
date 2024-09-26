@@ -23,7 +23,7 @@ void print_line(void)
 
 /**
  * @brief Ввод строки из stdin
- * 
+ * @param string Указатель на строку для ввода
  */
 int input_string(char *string)
 {
@@ -54,7 +54,11 @@ size_t count_symbols(char *string)
     return count;
 }
 
-// Функция считает количество символов в строке равных символу c
+/**
+ * @brief Функция считает количество символов в строке равных строке С
+ * @param string Указатель на строку
+ * @param c Символ поиска
+ */
 size_t count_eq_symbols(char *string, char c)
 {
     size_t count = 0;
@@ -78,6 +82,11 @@ void swap(char *string, size_t index1, size_t index2)
     string[index2] = buffer;
 }
 
+/**
+ * @brief Функция копирует данные из переменной в структуру long_number
+ * @param value Переменная для записи
+ * @param dest Структура, в которую нужно записать
+ */
 void copy_to_struct(long long value, long_number *dest)
 {
     // printf("%lld\n", value);
@@ -93,6 +102,10 @@ void copy_to_struct(long long value, long_number *dest)
     }
 }
 
+/**
+ * @brief Функция выводит число на экран
+ * @param number Структура для вывода на экран
+ */
 void print_number(long_number number)
 {
 
@@ -105,12 +118,18 @@ void print_number(long_number number)
 
     for (int i = 0; i < number.mantise_size; i++)
     {
-        // if number.mantise[i] == 0;
         printf("%hd", number.mantise[i]);
     }
     printf("e%hd\n", number.order);
 }
 
+/**
+ * @brief Функция копирует данные из одной структуры в другую структуру.
+ * @param stream Структура исходная
+ * @param dest Структуру для копирования
+ * @param start Индекс начала копирования
+ * @param end Индекс конца копирования
+ */
 void copy_structs(long_number stream, long_number *dest, size_t start, size_t end)
 {
     dest->mantise_size = 0;
@@ -125,6 +144,13 @@ void copy_structs(long_number stream, long_number *dest, size_t start, size_t en
     }
 }
 
+/**
+ * @brief Функция копирует данные из структуры в переменную.
+ * @param stream Структура
+ * @param dest Переменная для записи
+ * @param start Индекс начала копирования
+ * @param end Индекс конца копирования
+ */
 void copy_to_variable(long_number number, long long *value, size_t start, size_t end)
 {
     if (end > MANTISE_DEFINE)

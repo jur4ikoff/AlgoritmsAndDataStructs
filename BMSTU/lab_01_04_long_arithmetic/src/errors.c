@@ -1,6 +1,9 @@
 #include "errors.h"
 
-// Функция обработки ошибок
+/**
+ * @brief Функция вывода ошибок
+ * @param arg - Аргумент   
+*/
 void print_error(int arg)
 {
     switch (arg)

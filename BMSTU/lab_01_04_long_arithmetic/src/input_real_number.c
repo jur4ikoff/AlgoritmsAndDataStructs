@@ -146,6 +146,7 @@ int process_real_number(long_number *number, char *string)
     return ERR_OK;
 }
 
+// Ввод действительного числа
 int input_real_number(long_number *number)
 {
     // Определение переменных
