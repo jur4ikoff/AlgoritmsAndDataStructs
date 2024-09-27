@@ -1,7 +1,7 @@
 #include "errors.h"
 #include "stdio.h"
 
-print_error_message(short int arg)
+void print_error_message(short int arg)
 {
     switch (arg)
     {
