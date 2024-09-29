@@ -1,0 +1,16 @@
+SRCS := $(wildcard src/*.c)
+OBJS := $(addprefix out/,$(notdir $(SRCS:%.c=%.o)))
+EXE := app.exe
+
+CFLAGS += -I./inc
+
+out/%.o : src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(EXE) : $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $@
+
+.PHONY: clean
+clean :
+	$(RM) $(OBJS) *.exe
+# INCS := $(wildcard src/*.h)
