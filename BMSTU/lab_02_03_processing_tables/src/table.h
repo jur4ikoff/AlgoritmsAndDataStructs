@@ -11,24 +11,24 @@ typedef struct
     double average_score;
     union apartaments_type
     {
-        struct house
+        struct house_t
         {
             char street[MAX_STREET_LEN];
             short house_number;
             short flar_number;
-        };
-        struct hostel
+        } house;
+        struct hostel_t
         {
             short hostel_number;
             short hostel_flat;
-        };
-        struct rental
+        } hostel;
+        struct rental_t
         {
             char street[MAX_STREET_LEN];
             short house_number;
             short flar_number;
             short cost;
-        };
+        } rental;
     };
 } students_t;
 
