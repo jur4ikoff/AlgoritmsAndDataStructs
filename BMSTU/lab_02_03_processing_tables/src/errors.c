@@ -33,7 +33,7 @@ void print_error_message(short int arg)
         printf("Ошибка в чтении строки файла\n");
         break;
     case ERR_FILE_ORDER_OVERFLOW:
-        printf("Ошибка, переполнение записи\n");
+        printf("Ошибка, переполнение записи. Возможно, нужно добавить '\\n' в конец строки\n");
         break;
     case ERR_TOO_LONG_FIELD:
         printf("Ошибка, одно из полей слишком длинное\n");
@@ -52,6 +52,12 @@ void print_error_message(short int arg)
         break;
     case ERR_FILE_SAVE:
         printf("Ошибка при сохранении файла\n");
+        break;
+    case ERR_ADD_ORDER_INPUT:
+        printf("Ошибка при вводе новой записи\n");
+        break;
+    case ERR_ADD_ORDER_STRING_OVERFLOW:
+        printf("Ошибка, переполнение при вводе новой записи\n");
         break;
     }
 }

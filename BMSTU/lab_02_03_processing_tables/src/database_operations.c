@@ -4,6 +4,7 @@
 #include "constants.h"
 #include <string.h>
 #include "student_operations.h"
+#include "utils.h"
 
 int database_open(FILE **file, char *filename, char *mode)
 {
@@ -69,7 +70,7 @@ int database_save(char *filename, students_t *students, size_t count)
         student_save(file, students[i]);
     }
 
-    printf(">>Изменения сохранены\n");
+    // printf(">>Изменения сохранены\n");
     return rc;
 }
 
@@ -80,6 +81,22 @@ void database_print(students_t *array_students, size_t count)
 {
     for (size_t i = 0; i < count; i++)
     {
+        printf("%zu ", i);
         student_print(array_students[i]);
     }
+}
+
+int database_append(students_t *array_students, size_t *count)
+{
+
+    char buffer[MAX_STRING_LEN];
+    int rc = ERR_OK;
+    printf(">>Введите фамилию: ");
+    if ((rc = input_string(buffer, MAX_SURNAME_LEN)) != ERR_OK)
+        return rc;
+    strncpy(array_students[*count].surname, buffer, strlen(buffer));
+
+    (*count)++;
+
+    return rc;
 }

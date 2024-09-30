@@ -13,6 +13,7 @@ typedef enum
     PRINT_TABLE_WITH_KEYS,
     SORT_COMPLEXITY,
     SORT_COMPARE,
+    SAVE,
     PRINT_INFO
 
 } operations_t;

@@ -11,13 +11,18 @@
 
 int main(int argc, char **argv)
 {
+    // Инициализация переменых
     int rc = ERR_OK;
     char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./database.txt"};
     FILE *file;
     operations_t operation_number;
     size_t count = 0;
 
-    // Выбор имени файла
+    /*
+    Выбор имени файла с базой данных.
+    Если есть аргумент с именем файла, тогда работаем с другим файлом.
+    Иначе, используем дефолтное значение.
+    */
     if (argc == 2)
     {
         if ((rc = database_choose_name(argv[1])) == 0)
@@ -77,11 +82,16 @@ int main(int argc, char **argv)
             printf(">>Программа завершилась успешно\n");
             return ERR_OK;
         case PRINT_SOURCE:
-            // Вывод исходной таблицы
+            // Вывод таблицы
             database_print(array_students, count);
             break;
-        case 2:
-            // Добавить запись в конец таблицы
+        case ADD_RECORD:
+            if ((rc = database_append(array_students, &count)) != ERR_OK)
+            {
+                free(array_students);
+                print_error_message(rc);
+                return rc;
+            }
             break;
         case 3:
             // Удалить запись по ключу
@@ -98,12 +108,26 @@ int main(int argc, char **argv)
         case 7:
             // Вывод результатов использования различных алгоритмов сортировок
             // Вывод результатов сравнения эффективности работы программы
+        case 8:
+            break;
+        case 9:
+            break;
+        case SAVE:
+            // Сохранение данных
+            if ((rc = database_save(db_path, array_students, count)) != ERR_OK)
+            {
+                free(array_students);
+                print_error_message(rc);
+                return rc;
+            }
+            break;
         case PRINT_INFO:
             // Вывод информации о программе
             help();
             break;
         default:
             // Ошибка при выборе операции
+            free(array_students);
             print_error_message(ERR_UNKNOWN);
             return ERR_UNKNOWN;
         }
