@@ -15,6 +15,7 @@ int main(int argc, char **argv)
     char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./database.txt"};
     FILE *file;
     operations_t operation_number;
+    size_t count = 0;
 
     // Выбор имени файла
     if (argc == 2)
@@ -45,7 +46,14 @@ int main(int argc, char **argv)
         return ERR_MEMORY_ALLOCATION;
     }
 
-    printf("%d\n", input_student(file, array));
+    printf("%d\n", input_student(file, array, count));
+    count++;
+    printf("%d\n", input_student(file, array, count));
+    count++;
+    printf("%d\n", input_student(file, array, count));
+    count++;
+    printf("%d\n", input_student(file, array, count));
+    count++;
 
     while (rc)
 

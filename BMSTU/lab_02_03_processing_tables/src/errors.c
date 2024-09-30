@@ -29,6 +29,24 @@ void print_error_message(short int arg)
     case ERR_MEMORY_ALLOCATION:
         printf("Ошибка при выделении памяти\n");
         break;
+    case ERR_FILE_ORDER_INPUT:
+        printf("Ошибка в чтении строки файла\n");
+        break;
+    case ERR_FILE_ORDER_OVERFLOW:
+        printf("Ошибка, переполнение записи\n");
+        break;
+    case ERR_TOO_LONG_FIELD:
+        printf("Ошибка, одно из полкй слишком длинное\n");
+        break;
+    case ERR_CONVERTATION_DOUBLE:
+        printf("Ошибка, неверно введен средний балл\n");
+        break;
+    case ERR_UNKNOWN_TYPE:
+        printf("Ошибка в типе, можно вводить только: F - flat, H - hostel, R - rental\n");
+        break;
+    case ERR_UNKNOWN_GENDER:
+        printf("Ошибка в написании пола. Можно указать только M - Мужской и F - Женский");
+        break;
     }
 }
 

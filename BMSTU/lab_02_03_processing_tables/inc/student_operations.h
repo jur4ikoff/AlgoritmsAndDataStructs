@@ -4,12 +4,6 @@
 #include <stdio.h>
 #include "constants.h"
 
-typedef enum
-{
-    F,
-    H,
-    R
-} appartaments_t;
 
 typedef struct
 {
@@ -18,16 +12,15 @@ typedef struct
     char group[MAX_GROUP_NAME];
     char gender; // M - Male, F - Female
     double average_score;
-    appartaments_t type;
-
+    char type; // F - flat, H - hostel, R - rental
     union apartaments_type
     {
         struct flat_t
         {
             char street[MAX_STREET_LEN];
             short house_number;
-            short flar_number;
-        } house;
+            short flat_number;
+        } flat;
         struct hostel_t
         {
             short hostel_number;
@@ -37,12 +30,12 @@ typedef struct
         {
             char street[MAX_STREET_LEN];
             short house_number;
-            short flar_number;
-            short cost;
+            short flat_number;
+            int cost;
         } rental;
-    } apart_t;
+    } aparts;
 } students_t;
 
-int input_student(FILE *file, students_t *students);
+int input_student(FILE *file, students_t *students, size_t count);
 
 #endif

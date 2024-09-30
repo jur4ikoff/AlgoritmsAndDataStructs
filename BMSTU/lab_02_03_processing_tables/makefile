@@ -26,7 +26,7 @@ $(EXE_NAME) : $(obj_files)
 # Обозначение фиктивных целей
 .PHONY : clean release debug
 clean:
-	$(RM) *.exe out/*.o *.o
+	$(RM) *.exe out/*.o *.o *.out
 
 release: CFLAGS += -DNDEBUG -g0
 release: $(EXE_NAME)
