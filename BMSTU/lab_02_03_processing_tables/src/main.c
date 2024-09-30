@@ -4,15 +4,17 @@
 #include <stdio.h>
 #include "errors.h"
 #include "constants.h"
-#include "students_struct.h"
 #include "database_operations.h"
 #include "menu_operations.h"
+#include <stdlib.h>
+#include "student_operations.h"
 
 int main(int argc, char **argv)
 {
     int rc = ERR_OK;
     char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./database.txt"};
     FILE *file;
+    operations_t operation_number;
 
     // Выбор имени файла
     if (argc == 2)
@@ -35,10 +37,19 @@ int main(int argc, char **argv)
         return rc;
     }
 
-    operations_t operation_number;
-    // students_t *array = NULL;
-    // size_t n = 5;
-    print_menu();
+    students_t *array = NULL;
+    array = malloc(MAX_STUDENTS_COUNT * sizeof(students_t));
+    if (array == NULL)
+    {
+        print_error_message(ERR_MEMORY_ALLOCATION);
+        return ERR_MEMORY_ALLOCATION;
+    }
+
+    printf("%d\n", input_student(file, array));
+
+    while (rc)
+
+        print_menu();
     while (1)
     {
         if ((rc = input_operation(&operation_number)) != ERR_OK)

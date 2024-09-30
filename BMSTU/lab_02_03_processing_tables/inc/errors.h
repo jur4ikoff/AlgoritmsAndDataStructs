@@ -8,6 +8,7 @@
 #define ERR_OPERATION_COUNT 4
 #define ERR_STRING_OVERFLOW 5
 #define ERR_EMPTY_DATABASE 6
+#define ERR_MEMORY_ALLOCATION 7
 #define ERR_UNKNOWN 100
 
 void print_error_message(short int arg);

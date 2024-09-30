@@ -8,7 +8,7 @@ INC_DIR := ./inc
 
 # Настройки компиляции
 CC := gcc
-CFLAGS := -std=c99 -I $(INC_DIR) -Werror -Wall -pedantic -Wextra -Wvla
+CFLAGS := -std=c99 -I $(INC_DIR) -Werror -Wall -pedantic
 LINK_FLAGS := -lm
 
 # Определение исходных файлов
@@ -31,5 +31,5 @@ clean:
 release: CFLAGS += -DNDEBUG -g0
 release: $(EXE_NAME)
 
-debug: CFLAGS += -g3 -Wfloat-conversion -Wfloat-equal
+debug: CFLAGS += -g3 -Wfloat-conversion -Wfloat-equal -Wvla -Wextra
 debug: $(EXE_NAME)

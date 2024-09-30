@@ -1,5 +1,7 @@
-#ifndef TABLE_H
-#define TABLE_H
+#ifndef STUDENT_OPERATIONS
+#define STUDENT_OPERATIONS
+
+#include <stdio.h>
 #include "constants.h"
 
 typedef enum
@@ -40,5 +42,7 @@ typedef struct
         } rental;
     } apart_t;
 } students_t;
+
+int input_student(FILE *file, students_t *students);
 
 #endif

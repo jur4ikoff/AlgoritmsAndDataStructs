@@ -26,6 +26,9 @@ void print_error_message(short int arg)
     case ERR_EMPTY_DATABASE:
         printf("Ошибка, выбранный файл - пустой\n");
         break;
+    case ERR_MEMORY_ALLOCATION:
+        printf("Ошибка при выделении памяти\n");
+        break;
     }
 }
 

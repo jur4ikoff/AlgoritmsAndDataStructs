@@ -34,8 +34,3 @@ int database_choose_name(char *string)
 
     return ERR_OK;
 }
-
-int database_count_rows(FILE *FILENAME)
-{
-    int count = 0;
-}
