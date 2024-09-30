@@ -1,0 +1,2 @@
+Ivanov;Ivan;IU7-32B;M;3.75;F;Baumanskaya;32;120
+Alexeyev;Alexey;IU7-32B;M;4.00;H;5;2300

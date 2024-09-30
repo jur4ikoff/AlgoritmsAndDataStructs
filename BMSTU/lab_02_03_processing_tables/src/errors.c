@@ -22,3 +22,11 @@ void print_error_message(short int arg)
         break;
     }
 }
+
+// TO DO
+void help(void)
+{
+    printf("Программа предназначена для работы с таблицами\n"
+           "Разделителем в файле выступает символ - ;");
+    printf("Формат ввода: \n");
+}
