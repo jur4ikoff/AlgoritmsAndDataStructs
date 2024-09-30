@@ -38,7 +38,7 @@ typedef struct
             short flar_number;
             short cost;
         } rental;
-    };
+    } apart_t;
 } students_t;
 
 #endif

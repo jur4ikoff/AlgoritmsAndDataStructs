@@ -3,58 +3,46 @@
 #include "string.h"
 #include "stdio.h"
 #include "constants.h"
+#include "students_struct.h"
+#include "operations.h"
 
-typedef enum
+int database_open(FILE **file, char *filename, char *mode)
 {
-    EXIT,
-    ADD_RECORD,
-    DELETE_RECORD,
-    PRINT_SORT_KEY_TABLE,
-    PRINT_SORT_ORIGINAL_TABLE,
-    PRINT_TABLE_WITH_KEYS,
-    SORT_COMPLEXITY,
-    SORT_COMPARE,
-    CHOOSE_DB,
-    PRINT_INFO
-    
-} operations_t;
+    *file = fopen(filename, mode);
 
-// Меню программы
-void print_menu(void)
-{
-    printf(">Возможности программы\n"
-           " 0 - Выход\n"
-           " 1 - Добавить запись в конец таблицы\n 2 - Удалить запись по ключу\n"
-           " 3 - Просмотр отсортированной таблицы ключей\n 4 - Вывод упорядоченной исходной таблицы\n"
-           " 5 - Вывод исходной таблицы в упорядоченном виде, используя упорядоченную таблицу ключей\n"
-           " 6 - Вывод результатов использования различных алгоритмов сортировок\n"
-           " 7 - Вывод результатов сравнения эффективности работы программы\n"
-           " 8 - Выбрать базу данных (таблицу)\n 9 - Вывести иформацию о программе\n");
+    if (*file == NULL)
+        return ERR_FILENAME;
+
+    return ERR_OK;
 }
 
-int input_operation(operations_t *operation)
+int database_choose_name(char *string)
 {
-    int operation_number;
-    printf(">Выберите действие: ");
-    if (scanf("%d", &operation_number) != 1)
-        return ERR_OPERATION_INPUT;
+    FILE *file;
+    int rc;
 
-    if (operation_number < 0 || operation_number > OPERATIONS_COUNT)
-        return ERR_OPERATION_COUNT;
+    // Ввод имени файла
+    printf("> Введите относительный путь к файлу с таблицей:\n");
+    if (!fgets(string, MAX_STRING_LEN, stdin))
+        return ERR_INPUT;
+    char *newline = strchr(string, '\n');
+    if (!newline)
+        return ERR_STRING_OVERFLOW;
+    *newline = '\0';
 
-    *operation = (operations_t)operation_number;
+    // Проверка файла на существование
+    if ((rc = database_open(&file, string, "r")) != ERR_OK)
+        return rc;
+    fclose(file);
+
     return ERR_OK;
 }
 
 int main(int argc, char **argv)
 {
     int rc = ERR_OK;
+    char db_path[] = {"./database.txt"};
     operations_t operation_number;
-    if (argc == 2)
-    {
-        if (strcmp(argv[1], "-h") == 0)
-            help();
-    }
 
     print_menu();
     while (1)
@@ -67,8 +55,10 @@ int main(int argc, char **argv)
 
         switch (operation_number)
         {
+        case EXIT:
+            printf("Программа завершилась успешно\n");
+            return ERR_OK;
         case 1:
-
             break;
         case 2:
             // Добавить запись в конец таблицы
@@ -88,16 +78,23 @@ int main(int argc, char **argv)
         case 7:
             // Вывод результатов использования различных алгоритмов сортировок
             // Вывод результатов сравнения эффективности работы программы
-        case 8:
+        case CHOOSE_DB:
+            // Выбор имени базы данных
+            if ((rc = database_choose_name(db_path)) != ERR_OK)
+            {
+                print_error_message(rc);
+                return rc;
+            }
+            printf(">Выбран файл: %s\n", db_path);
+            break;
+        case PRINT_INFO:
             // Вывод информации о программе
             help();
-
             break;
         default:
             print_error_message(ERR_UNKNOWN);
             return ERR_UNKNOWN;
         }
-        // break;
     }
     return rc;
 }
