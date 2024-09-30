@@ -3,6 +3,7 @@
 #include "errors.h"
 #include "constants.h"
 #include <string.h>
+#include "student_operations.h"
 
 int database_open(FILE **file, char *filename, char *mode)
 {
@@ -33,4 +34,25 @@ int database_choose_name(char *string)
     fclose(file);
 
     return ERR_OK;
+}
+
+int database_import_students(FILE *file, students_t *students, size_t *count)
+{
+    *count = 0;
+    int rc = ERR_OK;
+    while (rc != END_OF_FILE)
+    {
+        if ((rc = student_input(file, students, *count)) == ERR_OK)
+        {
+            (*count)++;
+            if (*count > MAX_STUDENTS_COUNT)
+                return ERR_TOO_MANY_STUDENTS;
+        }
+        else if (rc == END_OF_FILE)
+            return ERR_OK;
+        else
+            return rc;
+    }
+
+    return rc;
 }

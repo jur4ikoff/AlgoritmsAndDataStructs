@@ -36,6 +36,6 @@ typedef struct
     } aparts;
 } students_t;
 
-int input_student(FILE *file, students_t *students, size_t count);
+int student_input(FILE *file, students_t *students, size_t count);
 
 #endif

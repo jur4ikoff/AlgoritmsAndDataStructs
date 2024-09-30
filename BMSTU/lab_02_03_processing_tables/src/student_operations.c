@@ -36,7 +36,7 @@ int string_to_double(const char *str, double *result, size_t count)
 }
 
 // Запись информации об одном студенте в файл
-int input_student(FILE *file, students_t *students, size_t count)
+int student_input(FILE *file, students_t *students, size_t count)
 {
     int rc, spaces, token_len;
     char buffer[MAX_STUDENT_ORDER];

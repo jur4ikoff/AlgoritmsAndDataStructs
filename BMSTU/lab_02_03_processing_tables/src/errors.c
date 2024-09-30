@@ -47,6 +47,9 @@ void print_error_message(short int arg)
     case ERR_UNKNOWN_GENDER:
         printf("Ошибка в написании пола. Можно указать только M - Мужской и F - Женский");
         break;
+    case ERR_TOO_MANY_STUDENTS:
+        printf("Ошибка, введено больше 1000 студентов - переполнение\n");
+        break;
     }
 }
 

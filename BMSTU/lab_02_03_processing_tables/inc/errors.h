@@ -16,6 +16,7 @@
 #define ERR_CONVERTATION_DOUBLE 11
 #define ERR_UNKNOWN_TYPE 12
 #define ERR_UNKNOWN_GENDER 13
+#define ERR_TOO_MANY_STUDENTS 14
 #define ERR_UNKNOWN 100
 
 void print_error_message(short int arg);

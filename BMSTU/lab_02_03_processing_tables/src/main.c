@@ -38,22 +38,19 @@ int main(int argc, char **argv)
         return rc;
     }
 
-    students_t *array = NULL;
-    array = malloc(MAX_STUDENTS_COUNT * sizeof(students_t));
-    if (array == NULL)
+    students_t *array_students = NULL;
+    array_students = malloc(MAX_STUDENTS_COUNT * sizeof(students_t));
+    if (array_students == NULL)
     {
         print_error_message(ERR_MEMORY_ALLOCATION);
         return ERR_MEMORY_ALLOCATION;
     }
 
-    printf("%d\n", input_student(file, array, count));
-    count++;
-    printf("%d\n", input_student(file, array, count));
-    count++;
-    printf("%d\n", input_student(file, array, count));
-    count++;
-    printf("%d\n", input_student(file, array, count));
-    count++;
+    if ((rc = database_import_students(file, array_students, count)) != ERR_OK)
+    {
+        print_error_message(rc);
+        return rc;
+    }
 
     while (rc)
 
