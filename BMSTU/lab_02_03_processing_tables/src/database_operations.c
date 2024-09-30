@@ -96,6 +96,16 @@ int database_append(students_t *array_students, size_t *count)
         return rc;
     strncpy(array_students[*count].surname, buffer, strlen(buffer));
 
+    printf(">>Введите имя: ");
+    if ((rc = input_string(buffer, MAX_NAME_LEN)) != ERR_OK)
+        return rc;
+    strncpy(array_students[*count].name, buffer, strlen(buffer));
+
+    printf(">>Введите учебную группу: ");
+    if ((rc = input_string(buffer, MAX_GROUP_NAME)) != ERR_OK)
+        return rc;
+    strncpy(array_students[*count].group, buffer, strlen(buffer));
+
     (*count)++;
 
     return rc;
