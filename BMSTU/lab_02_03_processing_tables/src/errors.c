@@ -36,7 +36,7 @@ void print_error_message(short int arg)
         printf("Ошибка, переполнение записи\n");
         break;
     case ERR_TOO_LONG_FIELD:
-        printf("Ошибка, одно из полкй слишком длинное\n");
+        printf("Ошибка, одно из полей слишком длинное\n");
         break;
     case ERR_CONVERTATION_DOUBLE:
         printf("Ошибка, неверно введен средний балл\n");
@@ -49,6 +49,9 @@ void print_error_message(short int arg)
         break;
     case ERR_TOO_MANY_STUDENTS:
         printf("Ошибка, введено больше 1000 студентов - переполнение\n");
+        break;
+    case ERR_FILE_SAVE:
+        printf("Ошибка при сохранении файла\n");
         break;
     }
 }

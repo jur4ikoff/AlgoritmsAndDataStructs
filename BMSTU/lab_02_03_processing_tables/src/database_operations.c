@@ -56,3 +56,30 @@ int database_import_students(FILE *file, students_t *students, size_t *count)
 
     return rc;
 }
+
+int database_save(char *filename, students_t *students, size_t count)
+{
+    FILE *file;
+    int rc = ERR_OK;
+    if ((rc = database_open(&file, filename, "w")) != ERR_OK)
+        return rc;
+
+    for (size_t i = 0; i < count; i++)
+    {
+        student_save(file, students[i]);
+    }
+
+    printf(">>Изменения сохранены\n");
+    return rc;
+}
+
+/**
+ * @brief Функция вывода таблицы студентов на экран
+ */
+void database_print(students_t *array_students, size_t count)
+{
+    for (size_t i = 0; i < count; i++)
+    {
+        student_print(array_students[i]);
+    }
+}

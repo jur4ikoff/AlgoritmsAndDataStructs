@@ -4,6 +4,7 @@
 typedef enum
 {
     EXIT,
+    PRINT_SOURCE,
     ADD_RECORD,
     DELETE_RECORD,
     SEARCH_RECORD,

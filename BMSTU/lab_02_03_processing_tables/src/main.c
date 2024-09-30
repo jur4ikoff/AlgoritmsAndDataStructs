@@ -30,9 +30,8 @@ int main(int argc, char **argv)
     }
     else
         strncpy(db_path, default_db_path, strlen(default_db_path));
-    printf("Выбран файл: %s\n", db_path);
 
-    if ((rc = database_open(&file, db_path, "r+")) != ERR_OK)
+    if ((rc = database_open(&file, db_path, "r")) != ERR_OK)
     {
         print_error_message(rc);
         return rc;
@@ -46,15 +45,17 @@ int main(int argc, char **argv)
         return ERR_MEMORY_ALLOCATION;
     }
 
-    if ((rc = database_import_students(file, array_students, count)) != ERR_OK)
+    // Импорт студентов из файла
+    if ((rc = database_import_students(file, array_students, &count)) != ERR_OK)
     {
+        free(array_students);
         print_error_message(rc);
         return rc;
     }
+    printf(">>Файл %s успешно прочитан\n", db_path);
 
-    while (rc)
+    print_menu();
 
-        print_menu();
     while (1)
     {
         if ((rc = input_operation(&operation_number)) != ERR_OK)
@@ -66,9 +67,18 @@ int main(int argc, char **argv)
         switch (operation_number)
         {
         case EXIT:
-            printf("Программа завершилась успешно\n");
+            // Контролируемый вывод из программы, сохранение данных
+            if ((rc = database_save(db_path, array_students, count)) != ERR_OK)
+            {
+                free(array_students);
+                print_error_message(rc);
+                return rc;
+            }
+            printf(">>Программа завершилась успешно\n");
             return ERR_OK;
-        case 1:
+        case PRINT_SOURCE:
+            // Вывод исходной таблицы
+            database_print(array_students, count);
             break;
         case 2:
             // Добавить запись в конец таблицы
@@ -98,5 +108,12 @@ int main(int argc, char **argv)
             return ERR_UNKNOWN;
         }
     }
+    if ((rc = database_save(db_path, array_students, count)) != ERR_OK)
+    {
+        free(array_students);
+        print_error_message(rc);
+        return rc;
+    }
+    free(array_students);
     return rc;
 }

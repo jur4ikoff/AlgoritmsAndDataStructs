@@ -221,3 +221,49 @@ int student_input(FILE *file, students_t *students, size_t count)
 
     return ERR_OK;
 }
+
+/**
+ * @brief Сохранение структуры одного студента в файл
+ * @param
+ * @param
+ * @return
+ */
+void student_save(FILE *file, students_t student)
+{
+    fprintf(file, "%s;%s;%s;%c;%.2f;%c;", student.surname, student.name, student.group, student.gender, student.average_score, student.type);
+    if (student.type == 'F')
+    {
+        fprintf(file, "%s;%d;%d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);
+    }
+    else if (student.type == 'H')
+    {
+        fprintf(file, "%d;%d\n", student.aparts.hostel.hostel_number, student.aparts.hostel.hostel_flat);
+    }
+    else if (student.type == 'R')
+    {
+        fprintf(file, "%s;%d;%d;%d\n", student.aparts.rental.street, student.aparts.rental.house_number, student.aparts.rental.flat_number, student.aparts.rental.cost);
+    }
+}
+
+/**
+ * @brief Вывод структуры студента на экран
+ * @param
+ * @param
+ * @return
+ */
+void student_print(students_t student)
+{
+    printf("%s %s, Пол - %c, Группа - %s, Средний балл - %.2f ", student.surname, student.name, student.gender, student.group, student.average_score);
+    if (student.type == 'F')
+    {
+        printf("Тип жилья: квартира. Улица %s Дом %d Квартира №%d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);
+    }
+    else if (student.type == 'H')
+    {
+        printf("Тип жилья: общежитие. Общежитие №%d Комната №%d\n", student.aparts.hostel.hostel_number, student.aparts.hostel.hostel_flat);
+    }
+    else if (student.type == 'R')
+    {
+        printf("Тип жилья: Аренда. Улица %s Дом %d Квартира №%d. Стоимость:%d\n", student.aparts.rental.street, student.aparts.rental.house_number, student.aparts.rental.flat_number, student.aparts.rental.cost);
+    }
+}

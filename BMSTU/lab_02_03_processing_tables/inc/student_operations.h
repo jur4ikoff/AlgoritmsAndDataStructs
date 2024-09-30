@@ -37,5 +37,6 @@ typedef struct
 } students_t;
 
 int student_input(FILE *file, students_t *students, size_t count);
-
+void student_save(FILE *file, students_t student);
+void student_print(students_t student);
 #endif
