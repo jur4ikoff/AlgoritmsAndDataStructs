@@ -11,7 +11,6 @@ typedef enum
     PRINT_TABLE_WITH_KEYS,
     SORT_COMPLEXITY,
     SORT_COMPARE,
-    CHOOSE_DB,
     PRINT_INFO
 
 } operations_t;

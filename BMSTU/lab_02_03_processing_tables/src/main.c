@@ -1,49 +1,43 @@
 // Вариант 3
+
+#include <string.h>
+#include <stdio.h>
 #include "errors.h"
-#include "string.h"
-#include "stdio.h"
 #include "constants.h"
 #include "students_struct.h"
-#include "operations.h"
-
-int database_open(FILE **file, char *filename, char *mode)
-{
-    *file = fopen(filename, mode);
-
-    if (*file == NULL)
-        return ERR_FILENAME;
-
-    return ERR_OK;
-}
-
-int database_choose_name(char *string)
-{
-    FILE *file;
-    int rc;
-
-    // Ввод имени файла
-    printf("> Введите относительный путь к файлу с таблицей:\n");
-    if (!fgets(string, MAX_STRING_LEN, stdin))
-        return ERR_INPUT;
-    char *newline = strchr(string, '\n');
-    if (!newline)
-        return ERR_STRING_OVERFLOW;
-    *newline = '\0';
-
-    // Проверка файла на существование
-    if ((rc = database_open(&file, string, "r")) != ERR_OK)
-        return rc;
-    fclose(file);
-
-    return ERR_OK;
-}
+#include "database_operations.h"
+#include "menu_operations.h"
 
 int main(int argc, char **argv)
 {
     int rc = ERR_OK;
-    char db_path[] = {"./database.txt"};
-    operations_t operation_number;
+    char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./database.txt"};
+    FILE *file;
 
+    // Выбор имени файла
+    if (argc == 2)
+    {
+        if ((rc = database_choose_name(argv[1])) == 0)
+            strncpy(db_path, argv[1], strlen(argv[1]));
+        else
+        {
+            print_error_message(rc);
+            return rc;
+        }
+    }
+    else
+        strncpy(db_path, default_db_path, strlen(default_db_path));
+    printf("Выбран файл: %s\n", db_path);
+
+    if ((rc = database_open(&file, db_path, "r+")) != ERR_OK)
+    {
+        print_error_message(rc);
+        return rc;
+    }
+
+    operations_t operation_number;
+    // students_t *array = NULL;
+    // size_t n = 5;
     print_menu();
     while (1)
     {
@@ -78,20 +72,12 @@ int main(int argc, char **argv)
         case 7:
             // Вывод результатов использования различных алгоритмов сортировок
             // Вывод результатов сравнения эффективности работы программы
-        case CHOOSE_DB:
-            // Выбор имени базы данных
-            if ((rc = database_choose_name(db_path)) != ERR_OK)
-            {
-                print_error_message(rc);
-                return rc;
-            }
-            printf(">Выбран файл: %s\n", db_path);
-            break;
         case PRINT_INFO:
             // Вывод информации о программе
             help();
             break;
         default:
+            // Ошибка при выборе операции
             print_error_message(ERR_UNKNOWN);
             return ERR_UNKNOWN;
         }

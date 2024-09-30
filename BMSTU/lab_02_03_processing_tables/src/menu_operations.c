@@ -1,7 +1,7 @@
-#include "operations.h"
 #include "errors.h"
-#include "stdio.h"
+#include <stdio.h>
 #include "constants.h"
+#include "menu_operations.h"
 
 // Меню программы
 void print_menu(void)
@@ -13,8 +13,7 @@ void print_menu(void)
            " 5 - Вывод исходной таблицы в упорядоченном виде, используя упорядоченную таблицу ключей\n"
            " 6 - Вывод результатов использования различных алгоритмов сортировок\n"
            " 7 - Вывод результатов сравнения эффективности работы программы\n"
-           " 8 - Выбрать базу данных (таблицу)\n"
-           " 9 - Вывести иформацию о программе\n");
+           " 8 - Вывести иформацию о программе\n");
 }
 
 int input_operation(operations_t *operation)

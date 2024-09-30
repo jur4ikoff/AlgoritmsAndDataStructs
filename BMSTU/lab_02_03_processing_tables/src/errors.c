@@ -23,6 +23,9 @@ void print_error_message(short int arg)
     case ERR_STRING_OVERFLOW:
         printf("Ошибка, переполнение при вводе строки\n");
         break;
+    case ERR_EMPTY_DATABASE:
+        printf("Ошибка, выбранный файл - пустой\n");
+        break;
     }
 }
 
