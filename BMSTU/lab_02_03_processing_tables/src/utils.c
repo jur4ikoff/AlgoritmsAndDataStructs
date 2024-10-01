@@ -30,6 +30,9 @@ void swap(students_t *students, size_t index1, size_t index2, size_t count)
     students[index2] = temp;
 }
 
+/**
+ * @brief Функция удаяет элемент из массива по индексу
+ */
 void delete_from_array(students_t *array, size_t index_to_delete, size_t *count)
 {
     for (size_t i = index_to_delete; i < *count - 1; i++)

@@ -102,8 +102,18 @@ int main(int argc, char **argv)
                 return rc;
             }
             break;
-        case 4:
-            // Просмотр отсортированной таблицы ключей
+        case SEARCH_RECORD:
+            /*
+            Поиск по запросу
+            Вывести список студентов указанного года поступления, живущих
+            в cъемном жилье, стоимостью меньше указанного
+            */
+            if ((rc = database_search(array_students, count)))
+            {
+                free(array_students);
+                print_error_message(rc);
+                return rc;
+            }
             break;
         case 5:
             // Вывод упорядоченной исходной таблицы

@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "constants.h"
 
-
 typedef struct
 {
     char surname[MAX_NAME_LEN];
@@ -12,6 +11,7 @@ typedef struct
     char group[MAX_GROUP_NAME];
     char gender; // M - Male, F - Female
     double average_score;
+    int admission_year;
     char type; // F - flat, H - hostel, R - rental
     union apartaments_type
     {

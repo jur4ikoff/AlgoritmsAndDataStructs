@@ -35,7 +35,7 @@ int string_to_double(const char *str, double *result, size_t count)
     return ERR_OK;
 }
 
-// Запись информации об одном студенте в файл
+// Получение информации об одном студенте из файла
 int student_input(FILE *file, students_t *students, size_t count)
 {
     int rc, spaces, token_len;
@@ -108,11 +108,20 @@ int student_input(FILE *file, students_t *students, size_t count)
     if (*ptr == '\0')
         return ERR_FILE_ORDER_INPUT;
 
+    double year;
+    if ((rc = string_to_double(ptr, &year, token_len)) != ERR_OK)
+        return rc;
+    students[count].admission_year = (int)year;
+    ptr += token_len + 1;
+    if (*ptr == '\0')
+        return ERR_FILE_ORDER_INPUT;
+
     token_len = strcspn(ptr, DELIMETER);
     if (token_len > 1)
         return ERR_TOO_LONG_FIELD;
 
     students[count].type = *ptr;
+    // TO DO Оптимизация ифа
     if (*ptr == 'F')
     {
         ptr += 2;
@@ -230,7 +239,7 @@ int student_input(FILE *file, students_t *students, size_t count)
  */
 void student_save(FILE *file, students_t student)
 {
-    fprintf(file, "%s;%s;%s;%c;%.2f;%c;", student.surname, student.name, student.group, student.gender, student.average_score, student.type);
+    fprintf(file, "%s;%s;%s;%c;%.2f;%d;%c;", student.surname, student.name, student.group, student.gender, student.average_score, student.admission_year, student.type);
     if (student.type == 'F')
     {
         fprintf(file, "%s;%d;%d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);
@@ -253,7 +262,7 @@ void student_save(FILE *file, students_t student)
  */
 void student_print(students_t student)
 {
-    printf("%s %s, Пол - %c, Группа - %s, Средний балл - %.2f ", student.surname, student.name, student.gender, student.group, student.average_score);
+    printf("%s %s, Пол - %c, Группа - %s, Средний балл - %.2f Год поступления - %d ", student.surname, student.name, student.gender, student.group, student.average_score, student.admission_year);
     if (student.type == 'F')
     {
         printf("Тип жилья: квартира. Улица %s Дом %d Квартира №%d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);

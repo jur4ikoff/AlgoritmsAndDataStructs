@@ -6,7 +6,7 @@ void print_error_message(short int arg)
     switch (arg)
     {
     case ERR_INPUT:
-        printf("Ошибка в таблице\n");
+        printf("Ошибка ввода\n");
         break;
     case ERR_FILENAME:
         printf("Ошибка в имени файла. Возможно файла не существует\n");

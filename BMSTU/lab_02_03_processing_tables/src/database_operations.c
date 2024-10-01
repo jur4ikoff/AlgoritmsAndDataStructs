@@ -24,11 +24,6 @@ int database_choose_name(char *string)
     if (strlen(string) > MAX_PATH_LEN)
         return ERR_STRING_OVERFLOW;
 
-    /*char *newline = strchr(string, '\n');
-    if (!newline)
-        return ERR_STRING_OVERFLOW;
-    *newline = '\0';*/
-
     // Проверка файла на существование
     if ((rc = database_open(&file, string, "r")) != ERR_OK)
         return rc;
@@ -93,7 +88,7 @@ int database_append(students_t *array_students, size_t *count)
 {
     double score;
     short buffer_short;
-    int cost;
+    int cost, year;
     char buffer[MAX_STRING_LEN];
     int rc = ERR_OK;
     printf(">>Введите фамилию: ");
@@ -120,6 +115,12 @@ int database_append(students_t *array_students, size_t *count)
     if (scanf("%lf", &score) != 1)
         return ERR_ADD_ORDER_INPUT;
     array_students[*count].average_score = score;
+    fgetc(stdin);
+
+    printf(">>Введите год поступления: ");
+    if (scanf("%d", &year) != 1)
+        return ERR_ADD_ORDER_INPUT;
+    array_students[*count].admission_year = year;
     fgetc(stdin);
 
     printf(">>Введите тип жилья F - Квартира, H - общежитие, R - арендное: ");
@@ -227,5 +228,36 @@ int database_delete_student(students_t *array_students, size_t *count)
         printf(">>Нет записей, удовлетворяющих поиску\n");
     else
         printf(">>Успешно удалено %zu записей\n", delete_count);
+    return ERR_OK;
+}
+
+/**
+ * @brief Функция поиска по таблице.
+ * Вывести список студентов указанного года поступления, живущих
+ * в cъемном жилье, стоимостью меньше указанного
+ */
+int database_search(students_t *array_students, size_t count)
+{
+    size_t search_count = 0;
+    printf(">>Поиск студетов по параметрам\n");
+    printf("Введите год поступления: ");
+    int admission_year, price;
+    if (scanf("%d", &admission_year) != 1)
+        return ERR_INPUT;
+    fgetc(stdin);
+
+    printf("Введите стоимость жилья: ");
+    if (scanf("%d", &price) != 1)
+        return ERR_INPUT;
+
+    for (size_t i = 0; i < count; i++)
+    {
+        if (array_students[i].type == 'R' && array_students[i].admission_year == admission_year && array_students[i].aparts.rental.cost < price)
+        {
+            search_count++;
+            student_print(array_students[i]);
+        }
+    }
+    printf(">>Было найдено %zu записей\n", search_count);
     return ERR_OK;
 }
