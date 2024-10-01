@@ -1,3 +1,8 @@
 Ivanov;Ivan;IU7-32B;M;3.75;R;Test;12;121;12000
 Alexeyev;Alexey;IU7-32B;M;4.00;H;5;2300
 Popov;Yurii;IU7-32B;M;4.00;F;Baumanskaya;32;1000
+Popov;Yurii;IU7-32B;M;3.30;F;Proizv;23;0
+Popov;Yurii;IU7-32B;M;3.00;F;Pro;2;0
+Popov;Yurii;Iu732b;M;3.50;F;sdsds;12;3
+Ahmedov;Ahmed;Iu742B;M;3.00;H;3;4
+sds;sdds;wew;M;2.00;R;edfd;12;32;1200

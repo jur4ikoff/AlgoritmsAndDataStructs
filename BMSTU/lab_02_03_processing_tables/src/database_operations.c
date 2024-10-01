@@ -70,7 +70,7 @@ int database_save(char *filename, students_t *students, size_t count)
         student_save(file, students[i]);
     }
 
-    // printf(">>Изменения сохранены\n");
+    fclose(file);
     return rc;
 }
 
@@ -88,7 +88,9 @@ void database_print(students_t *array_students, size_t count)
 
 int database_append(students_t *array_students, size_t *count)
 {
-
+    double score;
+    short buffer_short;
+    int cost;
     char buffer[MAX_STRING_LEN];
     int rc = ERR_OK;
     printf(">>Введите фамилию: ");
@@ -106,7 +108,87 @@ int database_append(students_t *array_students, size_t *count)
         return rc;
     strncpy(array_students[*count].group, buffer, strlen(buffer));
 
-    (*count)++;
+    printf(">>Введите пол M - мужской, F - Женский: ");
+    if ((rc = input_string(buffer, 3)) != ERR_OK)
+        return rc;
+    array_students[*count].gender = buffer[0];
 
+    printf(">>Введите средний балл: ");
+    if (scanf("%lf", &score) != 1)
+        return ERR_ADD_ORDER_INPUT;
+    array_students[*count].average_score = score;
+    fgetc(stdin);
+
+    printf(">>Введите тип жилья F - Квартира, H - общежитие, R - арендное: ");
+    if ((rc = input_string(buffer, 3)) != ERR_OK)
+        return rc;
+    if (buffer[0] == 'F')
+    {
+        array_students[*count].type = buffer[0];
+
+        printf(">>Введите улицу: ");
+        if ((rc = input_string(buffer, MAX_STREET_LEN)) != ERR_OK)
+            return rc;
+        strncpy(array_students[*count].aparts.flat.street, buffer, strlen(buffer));
+
+        printf(">>Введите номер дома: ");
+        if (scanf("%hd", &buffer_short) != 1)
+            return ERR_ADD_ORDER_INPUT;
+        array_students[*count].aparts.flat.house_number = buffer_short;
+        fgetc(stdin);
+
+        printf(">>Введите номер квартиры: ");
+        if (scanf("%hd", &buffer_short) != 1)
+            return ERR_ADD_ORDER_INPUT;
+        array_students[*count].aparts.flat.flat_number = buffer_short;
+        fgetc(stdin);
+    }
+    else if (buffer[0] == 'H')
+    {
+        array_students[*count].type = buffer[0];
+
+        printf(">>Введите номер общежития: ");
+        if (scanf("%hd", &buffer_short) != 1)
+            return ERR_ADD_ORDER_INPUT;
+        array_students[*count].aparts.hostel.hostel_number = buffer_short;
+        fgetc(stdin);
+
+        printf(">>Введите номер комнаты: ");
+        if (scanf("%hd", &buffer_short) != 1)
+            return ERR_ADD_ORDER_INPUT;
+        array_students[*count].aparts.hostel.hostel_flat = buffer_short;
+        fgetc(stdin);
+    }
+    else if (buffer[0] == 'R')
+    {
+        array_students[*count].type = buffer[0];
+
+        printf(">>Введите улицу: ");
+        if ((rc = input_string(buffer, MAX_STREET_LEN)) != ERR_OK)
+            return rc;
+        strncpy(array_students[*count].aparts.rental.street, buffer, strlen(buffer));
+
+        printf(">>Введите номер дома: ");
+        if (scanf("%hd", &buffer_short) != 1)
+            return ERR_ADD_ORDER_INPUT;
+        array_students[*count].aparts.rental.house_number = buffer_short;
+        fgetc(stdin);
+
+        printf(">>Введите номер квартиры: ");
+        if (scanf("%hd", &buffer_short) != 1)
+            return ERR_ADD_ORDER_INPUT;
+        array_students[*count].aparts.rental.flat_number = buffer_short;
+        fgetc(stdin);
+
+        printf(">>Введите стоимость аренды: ");
+        if (scanf("%d", &cost) != 1)
+            return ERR_ADD_ORDER_INPUT;
+        array_students[*count].aparts.rental.cost = cost;
+        fgetc(stdin);
+    }
+    else
+        return ERR_ADD_ORDER_INPUT;
+
+    (*count)++;
     return rc;
 }

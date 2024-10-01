@@ -8,12 +8,14 @@
 int input_string(char *string, size_t max_len)
 {
     if (!fgets(string, max_len, stdin))
-        return ERR_INPUT;
+        return ERR_ADD_ORDER_INPUT;
 
     char *newline = strchr(string, '\n');
     if (!newline)
         return ERR_ADD_ORDER_STRING_OVERFLOW;
-
     *newline = 0;
+
+    if (strlen(string) < 1)
+        return ERR_ADD_ORDER_INPUT;
     return ERR_OK;
 }

@@ -120,6 +120,7 @@ int main(int argc, char **argv)
                 print_error_message(rc);
                 return rc;
             }
+            printf(">>Изменения сохранены\n");
             break;
         case PRINT_INFO:
             // Вывод информации о программе
