@@ -93,8 +93,14 @@ int main(int argc, char **argv)
                 return rc;
             }
             break;
-        case 3:
-            // Удалить запись по ключу
+        case DELETE_RECORD:
+            // Удалить запись по ключу Имя и фамилия
+            if ((rc = database_delete_student(array_students, &count)) != ERR_OK)
+            {
+                free(array_students);
+                print_error_message(rc);
+                return rc;
+            }
             break;
         case 4:
             // Просмотр отсортированной таблицы ключей

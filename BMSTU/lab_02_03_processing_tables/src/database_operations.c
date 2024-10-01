@@ -86,6 +86,9 @@ void database_print(students_t *array_students, size_t count)
     }
 }
 
+/**
+ * @brief Функция добавляет запись о студенте в таблицу
+ */
 int database_append(students_t *array_students, size_t *count)
 {
     double score;
@@ -191,4 +194,38 @@ int database_append(students_t *array_students, size_t *count)
 
     (*count)++;
     return rc;
+}
+
+/**
+ * @brief Функция удаляет запись о студентах, чьи имена и фамилии равны запросу
+ */
+int database_delete_student(students_t *array_students, size_t *count)
+{
+    printf(">>Функция удаляет записи студентов по имени и фамилии\n");
+    char surname[MAX_SURNAME_LEN], name[MAX_NAME_LEN];
+    int rc = ERR_OK;
+    size_t delete_count = 0;
+    printf(">>Введите фамилию: ");
+    if ((rc = input_string(surname, MAX_SURNAME_LEN - 1)) != ERR_OK)
+        return rc;
+
+    printf(">>Введите имя: ");
+    if ((rc = input_string(name, MAX_NAME_LEN - 1)) != ERR_OK)
+        return rc;
+
+    for (size_t i = 0; i < *count; i++)
+    {
+        if (strcmp(array_students[i].surname, surname) == 0 && strcmp(array_students[i].name, name) == 0)
+        {
+            delete_from_array(array_students, i, count);
+            i--;
+            delete_count++;
+        }
+    }
+
+    if (delete_count == 0)
+        printf(">>Нет записей, удовлетворяющих поиску\n");
+    else
+        printf(">>Успешно удалено %zu записей\n", delete_count);
+    return ERR_OK;
 }
