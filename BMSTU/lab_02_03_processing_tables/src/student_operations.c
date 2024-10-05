@@ -273,16 +273,29 @@ void student_print(students_t student)
     printf("%c|", student.gender);
 
     printf("%*s%4.2f%*s|", 4, "", student.average_score, 4, "");
+    printf("%*s%d%*s|", 6, "", student.admission_year, 6, "");
     if (student.type == 'F')
     {
-        printf("Тип жилья: квартира. Улица %s Дом %d Квартира №%d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);
+        printf(" %*sКвартира%*s ", 1, "", 1, "");
+
+        padding = (MAX_STREET_LEN - (int)strlen(student.aparts.flat.street)) / 2;
+        printf("%*s%s%*s ", padding, "", student.aparts.flat.street, MAX_STREET_LEN - padding - (int)strlen(student.group), "");
+    
+        printf("%*s%d%*s ", 2, "", student.aparts.flat.house_number, 2, "");
+        printf("%*s%d%*s|", 2, "", student.aparts.flat.flat_number, 2, "");
+        // а %s %d %d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);
     }
     else if (student.type == 'H')
     {
-        printf("Тип жилья: общежитие. Общежитие №%d Комната №%d\n", student.aparts.hostel.hostel_number, student.aparts.hostel.hostel_flat);
+        printf(" %*sОбщежитие%*s ", 0, "", 1, "");
+
+        
+        //%d %d\n", student.aparts.hostel.hostel_number, student.aparts.hostel.hostel_flat);
     }
     else if (student.type == 'R')
     {
-        printf("Тип жилья: Аренда. Улица %s Дом %d Квартира №%d. Стоимость:%d\n", student.aparts.rental.street, student.aparts.rental.house_number, student.aparts.rental.flat_number, student.aparts.rental.cost);
+        printf(" %*sАренда%*s ", 2, "", 2, "");
+        // printf(" Аренда %s %d %d %d\n", student.aparts.rental.street, student.aparts.rental.house_number, student.aparts.rental.flat_number, student.aparts.rental.cost);
     }
+    printf("\n");
 }
