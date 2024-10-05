@@ -8,6 +8,7 @@
 #include "menu_operations.h"
 #include <stdlib.h>
 #include "student_operations.h"
+#include "table.h"
 
 int main(int argc, char **argv)
 {
@@ -115,9 +116,19 @@ int main(int argc, char **argv)
                 return rc;
             }
             break;
-        case PRINT_SORT_KEY_TABLE:
-            // Вывод упорядоченной исходной таблицы посредством построения таблицы ключей
-            
+        case SORT_KEY_TABLE:
+            // просмотр отсортированной таблицы ключей при несортированной исходной таблице;
+            table_t *key_table = NULL;
+            key_table = malloc(sizeof(table_t) * MAX_STUDENTS_COUNT);
+            if (key_table == NULL)
+            {
+                free(array_students);
+                print_error_message(ERR_MEMORY_ALLOCATION);
+                return ERR_MEMORY_ALLOCATION;
+            }
+
+            create_key_table(key_table, array_students, count);
+
             break;
         case 6:
             // Вывод исходной таблицы в упорядоченном виде, используя упорядоченную таблицу ключей
