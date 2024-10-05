@@ -83,7 +83,7 @@ int main(int argc, char **argv)
             return ERR_OK;
         case PRINT_SOURCE:
             // Вывод таблицы
-            database_print(array_students, count);
+            database_all_print(array_students, count);
             break;
         case ADD_RECORD:
             if ((rc = database_append(array_students, &count)) != ERR_OK)
@@ -115,8 +115,8 @@ int main(int argc, char **argv)
                 return rc;
             }
             break;
-        case 5:
-            // Вывод упорядоченной исходной таблицы
+        case PRINT_SORT_KEY_TABLE:
+            // Вывод упорядоченной исходной таблицы посредством построения таблицы ключей
             break;
         case 6:
             // Вывод исходной таблицы в упорядоченном виде, используя упорядоченную таблицу ключей

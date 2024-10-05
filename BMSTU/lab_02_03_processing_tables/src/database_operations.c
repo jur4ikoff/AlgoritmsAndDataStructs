@@ -72,13 +72,26 @@ int database_save(char *filename, students_t *students, size_t count)
 /**
  * @brief Функция вывода таблицы студентов на экран
  */
-void database_print(students_t *array_students, size_t count)
+void database_all_print(students_t *array_students, size_t count)
 {
+    printf("|———|————————————————————————|————————————————————|——————————|—|————————————|\n");
+    printf("| № |        Фамилия         |        Имя         |  Группа  |G|Средний балл|\n");
+    printf("|———|————————————————————————|————————————————————|——————————|—|————————————|\n");
     for (size_t i = 0; i < count; i++)
     {
-        printf("%zu ", i);
-        student_print(array_students[i]);
+        int padding = (3 - 1) / 2;
+        if (i < 10 || i >= 100)
+        {
+            printf("|%*s%zu%*s|", padding, "", i, 3 - padding - 1, "");
+            student_print(array_students[i]);
+        }
+        else
+        {
+            printf("| %zu|", i);
+            student_print(array_students[i]);
+        }
     }
+    printf("|___|________________________|____________________|__________|_|____________|\n");
 }
 
 /**

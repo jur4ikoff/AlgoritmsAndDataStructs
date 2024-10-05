@@ -35,3 +35,11 @@ int input_operation(operations_t *operation)
     *operation = (operations_t)operation_number;
     return ERR_OK;
 }
+
+// TO DO
+void help(void)
+{
+    printf("Программа предназначена для работы с таблицами\n"
+           "Разделителем в файле выступает символ - ;"
+           "Сортировка по ключу фамилия");
+}

@@ -23,5 +23,4 @@
 #define ERR_UNKNOWN 100
 
 void print_error_message(short int arg);
-void help(void);
 #endif

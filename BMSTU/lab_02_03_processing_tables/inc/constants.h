@@ -6,9 +6,9 @@
 #define MAX_PATH_LEN 128
 #define MAX_STRING_LEN 64
 #define MAX_STREET_LEN 64
-#define MAX_NAME_LEN 32
-#define MAX_SURNAME_LEN 32
-#define MAX_GROUP_NAME 12
+#define MAX_NAME_LEN 20
+#define MAX_SURNAME_LEN 24
+#define MAX_GROUP_NAME 10
 
 #define MAX_MANTISE_SIZE 9
 #define MAX_SHORT_SIZE 4

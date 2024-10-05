@@ -262,7 +262,17 @@ void student_save(FILE *file, students_t student)
  */
 void student_print(students_t student)
 {
-    printf("%s %s, Пол - %c, Группа - %s, Средний балл - %.2f Год поступления - %d ", student.surname, student.name, student.gender, student.group, student.average_score, student.admission_year);
+    int padding = (MAX_SURNAME_LEN - (int)strlen(student.surname)) / 2;
+    printf("%*s%s%*s|", padding, "", student.surname, MAX_SURNAME_LEN - padding - (int)strlen(student.surname), "");
+
+    padding = (MAX_NAME_LEN - (int)strlen(student.name)) / 2;
+    printf("%*s%s%*s|", padding, "", student.name, MAX_NAME_LEN - padding - (int)strlen(student.name), "");
+
+    padding = (MAX_GROUP_NAME - (int)strlen(student.group)) / 2;
+    printf("%*s%s%*s|", padding, "", student.group, MAX_GROUP_NAME - padding - (int)strlen(student.group), "");
+    printf("%c|", student.gender);
+
+    printf("%*s%4.2f%*s|", 4, "", student.average_score, 4, "");
     if (student.type == 'F')
     {
         printf("Тип жилья: квартира. Улица %s Дом %d Квартира №%d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);

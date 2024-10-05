@@ -20,5 +20,6 @@ typedef enum
 
 void print_menu(void);
 int input_operation(operations_t *operation);
+void help(void);
 
 #endif
