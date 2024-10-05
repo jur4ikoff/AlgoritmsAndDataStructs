@@ -2,6 +2,19 @@
 #include <string.h>
 #include "errors.h"
 
+// Получение длины целочисленного числа
+int int_len(long long value)
+{
+    int count = 0;
+    while (value > 0)
+    {
+        count++;
+        value /= 10;
+    }
+
+    return count;
+}
+
 /**
  * @brief Функция для ввода строки
  */

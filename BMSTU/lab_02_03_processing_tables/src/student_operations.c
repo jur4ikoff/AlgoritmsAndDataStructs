@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include "utils.h"
 
 // Конвертация строки в double
 int string_to_double(const char *str, double *result, size_t count)
@@ -276,26 +277,41 @@ void student_print(students_t student)
     printf("%*s%d%*s|", 6, "", student.admission_year, 6, "");
     if (student.type == 'F')
     {
-        printf(" %*sКвартира%*s ", 1, "", 1, "");
+        printf(" %*sКвартира%*s", 1, "", 1, "");
 
         padding = (MAX_STREET_LEN - (int)strlen(student.aparts.flat.street)) / 2;
-        printf("%*s%s%*s ", padding, "", student.aparts.flat.street, MAX_STREET_LEN - padding - (int)strlen(student.group), "");
-    
-        printf("%*s%d%*s ", 2, "", student.aparts.flat.house_number, 2, "");
-        printf("%*s%d%*s|", 2, "", student.aparts.flat.flat_number, 2, "");
-        // а %s %d %d\n", student.aparts.flat.street, student.aparts.flat.house_number, student.aparts.flat.flat_number);
+        printf("%*s%s%*s ", padding, "", student.aparts.flat.street, MAX_STREET_LEN - padding - (int)strlen(student.aparts.flat.street), "");
+
+        padding = (6 - int_len(student.aparts.flat.house_number)) / 2;
+        printf("%*s%d%*s ", padding, "", student.aparts.flat.house_number, padding, "");
+
+        padding = (6 - int_len(student.aparts.flat.flat_number)) / 2;
+        printf("%*s%d%*s", padding, "", student.aparts.flat.flat_number, padding, "");
     }
     else if (student.type == 'H')
     {
-        printf(" %*sОбщежитие%*s ", 0, "", 1, "");
+        printf(" %*sОбщежитие%*s", 0, "", 1, "");
 
-        
-        //%d %d\n", student.aparts.hostel.hostel_number, student.aparts.hostel.hostel_flat);
+        padding = (6 - int_len(student.aparts.hostel.hostel_number)) / 2;
+        printf("%*s%d%*s", padding, "", student.aparts.hostel.hostel_number, padding, "");
+
+        padding = (6 - int_len(student.aparts.hostel.hostel_flat)) / 2;
+        printf("%*s%d%*s", padding, "", student.aparts.hostel.hostel_flat, padding, "");
     }
     else if (student.type == 'R')
     {
-        printf(" %*sАренда%*s ", 2, "", 2, "");
-        // printf(" Аренда %s %d %d %d\n", student.aparts.rental.street, student.aparts.rental.house_number, student.aparts.rental.flat_number, student.aparts.rental.cost);
+        printf(" %*sАренда%*s", 2, "", 2, "");
+        padding = (MAX_STREET_LEN - (int)strlen(student.aparts.flat.street)) / 2;
+        printf("%*s%s%*s ", padding, "", student.aparts.rental.street, MAX_STREET_LEN - padding - (int)strlen(student.aparts.flat.street), "");
+
+        padding = (6 - int_len(student.aparts.flat.house_number)) / 2;
+        printf("%*s%d%*s", padding, "", student.aparts.rental.house_number, padding, "");
+
+        padding = (6 - int_len(student.aparts.flat.flat_number)) / 2;
+        printf("%*s%d%*s", padding, "", student.aparts.rental.flat_number, padding, "");
+
+        padding = (6 - int_len(student.aparts.rental.cost)) / 2;
+        printf("%*s%d%*s", padding, "", student.aparts.rental.cost, padding, "");
     }
     printf("\n");
 }
