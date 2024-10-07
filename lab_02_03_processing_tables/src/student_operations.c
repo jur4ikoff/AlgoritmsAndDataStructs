@@ -19,14 +19,14 @@ int string_to_double(const char *str, double *result, size_t count)
     // Проверяем ошибки
     if (errno == ERANGE)
     {
-        printf("Ошибка: число выходит за пределы допустимого диапазона.\n");
+        //printf("Ошибка: число выходит за пределы допустимого диапазона.\n");
         return ERR_CONVERTATION_DOUBLE; // Можно также выбросить ошибку или обработать иначе
     }
 
     // Проверяем, было ли преобразование успешным
     if (endptr == string)
     {
-        printf("Ошибка: строка не содержит валидного числа.\n");
+        //printf("Ошибка: строка не содержит валидного числа.\n");
         return ERR_CONVERTATION_DOUBLE; // Или иная обработка ошибки
     }
 
@@ -111,6 +111,7 @@ int student_input(FILE *file, students_t *students, size_t count)
         return ERR_FILE_ORDER_INPUT;
 
     double year;
+    token_len = strcspn(ptr, DELIMETER);
     if ((rc = string_to_double(ptr, &year, token_len)) != ERR_OK)
         return rc;
     students[count].admission_year = (int)year;
@@ -163,6 +164,7 @@ int student_input(FILE *file, students_t *students, size_t count)
         token_len = strcspn(ptr, DELIMETER);
         if (token_len > MAX_SHORT_SIZE)
             return ERR_TOO_LONG_FIELD;
+        
         double hostel_number;
         if ((rc = string_to_double(ptr, &hostel_number, token_len)) != ERR_OK)
             return rc;
@@ -174,6 +176,7 @@ int student_input(FILE *file, students_t *students, size_t count)
         token_len = strcspn(ptr, DELIMETER);
         if (token_len > MAX_SHORT_SIZE)
             return ERR_TOO_LONG_FIELD;
+        
         double hostel_flat;
         if ((rc = string_to_double(ptr, &hostel_flat, token_len)) != ERR_OK)
             return rc;

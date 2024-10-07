@@ -2,7 +2,6 @@
 
 import os
 import random
-import string
 
 russian_names = [
     "Александр",
@@ -88,8 +87,9 @@ russian_street_names = [
     "Griboedov Canal Street",
     "Andreevsky Lane",
     "Pavlovskaya Street",
-    "Smolenskaya Street"
+    "Smolenskaya Street",
 ]
+
 
 def generate_data(size):
     directory = "data"
@@ -100,26 +100,24 @@ def generate_data(size):
 
     with open(filepath, "w", encoding="utf-8") as file:
         for _ in range(size):
-            print(_)
             order = f"{russian_surnames[random.randint(0, len(russian_surnames) - 1)]}"
             order += f";{russian_names[random.randint(0, len(russian_names) - 1)]}"
-            order += (
-                f";IU{random.randint(1, 9)}-{random.randint(1, 8)}{random.randint(0, 9)}B"
-            )
+            order += f";IU{random.randint(1, 9)}-{random.randint(1, 8)}{random.randint(0, 9)}B"
             order += f";{gender[random.randint(0, 1)]}"
             order += f";{round(random.randint(6,25) / random.randint(3, 5), 2)}"
+            order += f";{random.randint(2020, 2024)}"
 
             mode = modes[random.randint(0, 2)]
             order += f";{mode}"
 
             if mode == "H":
                 order += f";{random.randint(1, 20)}"
-                order += f";{random.randint(1, 65534)}"
+                order += f";{random.randint(1, 9999)}"
             else:
                 order += f";{russian_street_names[random.randint(0, len(russian_street_names) - 1)]}"
                 order += f";{random.randint(1, 300)}"
                 order += f";{random.randint(1, 1000)}"
-                if (mode == 'R'):
+                if mode == "R":
                     order += f";{random.randint(1, 100000)}"
 
             order += "\n"

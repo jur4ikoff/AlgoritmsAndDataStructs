@@ -1,4 +1,4 @@
-Иванов;Александр;IU8-76B;M;7.67;F;Lenin Street;145;469
-Смирнов;Александр;IU3-80B;M;4.33;F;Troitskaya Street;33;860
-Белов;Андрей;IU4-18B;M;1.8;F;Arbat Street;189;846
-Фedorov;Денис;IU3-51B;F;4.2;F;Zhukov Avenue;4;359
+Волков;Андрей;IU6-44B;F;4.0;2022;R;Pushkin Boulevard;154;407;55452
+Иванов;Кирилл;IU3-66B;M;8.0;2023;R;Kremlin Way;278;658;29326
+Новиков;Дмитрий;IU9-72B;M;4.75;2024;F;Moscow Highway;275;463
+Волков;Григорий;IU9-50B;F;1.75;2022;F;Kirov Street;53;401

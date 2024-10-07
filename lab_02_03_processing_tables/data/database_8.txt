@@ -1,8 +1,8 @@
-Егоров;Андрей;IU2-74B;M;3.0;F;Smolenskaya Street;159;336
-Зайцев;Егор;IU4-72B;F;3.33;R;Red Square;64;860;35633
-Иванов;Максим;IU5-20B;F;5.75;H;6;61955
-Дмитриев;Виктор;IU3-21B;M;4.67;R;Moscow Highway;233;461;58110
-Иванов;Кирилл;IU8-49B;M;3.4;F;Shcherbakov Street;31;380
-Петров;Сергей;IU3-30B;F;5.0;F;Komsomolskaya Street;255;195
-Кузнецов;Григорий;IU9-47B;M;1.2;R;Petrovskaya Street;110;656;46051
-Дмитриев;Николай;IU2-54B;M;5.67;F;Leningrad Avenue;104;314
+Зайцев;Станислав;IU4-42B;M;4.67;2020;F;Leningrad Avenue;83;342
+Иванов;Дмитрий;IU9-42B;M;1.2;2023;F;Bolshevik Avenue;180;60
+Кузнецов;Максим;IU2-22B;F;2.67;2020;F;Pushkin Boulevard;276;246
+Смирнов;Максим;IU3-26B;F;4.0;2022;R;Chkalov Street;248;619;68210
+Петров;Владимир;IU5-38B;F;4.2;2023;R;Pushkin Boulevard;210;331;61767
+Зайцев;Кирилл;IU7-89B;F;1.5;2023;H;1;8329
+Фedorov;Владимир;IU4-49B;M;4.6;2023;R;Shcherbakov Street;224;745;56796
+Орлов;Олег;IU5-20B;F;2.25;2021;H;5;8521

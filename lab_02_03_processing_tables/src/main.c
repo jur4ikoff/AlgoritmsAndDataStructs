@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
     // Инициализация переменых
     int rc = ERR_OK;
-    char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./data/database.txt"};
+    char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./data/database_16.txt"};
     FILE *file;
     operations_t operation_number;
     size_t count = 0;
@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     Если есть аргумент с именем файла, тогда работаем с другим файлом.
     Иначе, используем дефолтное значение.
     */
-    if (argc == 2)
+    if (argc == 2) 
     {
         if ((rc = database_choose_name(argv[1])) == 0)
             strncpy(db_path, argv[1], strlen(argv[1]));
