@@ -1,0 +1,4 @@
+Иванов;Александр;IU8-76B;M;7.67;F;Lenin Street;145;469
+Смирнов;Александр;IU3-80B;M;4.33;F;Troitskaya Street;33;860
+Белов;Андрей;IU4-18B;M;1.8;F;Arbat Street;189;846
+Фedorov;Денис;IU3-51B;F;4.2;F;Zhukov Avenue;4;359

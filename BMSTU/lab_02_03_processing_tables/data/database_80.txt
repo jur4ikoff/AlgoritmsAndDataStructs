@@ -1,0 +1,80 @@
+Фedorov;Кирилл;IU4-83B;F;3.67;F;Moscow Highway;159;806
+Смирнов;Олег;IU6-21B;M;4.33;H;9;2657
+Кузнецов;Александр;IU9-24B;F;1.6;R;Shcherbakov Street;279;140;13603
+Соколова;Станислав;IU3-89B;F;3.4;F;Moscow Highway;6;422
+Орлов;Денис;IU1-64B;M;3.5;F;Pavlovskaya Street;127;621
+Степанов;Артем;IU8-32B;F;3.5;H;12;17828
+Волков;Сергей;IU9-28B;F;5.67;R;Vavilov Street;229;789;94860
+Смирнов;Денис;IU9-70B;M;4.33;R;Zhukov Avenue;207;176;5497
+Соколова;Николай;IU3-85B;M;5.0;F;Gorky Street;29;978
+Александров;Роман;IU8-70B;F;6.25;R;Bolshevik Avenue;55;162;72452
+Волков;Егор;IU8-52B;M;2.5;R;Yaroslavl Road;296;733;53279
+Смирнов;Владимир;IU3-52B;F;1.2;R;Moscow Highway;141;219;28149
+Попов;Кирилл;IU6-12B;F;2.2;R;Knyazev Street;94;715;75553
+Соколова;Александр;IU5-16B;M;8.0;R;Leningrad Avenue;49;850;41677
+Ковалев;Дмитрий;IU5-16B;M;6.33;H;9;25087
+Морозов;Александр;IU6-89B;M;1.2;F;Moscow Highway;241;841
+Волков;Роман;IU7-47B;M;4.0;H;5;44671
+Зайцев;Денис;IU3-63B;F;3.67;R;Freedom Street;288;828;68325
+Ковалев;Михаил;IU2-36B;M;3.0;R;Baumanskaya Street;4;499;48979
+Кузнецов;Григорий;IU5-80B;M;3.0;H;9;32308
+Сидоров;Александр;IU3-83B;F;5.25;R;Arbat Street;239;311;51356
+Белов;Павел;IU3-19B;F;5.5;R;Kirov Street;100;160;94679
+Иванов;Павел;IU7-13B;F;7.0;F;Smolenskaya Street;221;660
+Ковалев;Михаил;IU8-41B;F;3.67;H;11;34475
+Лебедев;Павел;IU9-22B;F;4.4;H;2;39093
+Белов;Олег;IU8-33B;F;5.0;R;Andreevsky Lane;113;258;64933
+Егоров;Дмитрий;IU8-82B;F;3.4;R;Naberezhnaya River;20;486;78641
+Ковалев;Максим;IU8-52B;M;3.0;F;Lenin Street;59;807
+Орлов;Виктор;IU6-48B;M;3.75;R;Freedom Street;274;646;6549
+Лебедев;Александр;IU5-49B;F;3.0;H;10;28636
+Дмитриев;Андрей;IU5-57B;M;5.0;R;Freedom Street;174;994;13599
+Соколова;Сергей;IU1-47B;M;8.33;H;18;39948
+Орлов;Павел;IU6-70B;F;4.2;H;15;18496
+Смирнов;Денис;IU2-81B;F;3.25;F;Baumanskaya Street;199;314
+Белов;Тимур;IU4-85B;M;3.67;F;Baumanskaya Street;167;646
+Лебедев;Артем;IU2-80B;M;2.6;R;Soviet Avenue;164;431;58370
+Зайцев;Михаил;IU3-67B;F;1.8;R;Yaroslavl Road;40;606;48943
+Зайцев;Николай;IU5-34B;M;4.6;H;19;45663
+Фedorov;Денис;IU7-89B;M;5.5;R;Knyazev Street;282;28;80313
+Попов;Олег;IU4-23B;F;3.2;R;Zhukov Avenue;219;578;32
+Александров;Максим;IU3-11B;F;4.75;R;Smolenskaya Street;132;97;36298
+Сидоров;Олег;IU1-71B;F;6.0;F;Victory Avenue;135;664
+Ковалев;Егор;IU6-42B;F;4.8;F;Pavlovskaya Street;236;647
+Орлов;Виктор;IU9-15B;F;4.67;R;Zelenograd Boulevard;136;736;49003
+Орлов;Михаил;IU5-54B;F;4.0;R;Naberezhnaya River;125;114;15978
+Иванов;Максим;IU1-42B;M;5.0;H;8;65255
+Лебедев;Иван;IU1-59B;F;3.8;R;Nevsky Prospect;260;786;80666
+Степанов;Сергей;IU8-83B;M;2.8;F;Pavlovskaya Street;57;857
+Степанов;Кирилл;IU5-67B;F;5.67;R;Soviet Avenue;250;685;11240
+Фedorov;Сергей;IU8-31B;M;1.2;F;Lermontov Street;113;260
+Петров;Кирилл;IU3-26B;M;8.0;R;Smolenskaya Street;17;324;79378
+Смирнов;Григорий;IU7-42B;F;2.67;H;5;64741
+Попов;Сергей;IU3-66B;F;4.67;R;Petrovskaya Street;109;871;49598
+Орлов;Денис;IU3-27B;M;3.75;F;Vavilov Street;168;2
+Соколова;Артем;IU6-69B;F;3.4;R;Bolshevik Avenue;97;595;95907
+Морозов;Роман;IU7-40B;F;3.67;H;15;10517
+Егоров;Артем;IU7-71B;F;2.25;F;Mayakovsky Street;15;807
+Петров;Максим;IU2-83B;M;8.33;R;Shcherbakov Street;210;583;13381
+Сидоров;Григорий;IU8-33B;M;2.8;F;Yaroslavl Road;85;542
+Белов;Дмитрий;IU6-86B;M;5.67;H;12;19407
+Волков;Максим;IU7-87B;F;4.75;R;Mira Avenue;134;663;73949
+Белов;Николай;IU3-46B;F;4.6;F;Petrovskaya Street;25;5
+Белов;Виктор;IU6-31B;F;2.6;F;Freedom Street;98;46
+Ковалев;Григорий;IU1-64B;F;3.5;R;Chekhov Lane;110;96;60344
+Орлов;Артем;IU9-51B;F;6.33;F;Lermontov Street;227;476
+Иванов;Егор;IU2-42B;F;2.4;F;Mayakovsky Street;51;185
+Морозов;Иван;IU1-15B;F;2.0;R;Mayakovsky Street;83;924;58041
+Иванов;Сергей;IU5-61B;M;7.33;F;Nevsky Prospect;172;171
+Волков;Денис;IU5-21B;M;5.0;F;Freedom Street;48;110
+Волков;Владимир;IU8-84B;F;3.4;F;Sakharov Avenue;267;902
+Смирнов;Александр;IU4-26B;F;4.2;R;Gorky Street;187;961;78941
+Сидоров;Олег;IU4-20B;F;2.5;R;Sakharov Avenue;253;376;3195
+Лебедев;Кирилл;IU7-13B;F;7.33;R;Leningrad Avenue;155;952;74941
+Сидоров;Сергей;IU8-20B;F;1.5;H;12;46043
+Иванов;Владимир;IU8-34B;F;3.8;H;20;26057
+Дмитриев;Артем;IU3-25B;M;1.2;F;Bolshevik Avenue;63;789
+Лебедев;Станислав;IU3-27B;M;8.33;F;Pushkin Boulevard;185;525
+Смирнов;Максим;IU7-29B;M;2.0;F;Pushkin Boulevard;234;151
+Фedorov;Сергей;IU4-84B;F;5.25;F;Naberezhnaya River;197;477
+Дмитриев;Олег;IU8-51B;F;4.67;F;Soviet Avenue;230;607

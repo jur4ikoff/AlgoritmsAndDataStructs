@@ -1,0 +1,8 @@
+Егоров;Андрей;IU2-74B;M;3.0;F;Smolenskaya Street;159;336
+Зайцев;Егор;IU4-72B;F;3.33;R;Red Square;64;860;35633
+Иванов;Максим;IU5-20B;F;5.75;H;6;61955
+Дмитриев;Виктор;IU3-21B;M;4.67;R;Moscow Highway;233;461;58110
+Иванов;Кирилл;IU8-49B;M;3.4;F;Shcherbakov Street;31;380
+Петров;Сергей;IU3-30B;F;5.0;F;Komsomolskaya Street;255;195
+Кузнецов;Григорий;IU9-47B;M;1.2;R;Petrovskaya Street;110;656;46051
+Дмитриев;Николай;IU2-54B;M;5.67;F;Leningrad Avenue;104;314
