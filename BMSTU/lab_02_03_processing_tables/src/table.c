@@ -10,6 +10,7 @@ void create_key_table(table_t *key_table, students_t *array, size_t count)
         key_table[i].index_src = i;
         key_table[i].index_table = i;
         strcpy(key_table[i].surname, array[i].surname);
+        // key_table[i].surname = array[i].surname;
     }
 }
 
@@ -23,12 +24,10 @@ void key_table_sort(table_t table[], size_t count)
         size_t j = i - 1;
         while (j >= 0 && strcmp(table[j].surname, key.surname) > 0)
         {
-            printf("%s %s %zu\n", table[j].surname, key.surname, j + 1);
             table[j + 1] = table[j];
             table[j + 1].index_table = j + 1;
             j--;
         }
-        printf("%s %s %zu\n", table[j + 1].surname, key.surname, j + 1);
         table[j + 1] = key;
         table[j + 1].index_table = j + 1;
     }

@@ -18,7 +18,7 @@ void print_error_message(short int arg)
         printf("Ошибка при выборе операции\n");
         break;
     case ERR_OPERATION_COUNT:
-        printf("Ошибка, введите число от 1 до 8\n");
+        printf("Ошибка, введите число от 1 до 12\n");
         break;
     case ERR_STRING_OVERFLOW:
         printf("Ошибка, переполнение при вводе строки\n");

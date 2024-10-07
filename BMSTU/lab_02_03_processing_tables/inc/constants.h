@@ -13,7 +13,7 @@
 #define MAX_MANTISE_SIZE 9
 #define MAX_SHORT_SIZE 4
 #define MAX_INT_SIZE 8
-#define OPERATIONS_COUNT 11
+#define OPERATIONS_COUNT 12
 
 
 #define DELIMETER ";"

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include "utils.h"
+#include "table.h"
 
 // Конвертация строки в double
 int string_to_double(const char *str, double *result, size_t count)

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "student_operations.h"
 #include "table.h"
+#include "sort.h"
 
 int main(int argc, char **argv)
 {
@@ -126,16 +127,17 @@ int main(int argc, char **argv)
             }
             break;
         case SORT_KEY_TABLE:
-            // просмотр отсортированной таблицы ключей при несортированной исходной таблице;
+            // просмотр отсортированной таблицы ключей
             create_key_table(table, array_students, count);
-            key_table_print(table, count);
             key_table_sort(table, count);
-
             key_table_print(table, count);
-
             break;
-        case 6:
-            // Вывод исходной таблицы в упорядоченном виде, используя упорядоченную таблицу ключей
+        case PRINT_SORT_ORIGINAL_TABLE:
+            // Вывод упорядоченной исходной таблицы
+            database_all_print(array_students, count);
+            qsort(array_students, count, sizeof(students_t), compare_surnames);
+            database_all_print(array_students, count);
+
             break;
         case 7:
             // Вывод результатов использования различных алгоритмов сортировок
@@ -143,6 +145,8 @@ int main(int argc, char **argv)
         case 8:
             break;
         case 9:
+            break;
+        case 10:
             break;
         case SAVE:
             // Сохранение данных
