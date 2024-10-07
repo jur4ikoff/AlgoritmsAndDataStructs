@@ -10,7 +10,7 @@ typedef struct
 {
     size_t index_src;
     size_t index_table;
-    char surname[MAX_STRING_LEN];
+    char *surname[MAX_STRING_LEN];
 
 } table_t;
 

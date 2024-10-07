@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 {
     // Инициализация переменых
     int rc = ERR_OK;
-    char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./database.txt"};
+    char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./data/database.txt"};
     FILE *file;
     operations_t operation_number;
     size_t count = 0;
@@ -134,15 +134,19 @@ int main(int argc, char **argv)
             break;
         case PRINT_SORT_ORIGINAL_TABLE:
             // Вывод упорядоченной исходной таблицы
-            database_all_print(array_students, count);
             qsort(array_students, count, sizeof(students_t), compare_surnames);
             database_all_print(array_students, count);
-
             break;
-        case 7:
-            // Вывод результатов использования различных алгоритмов сортировок
-            // Вывод результатов сравнения эффективности работы программы
-        case 8:
+        case PRINT_SECOND_SORT_ORIGINAL_TABLE:
+            // Вывод упорядоченной исходной таблицы
+            mysort(array_students, count, sizeof(students_t), compare_surnames);
+            database_all_print(array_students, count);
+            break;
+        case PRINT_TABLE_WITH_KEYS:
+            // Сортировка исходной таблицы с помощью таблицы ключей
+            create_key_table(table, array_students, count);
+            key_table_sort(table, count);
+            print_table_with_keys(array_students, table, count);
             break;
         case 9:
             break;
