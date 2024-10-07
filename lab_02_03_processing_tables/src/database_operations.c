@@ -34,6 +34,7 @@ int database_choose_name(char *string)
 
 int database_import_students(FILE *file, students_t *students, size_t *count)
 {
+    rewind(file);
     *count = 0;
     int rc = ERR_OK;
     while (rc != END_OF_FILE)

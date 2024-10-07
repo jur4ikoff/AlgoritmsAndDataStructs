@@ -1,7 +1,7 @@
 #ifndef CONST_H
 #define CONST_H
 
-#define MAX_STUDENTS_COUNT 1000
+#define MAX_STUDENTS_COUNT 6001
 #define MAX_STUDENT_ORDER 256
 #define MAX_PATH_LEN 128
 #define MAX_STRING_LEN 64

@@ -132,7 +132,7 @@ russian_street_names = [
 
 def generate_data(size):
     directory = "data"
-    filename = f"database_{size}.txt"
+    filename = f"db_{size}.txt"
     if not os.path.exists(directory):
         os.makedirs(directory)
     filepath = os.path.join(directory, filename)
@@ -164,8 +164,8 @@ def generate_data(size):
 
 
 if __name__ == "__main__":
-    i = 4
-    while i < 1000:
+    i = 8
+    while i < 6000:
         generate_data(i)
         i *= 2
-    generate_data(999)
+    generate_data(6000)

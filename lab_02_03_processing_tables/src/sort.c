@@ -9,6 +9,14 @@ int compare_surnames(const void *a, const void *b)
     return strcmp(students_a->surname, students_b->surname);
 }
 
+int compare_table(const void *a, const void *b)
+{
+    table_t *table_a = (table_t *)a;
+    table_t *table_b = (table_t *)b;
+
+    return strcmp(table_a->surname, table_b->surname);
+}
+
 // Сортировка модифицированная пузырьком
 void mysort(void *arr, size_t number, size_t width, int (*compare)(const void *, const void *))
 {
