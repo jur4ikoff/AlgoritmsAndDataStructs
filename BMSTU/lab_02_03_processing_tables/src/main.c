@@ -10,6 +10,7 @@
 #include "student_operations.h"
 #include "table.h"
 #include "sort.h"
+#include "time_measuring.h"
 
 int main(int argc, char **argv)
 {
