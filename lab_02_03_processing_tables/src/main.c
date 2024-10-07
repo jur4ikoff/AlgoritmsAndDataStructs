@@ -26,7 +26,7 @@ int main(int argc, char **argv)
     Если есть аргумент с именем файла, тогда работаем с другим файлом.
     Иначе, используем дефолтное значение.
     */
-    if (argc == 2) 
+    if (argc == 2)
     {
         if ((rc = database_choose_name(argv[1])) == 0)
             strncpy(db_path, argv[1], strlen(argv[1]));
@@ -149,7 +149,14 @@ int main(int argc, char **argv)
             key_table_sort(table, count);
             print_table_with_keys(array_students, table, count);
             break;
-        case 9:
+        case DEF_AND_KEY_SORT_COMPARE:
+            if ((rc = compare_times()) != ERR_OK)
+            {
+                free(array_students);
+                free(table);
+                print_error_message(rc);
+                return rc;
+            }
             break;
         case 10:
             break;

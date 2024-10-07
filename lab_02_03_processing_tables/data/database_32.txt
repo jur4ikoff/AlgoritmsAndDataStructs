@@ -1,32 +1,32 @@
-Петров;Павел;IU8-54B;M;4.0;2024;H;1;6831
-Белов;Андрей;IU2-52B;F;6.0;2022;H;4;9834
-Александров;Андрей;IU3-31B;F;4.0;2023;F;Lenin Street;130;328
-Петров;Тимур;IU4-25B;M;5.33;2023;H;8;8936
-Зайцев;Григорий;IU8-61B;F;4.25;2021;H;11;9606
-Александров;Николай;IU7-32B;F;2.5;2023;R;Griboedov Canal Street;95;320;2449
-Морозов;Сергей;IU8-23B;M;3.6;2021;H;10;5499
-Александров;Олег;IU6-65B;F;7.0;2020;H;15;2814
-Дмитриев;Михаил;IU9-47B;F;6.33;2020;R;Sakharov Avenue;111;342;76791
-Белов;Дмитрий;IU7-88B;F;1.2;2023;F;Kirov Street;147;415
-Зайцев;Роман;IU2-83B;M;3.0;2020;R;Zhukov Avenue;93;215;91072
-Морозов;Виктор;IU5-40B;M;4.0;2023;H;17;9551
-Соколова;Максим;IU7-10B;M;3.0;2020;R;Chekhov Lane;146;705;53308
-Лебедев;Николай;IU3-11B;M;1.2;2022;F;Pavlovskaya Street;196;197
-Егоров;Максим;IU9-79B;F;4.0;2020;R;Chekhov Lane;149;289;12737
-Степанов;Дмитрий;IU3-79B;F;3.67;2022;F;Shcherbakov Street;205;451
-Степанов;Николай;IU6-48B;F;7.67;2023;R;Andreevsky Lane;15;991;6655
-Кузнецов;Иван;IU1-48B;M;3.67;2020;F;Sretensky Boulevard;299;161
-Фedorov;Григорий;IU7-51B;F;3.0;2022;H;9;9529
-Попов;Григорий;IU3-85B;F;6.33;2024;H;7;3153
-Егоров;Иван;IU4-38B;M;4.33;2021;H;19;4264
-Степанов;Владимир;IU4-85B;F;1.5;2021;R;Pushkin Boulevard;234;377;31273
-Смирнов;Максим;IU1-43B;M;7.33;2022;R;Arbat Street;256;615;53355
-Морозов;Артем;IU8-48B;F;6.67;2021;R;Smolenskaya Street;51;111;62843
-Белов;Виктор;IU5-85B;F;3.67;2022;H;20;9960
-Морозов;Денис;IU8-54B;M;2.2;2022;H;16;6615
-Кузнецов;Станислав;IU9-29B;M;5.5;2024;R;Lermontov Street;204;708;95171
-Егоров;Олег;IU6-38B;M;4.5;2020;R;Mira Avenue;236;401;53789
-Белов;Владимир;IU6-54B;F;4.2;2024;F;Nevsky Prospect;42;965
-Дмитриев;Егор;IU3-75B;M;2.4;2023;F;Andreevsky Lane;85;172
-Дмитриев;Егор;IU8-30B;F;2.33;2024;R;Soviet Avenue;124;967;89439
-Смирнов;Кирилл;IU4-62B;F;3.6;2022;R;Tverskaya Street;263;336;45124
+Nikiforov;Oksana;IU3-74B;M;2.33;2024;F;Kremlin Way;157;979
+Romanov;Nadezhda;IU8-74B;M;7.0;2022;F;Red Square;237;597
+Zaitsev;Tat'yana;IU6-12B;F;8.0;2020;F;Knyazev Street;31;469
+Morozov;Stepan;IU9-14B;M;7.0;2024;H;13;5153
+Alekseev;Maria;IU7-14B;M;2.0;2023;F;Knyazev Street;161;368
+Tarasov;Stepan;IU7-79B;M;3.5;2021;H;13;8331
+Romanov;Arkadiy;IU9-23B;F;2.0;2022;H;9;2018
+Vinogradov;Stanislav;IU5-46B;M;4.0;2023;H;5;5811
+Petrov;Ivan;IU4-29B;F;7.67;2022;R;Dzerzhinsky Street;224;51;12825
+Nikiforov;Stepan;IU7-11B;M;3.75;2020;F;Pavlovskaya Street;180;76
+Lebedev;Nikita;IU7-11B;M;4.0;2024;H;6;2679
+Dmitriev;Lyudmila;IU7-84B;F;5.67;2022;R;Freedom Street;226;769;3599
+Zaitsev;Natalya;IU5-44B;M;3.5;2023;F;Vavilov Street;199;511
+Ivanov;Arkadiy;IU6-25B;F;7.33;2024;F;Kirov Street;208;444
+Vasiliev;Anastasiya;IU1-65B;F;3.6;2024;H;11;6835
+Mikhailov;Katerina;IU6-42B;F;4.2;2023;H;11;2516
+Vinogradov;Yulia;IU2-10B;M;1.75;2020;F;Red Square;102;550
+Yakovlev;Sergey;IU4-29B;M;4.0;2021;H;13;1523
+Karpov;Alena;IU4-35B;F;4.5;2020;R;Red Square;215;928;17894
+Mikhailov;Larisa;IU9-88B;F;6.25;2020;R;Shcherbakov Street;276;263;18333
+Zaitsev;Arkadiy;IU2-19B;F;3.67;2020;H;18;760
+Belyakov;Zinaida;IU7-19B;M;5.0;2020;H;1;6476
+Alekseev;Igor;IU3-63B;F;7.67;2020;R;Chekhov Lane;170;411;92865
+Sorokin;Natalya;IU8-58B;M;1.4;2024;R;Gorky Street;225;470;93576
+Morozov;Lyudmila;IU8-43B;M;4.25;2021;H;5;6521
+Pavlov;Denis;IU6-84B;F;5.0;2021;F;Red Square;31;610
+Dmitriev;Igor;IU1-26B;F;5.67;2022;F;Bolshevik Avenue;94;287
+Zaitsev;Olga;IU9-58B;M;3.75;2021;F;Pavlovskaya Street;81;584
+Dmitriev;Alexey;IU8-38B;M;2.25;2023;F;Chekhov Lane;132;226
+Romanov;Natalya;IU6-67B;F;3.6;2021;R;Andreevsky Lane;202;912;43164
+Matveev;Andrey;IU4-58B;M;4.6;2023;H;17;5999
+Nikiforov;Katerina;IU6-21B;F;2.0;2022;H;13;9111

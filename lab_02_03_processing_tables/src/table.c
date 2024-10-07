@@ -9,7 +9,7 @@ void create_key_table(table_t *key_table, students_t *array, size_t count)
     {
         key_table[i].index_src = i;
         key_table[i].index_table = i;
-        *key_table[i].surname = &array[i].surname[0];
+        key_table[i].surname = &array[i].surname[0];
     }
 }
 
@@ -21,7 +21,7 @@ void key_table_sort(table_t table[], size_t count)
     {
         key = table[i];
         int j = i - 1;
-        while (j >= 0 && strcmp(*table[j].surname, *key.surname) > 0)
+        while (j >= 0 && strcmp(table[j].surname, key.surname) > 0)
         {
             table[j + 1] = table[j];
             table[j + 1].index_table = j + 1;
@@ -44,8 +44,8 @@ void key_table_print(table_t *key_table, size_t count)
         printf("|%*s%zu%*s|", 0, "", key_table[i].index_src, 3 - int_len(key_table[i].index_src), "");
         printf("%*s%zu%*s|", 0, "", key_table[i].index_table, 3 - int_len(key_table[i].index_table), "");
 
-        int padding = (MAX_SURNAME_LEN - (int)strlen(*key_table[i].surname)) / 2;
-        printf("%*s%s%*s|\n", padding, "", *key_table[i].surname, MAX_SURNAME_LEN - padding - (int)strlen(*key_table[i].surname), "");
+        int padding = (MAX_SURNAME_LEN - (int)strlen(key_table[i].surname)) / 2;
+        printf("%*s%s%*s|\n", padding, "", key_table[i].surname, MAX_SURNAME_LEN - padding - (int)strlen(key_table[i].surname), "");
     }
     printf("|___|___|________________________|\n");
 }
