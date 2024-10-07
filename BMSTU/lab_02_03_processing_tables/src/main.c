@@ -44,9 +44,18 @@ int main(int argc, char **argv)
     }
 
     students_t *array_students = NULL;
+    table_t *table = NULL;
     array_students = malloc(MAX_STUDENTS_COUNT * sizeof(students_t));
     if (array_students == NULL)
     {
+        print_error_message(ERR_MEMORY_ALLOCATION);
+        return ERR_MEMORY_ALLOCATION;
+    }
+
+    table = malloc(sizeof(table_t) * MAX_STUDENTS_COUNT);
+    if (table == NULL)
+    {
+        free(array_students);
         print_error_message(ERR_MEMORY_ALLOCATION);
         return ERR_MEMORY_ALLOCATION;
     }
@@ -118,16 +127,11 @@ int main(int argc, char **argv)
             break;
         case SORT_KEY_TABLE:
             // просмотр отсортированной таблицы ключей при несортированной исходной таблице;
-            table_t *key_table = NULL;
-            key_table = malloc(sizeof(table_t) * MAX_STUDENTS_COUNT);
-            if (key_table == NULL)
-            {
-                free(array_students);
-                print_error_message(ERR_MEMORY_ALLOCATION);
-                return ERR_MEMORY_ALLOCATION;
-            }
+            create_key_table(table, array_students, count);
+            key_table_print(table, count);
+            key_table_sort(table, count);
 
-            create_key_table(key_table, array_students, count);
+            key_table_print(table, count);
 
             break;
         case 6:

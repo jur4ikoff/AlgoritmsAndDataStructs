@@ -1,5 +1,7 @@
 #include "table.h"
 #include "student_operations.h"
+#include <string.h>
+#include "utils.h"
 
 void create_key_table(table_t *key_table, students_t *array, size_t count)
 {
@@ -12,21 +14,40 @@ void create_key_table(table_t *key_table, students_t *array, size_t count)
 }
 
 // Сортировка вставками
-void sort_key_table(table_t *key_table, size_t count)
+void key_table_sort(table_t table[], size_t count)
 {
-    char key[MAX_SURNAME_LEN], temp[MAX_STRING_LEN];
+    table_t key;
     for (size_t i = 1; i < count; i++)
     {
-        strcpy(key_table[i], key);
-        int j = i - 1;
-        while (j >= 0 && strcmp(key_table[j], key) > 0)
+        key = table[i];
+        size_t j = i - 1;
+        while (j >= 0 && strcmp(table[j].surname, key.surname) > 0)
         {
-            if (srcmp(key_table[j], key) > 0)
-            {
-                j--;
-                strcpy(key_table[j + 1], key_table[j]);
-            }
-            strcpy(key, key_table[j + 1]);
+            printf("%s %s %zu\n", table[j].surname, key.surname, j + 1);
+            table[j + 1] = table[j];
+            table[j + 1].index_table = j + 1;
+            j--;
         }
+        printf("%s %s %zu\n", table[j + 1].surname, key.surname, j + 1);
+        table[j + 1] = key;
+        table[j + 1].index_table = j + 1;
     }
+}
+
+void key_table_print(table_t *key_table, size_t count)
+{
+    printf("|———|———|————————————————————————|\n");
+    printf("|src|tab|         Фамилия        |\n");
+    printf("|———|———|————————————————————————|\n");
+
+    // int padding = (3 - (int)strlen(key_table.index)) / 2;
+    for (size_t i = 0; i < count; i++)
+    {
+        printf("|%*s%zu%*s|", 0, "", key_table[i].index_src, 3 - int_len(key_table[i].index_src), "");
+        printf("%*s%zu%*s|", 0, "", key_table[i].index_table, 3 - int_len(key_table[i].index_table), "");
+
+        int padding = (MAX_SURNAME_LEN - (int)strlen(key_table[i].surname)) / 2;
+        printf("%*s%s%*s|\n", padding, "", key_table[i].surname, MAX_SURNAME_LEN - padding - (int)strlen(key_table[i].surname), "");
+    }
+    printf("|___|___|________________________|\n");
 }

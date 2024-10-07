@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "constants.h"
 #include "errors.h"
+#include "student_operations.h"
 
 typedef struct
 {
@@ -14,5 +15,7 @@ typedef struct
 } table_t;
 
 void create_key_table(table_t *key_table, students_t *array, size_t count);
+void key_table_sort(table_t table[], size_t count);
+void key_table_print(table_t *key_table, size_t count);
 
 #endif

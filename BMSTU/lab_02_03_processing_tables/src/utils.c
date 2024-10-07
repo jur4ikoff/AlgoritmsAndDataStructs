@@ -36,7 +36,7 @@ int input_string(char *string, size_t max_len)
 /**
  * @brief Функция меняет местами элементы массива
  */
-void swap(students_t *students, size_t index1, size_t index2, size_t count)
+static void swap(students_t *students, size_t index1, size_t index2, size_t count)
 {
     students_t temp = students[index1];
     students[index1] = students[index2];
