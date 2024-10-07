@@ -21,7 +21,7 @@ void key_table_sort(table_t table[], size_t count)
     for (size_t i = 1; i < count; i++)
     {
         key = table[i];
-        size_t j = i - 1;
+        int j = i - 1;
         while (j >= 0 && strcmp(table[j].surname, key.surname) > 0)
         {
             table[j + 1] = table[j];
