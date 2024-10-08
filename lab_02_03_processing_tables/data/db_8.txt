@@ -1,8 +1,8 @@
-Karpov;Katerina;IU4-22B;F;3.67;2023;F;Dzerzhinsky Street;234;505
-Kuznetsov;Svetlana;IU6-81B;M;3.5;2024;F;Shcherbakov Street;50;340
-Vinogradov;Galina;IU1-59B;M;6.33;2023;H;9;1698
-Sorokin;Vladimir;IU5-20B;M;1.75;2023;R;Arbat Street;244;481;90853
-Petrov;Oksana;IU5-23B;F;4.8;2024;H;2;1424
-Mikhailov;Galina;IU5-39B;F;6.0;2023;H;8;2533
-Matveev;Vladimir;IU2-83B;F;7.33;2024;R;Tverskaya Street;131;311;11592
-Volkov;Maxim;IU4-13B;F;6.0;2021;F;Freedom Street;67;886
+Nikiforov;Ekaterina;IU2-46B;F;2.8;2023;H;12;1209
+Petrov;Alexey;IU6-11B;M;4.4;2023;F;Petrovskaya Street;267;304
+Mikhailov;Alexey;IU6-82B;F;6.0;2024;H;19;1538
+Nikiforov;Katerina;IU9-56B;F;5.67;2023;R;Dzerzhinsky Street;195;430;88713
+Popov;Anastasiya;IU4-67B;F;2.0;2021;F;Knyazev Street;255;164
+Pavlov;Olga;IU4-67B;M;4.0;2023;R;Kremlin Way;193;316;92820
+Trofimov;Maria;IU9-84B;F;4.75;2023;F;Smolenskaya Street;78;782
+Solovyov;Maxim;IU5-81B;M;6.0;2023;R;Zelenograd Boulevard;115;266;73999

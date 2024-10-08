@@ -67,7 +67,6 @@ int compare_times()
             free(table_1);
             return rc;
         }
-        printf("%zu\n", count);
         rewind(file);
         if ((rc = database_import_students(file, array_students_2, &count)) != ERR_OK)
         {
@@ -107,6 +106,10 @@ int compare_times()
         clock_gettime(CLOCK_REALTIME, &end);
         time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
         measure_data[read_count].time_key_qsort = time;
+
+        printf("В случае qsort, использование таблиц эффективнее на %f%%\n", (double)(measure_data[read_count].time_def_qsort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_def_qsort * 100);
+        printf("qsort, эффективнее модернизированного bubble sort на %f%% (Для таблицы ключей)\n", (double)(measure_data[read_count].time_key_mysort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_key_mysort * 100);
+        printf("qsort, эффективнее модернизированного bubble sort на %f%%\n", (double)(measure_data[read_count].time_def_mysort - measure_data[read_count].time_def_qsort) / (double)measure_data[read_count].time_def_mysort * 100);
         read_count++;
     }
 

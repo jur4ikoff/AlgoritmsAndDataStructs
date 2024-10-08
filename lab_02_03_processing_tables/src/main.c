@@ -159,8 +159,6 @@ int main(int argc, char **argv)
                 return rc;
             }
             break;
-        case 10:
-            break;
         case SAVE:
             // Сохранение данных
             if ((rc = database_save(db_path, array_students, count)) != ERR_OK)

@@ -165,7 +165,7 @@ def generate_data(size):
 
 if __name__ == "__main__":
     i = 8
-    while i < 6000:
+    while i < 5000:
         generate_data(i)
         i *= 2
-    generate_data(6000)
+    generate_data(5000)
