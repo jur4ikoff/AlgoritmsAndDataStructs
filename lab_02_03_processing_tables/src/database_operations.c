@@ -242,6 +242,9 @@ int database_delete_student(students_t *array_students, size_t *count)
         printf(">>Нет записей, удовлетворяющих поиску\n");
     else
         printf(">>Успешно удалено %zu записей\n", delete_count);
+    
+    if (*count == 0)
+        return ERR_EMPTY_OUTPUT;
     return ERR_OK;
 }
 

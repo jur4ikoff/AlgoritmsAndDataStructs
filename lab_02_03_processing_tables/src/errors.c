@@ -59,5 +59,8 @@ void print_error_message(short int arg)
     case ERR_ADD_ORDER_STRING_OVERFLOW:
         printf("Ошибка, переполнение при вводе новой записи\n");
         break;
+    case ERR_EMPTY_OUTPUT:
+        printf("Ошибка, пустой вывод\n");
+        break;
     }
 }
