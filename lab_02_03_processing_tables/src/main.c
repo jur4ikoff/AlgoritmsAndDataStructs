@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 {
     // Инициализация переменых
     int rc = ERR_OK;
-    char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"./data/db_16.txt"};
+    char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"data/db_16.txt"};
     FILE *file;
     operations_t operation_number;
     size_t count = 0;
@@ -130,8 +130,8 @@ int main(int argc, char **argv)
         case SORT_KEY_TABLE:
             // просмотр отсортированной таблицы ключей
             create_key_table(table, array_students, count);
-            qsort(table, count, sizeof(table_t), compare_table);
-            // key_table_sort(table, count);
+            // qsort(table, count, sizeof(table_t), compare_table);
+            key_table_sort(table, count);
             key_table_print(table, count);
             break;
         case PRINT_SORT_ORIGINAL_TABLE:

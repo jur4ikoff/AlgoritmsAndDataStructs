@@ -12,5 +12,5 @@ typedef struct
     long long time_key_qsort;
 } measuring;
 
-int compare_times();
+int compare_times(void);
 #endif
