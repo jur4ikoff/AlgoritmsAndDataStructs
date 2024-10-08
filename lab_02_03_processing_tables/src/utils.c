@@ -6,6 +6,10 @@
 int int_len(long long value)
 {
     int count = 0;
+
+    if (value == 0)
+        return 1;
+        
     while (value > 0)
     {
         count++;

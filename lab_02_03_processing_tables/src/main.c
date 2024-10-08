@@ -147,7 +147,8 @@ int main(int argc, char **argv)
         case PRINT_TABLE_WITH_KEYS:
             // Сортировка исходной таблицы с помощью таблицы ключей
             create_key_table(table, array_students, count);
-            key_table_sort(table, count);
+            qsort(table, count, sizeof(table_t), compare_table);
+            // key_table_sort(table, count);
             print_table_with_keys(array_students, table, count);
             break;
         case DEF_AND_KEY_SORT_COMPARE:

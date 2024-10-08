@@ -9,7 +9,6 @@
 typedef struct
 {
     size_t index_src;
-    size_t index_table;
     char *surname;
 
 } table_t;

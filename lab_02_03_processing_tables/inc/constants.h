@@ -15,6 +15,7 @@
 #define MAX_INT_SIZE 8
 #define OPERATIONS_COUNT 11
 
+#define EXP_COUNT 10
 
 #define DELIMETER ";"
 #define SPACES " \t"
