@@ -87,13 +87,13 @@ int compare_times(void)
         clock_gettime(CLOCK_REALTIME, &start);
         qsort(array_students_1, count, sizeof(students_t), compare_surnames);
         clock_gettime(CLOCK_REALTIME, &end);
-        time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
+        time = (long long)((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec));
         measure_data[read_count].time_def_qsort = time;
 
         clock_gettime(CLOCK_REALTIME, &start);
         mysort(array_students_2, count, sizeof(students_t), compare_surnames);
         clock_gettime(CLOCK_REALTIME, &end);
-        time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
+        time = (long long)((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec));
         measure_data[read_count].time_def_mysort = time;
 
         clock_gettime(CLOCK_REALTIME, &start);
@@ -105,38 +105,38 @@ int compare_times(void)
         clock_gettime(CLOCK_REALTIME, &start);
         qsort(table_2, count, sizeof(table_t), compare_table);
         clock_gettime(CLOCK_REALTIME, &end);
-        time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
+        time = (long long)((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec));
         measure_data[read_count].time_key_qsort = time;
 
-        printf("В случае qsort, использование таблиц эффективнее на %f%%\n", (double)(measure_data[read_count].time_def_qsort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_def_qsort * 100);
-        printf("qsort, эффективнее модернизированного bubble sort на %f%% (Для таблицы ключей)\n", (double)(measure_data[read_count].time_key_mysort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_key_mysort * 100);
-        printf("qsort, эффективнее модернизированного bubble sort на %f%%\n", (double)(measure_data[read_count].time_def_mysort - measure_data[read_count].time_def_qsort) / (double)measure_data[read_count].time_def_mysort * 100);
-        printf("Отношение быстрой сортировки основной таблицы к таблице ключей %f\n", (double)measure_data[read_count].time_def_qsort / (double)measure_data->time_key_qsort);
-        printf("Отношение cортировки пузырьком основной таблицы к таблице ключей %f\n", (double)measure_data[read_count].time_def_mysort / (double)measure_data->time_key_mysort);
+        printf("В случае qsort, использование таблиц эффективнее на %.2f%%\n", (double)(measure_data[read_count].time_def_qsort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_def_qsort * 100);
+        printf("qsort, эффективнее модернизированного bubble sort на %.2f%% (Для таблицы ключей)\n", (double)(measure_data[read_count].time_key_mysort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_key_mysort * 100);
+        printf("qsort, эффективнее модернизированного bubble sort на %.2f%%\n", (double)(measure_data[read_count].time_def_mysort - measure_data[read_count].time_def_qsort) / (double)measure_data[read_count].time_def_mysort * 100);
+        printf("Отношение быстрой сортировки основной таблицы к таблице ключей %.3f\n", (double)measure_data[read_count].time_def_qsort / (double)measure_data[read_count].time_key_qsort);
+        printf("Отношение cортировки пузырьком основной таблицы к таблице ключей %.3f\n", (double)measure_data[read_count].time_def_mysort / (double)measure_data->time_key_mysort);
         read_count++;
     }
 
     printf("Проведено эксперементов: %zu\n", read_count);
     printf("Вывод результатов эксперемента\n");
-    printf("|____|___________|____________|_____________|______________|\n");
-    printf("|size| qsort_arr | mysort_arr | qsort_table | mysort_table |\n");
-    printf("|____|___________|____________|_____________|______________|\n");
+    printf("|____|____________|_____________|_________________|__________________|\n");
+    printf("|size| qsort main | mysort main | qsort key table | mysort key table |\n");
+    printf("|____|____________|_____________|_________________|__________________|\n");
     int padding = 0;
     for (size_t i = 0; i < read_count; i++)
     {
         printf("|%*s%zu%*s|", 0, "", measure_data[i].size, 4 - padding - (int)int_len(i), "");
 
         // printf("$s ")
-        padding = (11 - (int)int_len(measure_data[i].time_def_qsort)) / 2;
+        padding = (12 - (int)int_len(measure_data[i].time_def_qsort)) / 2;
         printf("%*s%lld%*s|", padding, "", measure_data[i].time_def_qsort, 11 - padding - (int)int_len(measure_data[i].time_def_qsort), "");
 
-        padding = (11 - (int)int_len(measure_data[i].time_def_mysort)) / 2;
+        padding = (13 - (int)int_len(measure_data[i].time_def_mysort)) / 2;
         printf("%*s%lld%*s|", padding, "", measure_data[i].time_def_mysort, 11 - padding - (int)int_len(measure_data[i].time_def_mysort), "");
 
-        padding = (13 - (int)int_len(measure_data[i].time_key_qsort)) / 2;
+        padding = (17 - (int)int_len(measure_data[i].time_key_qsort)) / 2;
         printf("%*s%lld%*s|", padding, "", measure_data[i].time_key_qsort, 13 - padding - (int)int_len(measure_data[i].time_key_qsort), "");
 
-        padding = (14 - (int)int_len(measure_data[i].time_key_mysort)) / 2;
+        padding = (18 - (int)int_len(measure_data[i].time_key_mysort)) / 2;
         printf("%*s%lld%*s|\n", padding, "", measure_data[i].time_key_mysort, 12 - padding - (int)int_len(measure_data[i].time_key_mysort), "");
     }
     printf("|____|___________|____________|_____________|______________|\n");
