@@ -1,8 +1,0 @@
-Nikiforov;Ekaterina;IU2-46B;F;2.8;2023;H;12;1209
-Petrov;Alexey;IU6-11B;M;4.4;2023;F;Petrovskaya Street;267;304
-Mikhailov;Alexey;IU6-82B;F;6.0;2024;H;19;1538
-Nikiforov;Katerina;IU9-56B;F;5.67;2023;R;Dzerzhinsky Street;195;430;88713
-Popov;Anastasiya;IU4-67B;F;2.0;2021;F;Knyazev Street;255;164
-Pavlov;Olga;IU4-67B;M;4.0;2023;R;Kremlin Way;193;316;92820
-Trofimov;Maria;IU9-84B;F;4.75;2023;F;Smolenskaya Street;78;782
-Solovyov;Maxim;IU5-81B;M;6.0;2023;R;Zelenograd Boulevard;115;266;73999
