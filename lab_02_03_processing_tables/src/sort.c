@@ -1,6 +1,7 @@
 #include "sort.h"
 #include <string.h>
 
+// Сравнение фамилий, для функции qsort
 int compare_surnames(const void *a, const void *b)
 {
     students_t *students_a = (students_t *)a;
@@ -9,6 +10,7 @@ int compare_surnames(const void *a, const void *b)
     return strcmp(students_a->surname, students_b->surname);
 }
 
+// Сравнение таблиц ключей, для функции qsort
 int compare_table(const void *a, const void *b)
 {
     table_t *table_a = (table_t *)a;
@@ -49,7 +51,6 @@ void mysort(void *arr, size_t number, size_t width, int (*compare)(const void *,
             }
         }
 
-        // Уменьшаем число сравнений в следующем проходе
         number = last_swap_index;
 
     } while (swapped);

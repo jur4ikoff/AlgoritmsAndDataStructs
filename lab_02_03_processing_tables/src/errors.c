@@ -1,6 +1,7 @@
 #include "errors.h"
 #include "stdio.h"
 
+// Функция обрабатывает код ошибки и выводит нужное сообщение на экран
 void print_error_message(short int arg)
 {
     switch (arg)

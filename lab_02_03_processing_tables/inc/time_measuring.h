@@ -10,7 +10,7 @@ typedef struct
     long long time_def_qsort;
     long long time_key_mysort;
     long long time_key_qsort;
-} measuring;
+} measuring_t;
 
 int compare_times(void);
 #endif

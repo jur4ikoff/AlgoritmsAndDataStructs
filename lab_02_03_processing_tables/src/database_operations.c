@@ -6,6 +6,7 @@
 #include "student_operations.h"
 #include "utils.h"
 
+// Открытие файла
 int database_open(FILE **file, char *filename, char *mode)
 {
     *file = fopen(filename, mode);
@@ -16,6 +17,7 @@ int database_open(FILE **file, char *filename, char *mode)
     return ERR_OK;
 }
 
+// Выбор файла для работы
 int database_choose_name(char *string)
 {
     FILE *file;
@@ -32,6 +34,7 @@ int database_choose_name(char *string)
     return ERR_OK;
 }
 
+// Импорт студентов из файла в таблицу студентов
 int database_import_students(FILE *file, students_t *students, size_t *count)
 {
     rewind(file);
@@ -54,6 +57,7 @@ int database_import_students(FILE *file, students_t *students, size_t *count)
     return rc;
 }
 
+// Сохранение таблицы ключей в файл 
 int database_save(char *filename, students_t *students, size_t count)
 {
     FILE *file;

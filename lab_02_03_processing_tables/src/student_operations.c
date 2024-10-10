@@ -13,27 +13,19 @@ int string_to_double(const char *str, double *result, size_t count)
     strncpy(string, str, count);
     string[count] = 0;
 
-    errno = 0; // Сбрасываем errno перед вызовом strtod
+    errno = 0; // Сбрасываем errno
     *result = strtod(string, &endptr);
 
     // Проверяем ошибки
     if (errno == ERANGE)
-    {
-        // printf("Ошибка: число выходит за пределы допустимого диапазона.\n");
-        return ERR_CONVERTATION_DOUBLE; // Можно также выбросить ошибку или обработать иначе
-    }
+        return ERR_CONVERTATION_DOUBLE;
 
-    // Проверяем, было ли преобразование успешным
     if (endptr == string)
-    {
-        // printf("Ошибка: строка не содержит валидного числа.\n");
-        return ERR_CONVERTATION_DOUBLE; // Или иная обработка ошибки
-    }
+        return ERR_CONVERTATION_DOUBLE;
 
     if (*endptr != 0)
         return ERR_CONVERTATION_DOUBLE;
 
-    // Успешное преобразование
     return ERR_OK;
 }
 
@@ -122,9 +114,8 @@ int student_input(FILE *file, students_t *students, size_t count)
     token_len = strcspn(ptr, DELIMETER);
     if (token_len > 1)
         return ERR_TOO_LONG_FIELD;
-
     students[count].type = *ptr;
-    // TO DO Оптимизация ифа
+
     if (*ptr == 'F')
     {
         ptr += 2;
@@ -236,12 +227,7 @@ int student_input(FILE *file, students_t *students, size_t count)
     return ERR_OK;
 }
 
-/**
- * @brief Сохранение структуры одного студента в файл
- * @param
- * @param
- * @return
- */
+// Сохранение структуры одного студента в файл
 void student_save(FILE *file, students_t student)
 {
     fprintf(file, "%s;%s;%s;%c;%.2f;%d;%c;", student.surname, student.name, student.group, student.gender, student.average_score, student.admission_year, student.type);
@@ -259,12 +245,7 @@ void student_save(FILE *file, students_t student)
     }
 }
 
-/**
- * @brief Вывод структуры студента на экран
- * @param
- * @param
- * @return
- */
+// Вывод структуры студента на экран
 void student_print(students_t student)
 {
     int padding = (MAX_SURNAME_LEN - (int)strlen(student.surname)) / 2;

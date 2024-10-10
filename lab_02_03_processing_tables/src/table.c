@@ -3,6 +3,8 @@
 #include <string.h>
 #include "utils.h"
 
+
+// Функция реализует создание таблицы ключей из таблицы студентов
 void create_key_table(table_t *key_table, students_t *array, size_t count)
 {
     
@@ -13,7 +15,7 @@ void create_key_table(table_t *key_table, students_t *array, size_t count)
     }
 }
 
-// Сортировка вставками
+// Функция сортирует таблицу ключей. Метод: сортировка вставками
 void key_table_sort(table_t table[], size_t count)
 {
     table_t key;
