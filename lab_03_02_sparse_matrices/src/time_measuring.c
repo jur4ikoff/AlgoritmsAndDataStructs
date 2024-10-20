@@ -1,4 +1,4 @@
-#include "time_measuring.h"
+/*#include "time_measuring.h"
 #include <time.h>
 #include "database_operations.h"
 #include "table.h"
@@ -187,3 +187,5 @@ int compare_times(void)
     free(table_2);
     return ERR_OK;
 }
+*/
+#include <stdio.h>

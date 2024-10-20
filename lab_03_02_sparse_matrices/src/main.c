@@ -32,10 +32,115 @@
 Для того, чтобы программа работала без лишнего вывода, запустить с флагом --quite*/
 
 #include <stdio.h>
-
+#include <stdbool.h>
 #include "errors.h"
+#include "constants.h"
 
-int main(int argc, char **argv)
+typedef enum
+{
+    MENU_EXIT,
+    MENU_FILL_MANUAL,
+    MENU_FILL_RANDOM,
+    MENU_PRINT_DEF,
+    MENU_PRINT_CSC,
+    MENU_ADD_DEF,
+    MENU_ADD_CSC,
+    MENU_COMPARE_EFFICIENCY,
+    MENU_HELP
+} menu_t;
+
+void print_menu(void)
+{
+    printf("\n"
+           "0 - Выход\n"
+           "1 - Заполнить матрицы вручную\n"
+           "2 - Заполнить матрицы рандомно\n"
+           "2 - Вывести матрицы\n"
+           "3 - Вывести матрицы в формате CSC\n"
+           "4 - Сложить матрицы в обычном виде\n"
+           "5 - Сложить матрицы в формате CSC\n"
+           "6 - Сравнить эффективность\n"
+           "7 - Справочная информация\n");
+}
+
+int input_operation(menu_t *operation)
+{
+    printf("Введите номер операции: ");
+    int input;
+    if (scanf("%d", &input) != ERR_OK)
+        return ERR_INPUT_OPERATION;
+
+    fgetc(stdin);
+
+    if (input < 0 || input > MAX_OPERATION)
+        return ERR_RANGE_OPERATION;
+
+    *operation = (menu_t)input;
+    return ERR_OK;
+}
+
+void help(void)
+{
+    printf("Программа для сложения разреженных матриц в обычном виде, и в формате csc\n"
+           "Для того чтобы заполнить две матрицы вручную, нужно ввести путь к двум файлам следующей структуры:\n"
+           "На первой строке количество строк и столбцов\n"
+           "На последующих строках находится целочисленная матрица\n\n");
+}
+
+int main(void)
 {
     int rc = ERR_OK;
+    print_menu();
+
+    while (true)
+    {
+        menu_t operation;
+        if ((rc = input_operation(&operation)) != ERR_OK)
+        {
+            print_error_message(rc);
+            return rc;
+        }
+
+        switch (operation)
+        {
+        case MENU_EXIT:
+            // Выход из программы
+            printf("Успешное завершение работы программы\n");
+            return rc;
+
+        case MENU_FILL_MANUAL:
+            // Заполнение матриц вручную
+            break;
+
+        case MENU_FILL_RANDOM:
+            // Заполнение матрицы рандомно
+            break;
+
+        case MENU_PRINT_DEF:
+            // Вывод матрицы в обычном виде
+            break;
+
+        case MENU_PRINT_CSC:
+            // Вывод матрицы в формате CSC
+            break;
+
+        case MENU_ADD_DEF:
+            // Сложение матриц в обычном виде
+            break;
+
+        case MENU_ADD_CSC:
+            // Сложение матриц в формате CSC
+            break;
+
+        case MENU_COMPARE_EFFICIENCY:
+            // Сравнение эффект
+            break;
+        case MENU_HELP:
+            // Справочная информация
+            help();
+            break;
+        }
+    }
+
+    return rc;
 }
