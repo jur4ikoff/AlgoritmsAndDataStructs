@@ -219,9 +219,11 @@ int main(int argc, char **argv)
                 printf("Матрицы не заполнены\n");
             else
             {
+                printf("\nПервая матрица\n");
                 csc_1 = *convert_to_csc(&matrix_1);
                 print_csc_matrix(&csc_1);
 
+                printf("\nВторая матрица\n");
                 csc_2 = *convert_to_csc(&matrix_2);
                 print_csc_matrix(&csc_2);
             }
@@ -232,13 +234,19 @@ int main(int argc, char **argv)
                 printf("Матрицы не заполнены\n");
             else
             {
-                ;
+                if ((rc = add_matrix_t(matrix_1, matrix_2, &def_res)) != ERR_OK)
+                    break;
+                printf("Вывод результата сложения\n");
+                print_matrix(def_res);
             }
         }
         else if (operation == MENU_ADD_CSC)
         {
             // Сложение матриц в формате CSC
-            (void)csc_res;
+            if (matrix_1.rows_count == 0 || matrix_1.columns_count == 0 || matrix_2.rows_count == 0 || matrix_2.columns_count == 0)
+                printf("Матрицы не заполнены\n");
+            else
+                (void)csc_res;
         }
         else if (operation == MENU_COMPARE_EFFICIENCY)
         {

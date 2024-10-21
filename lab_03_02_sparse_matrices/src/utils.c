@@ -94,6 +94,24 @@ int get_matrix_info(FILE *file, int *row, int *column)
     return ERR_OK;
 }
 
+void *max(void *value_1, void *value_2, size_t width)
+{
+    unsigned char buf1[MAX_WIDTH];
+    unsigned char buf2[MAX_WIDTH];
+
+    memcpy(buf1, value_1, width);
+    memcpy(buf2, value_2, width);
+
+    for (size_t i = 0; i < width; i++)
+    {
+        if (buf1[i] > buf2[i])
+            return value_1;
+        else
+            return value_2;
+    }
+    return value_1;
+}
+
 /**
  * @brief Функция меняет местами элементы массива
 

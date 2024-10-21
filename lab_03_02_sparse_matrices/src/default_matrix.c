@@ -97,3 +97,27 @@ int random_fill_default_matrix(matrix_t *matrix)
 
     return rc;
 }
+
+int add_matrix_t(matrix_t matrix_1, matrix_t matrix_2, matrix_t *res)
+{
+    int rc = ERR_OK;
+
+    if (matrix_1.columns_count != matrix_2.columns_count || matrix_1.rows_count != matrix_2.rows_count)
+        return ERR_MATRIX_SIZE_NOT_EQ;
+
+    if ((rc = create_default_matrix(res, matrix_1.rows_count, matrix_1.columns_count)) != ERR_OK)
+        return rc;
+
+    res->rows_count = matrix_1.rows_count;
+    res->columns_count = matrix_1.columns_count;
+
+    for (size_t i = 0; i < res->columns_count; i++)
+    {
+        for (size_t j = 0; j < res->columns_count; j++)
+        {
+            res->values[i][j] = matrix_1.values[i][j] + matrix_2.values[i][j];
+        }
+    }
+
+    return rc;
+}

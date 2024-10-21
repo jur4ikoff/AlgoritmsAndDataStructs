@@ -21,7 +21,7 @@ static size_t count_non_zero_elements(matrix_t *matrix)
 
 csc_t *convert_to_csc(matrix_t *matrix)
 {
-    print_matrix(*matrix);
+    // print_matrix(*matrix);
     csc_t *csc_matrix = (csc_t *)calloc(1, sizeof(csc_t));
     csc_matrix->rows_count = matrix->rows_count;
     csc_matrix->columns_count = matrix->columns_count;
@@ -71,7 +71,7 @@ void print_csc_matrix(csc_t *matrix)
     printf("Values\n");
     for (size_t i = 0; i < matrix->nz_count; i++)
     {
-        printf("%4d ", matrix->values[i]);
+        printf("%d ", matrix->values[i]);
     }
     printf("\n");
 

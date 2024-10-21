@@ -37,5 +37,8 @@ void print_error_message(short int arg)
     case ERR_INPUT_INTEGER_NUMBER_RANGE:
         printf("Ошибка, введенное число выходит за диапазон разрешенных значений\n");
         break;
+    case ERR_MATRIX_SIZE_NOT_EQ:
+        printf("Ошибка, при сложении, матрицы должны быть одинакого размера");
+        break;
     }
 }
