@@ -38,6 +38,7 @@
 #include "constants.h"
 #include "utils.h"
 #include "default_matrix.h"
+#include "csc_matrix.h"
 
 typedef enum
 {
@@ -57,12 +58,12 @@ void print_menu(void)
     printf("0 - Выход\n"
            "1 - Заполнить матрицы вручную\n"
            "2 - Заполнить матрицы рандомно\n"
-           "2 - Вывести матрицы\n"
-           "3 - Вывести матрицы в формате CSC\n"
-           "4 - Сложить матрицы в обычном виде\n"
-           "5 - Сложить матрицы в формате CSC\n"
-           "6 - Сравнить эффективность\n"
-           "7 - Справочная информация\n");
+           "3 - Вывести матрицы\n"
+           "4 - Вывести матрицы в формате CSC\n"
+           "5 - Сложить матрицы в обычном виде\n"
+           "6 - Сложить матрицы в формате CSC\n"
+           "7 - Сравнить эффективность\n"
+           "8 - Справочная информация\n");
 }
 
 int input_operation(menu_t *operation)
@@ -94,8 +95,10 @@ int main(int argc, char **argv)
     print_menu();
     char filename_first[MAX_PATH_SIZE + 1], filename_second[MAX_PATH_SIZE + 1];
     matrix_t matrix_1 = {0}, matrix_2 = {0}, def_res = {0};
+    csc_t *csc_1 = {0}, *csc_2 = {0}, *csc_res = {0};
     FILE *file_1 = NULL, *file_2 = NULL;
     bool is_manual = false;
+
     if (argc == 2 && strcmp(argv[1], "--manual") == 0)
     {
         is_manual = true;
@@ -273,18 +276,32 @@ int main(int argc, char **argv)
         }
         else if (operation == MENU_PRINT_CSC)
         {
-            // Вывод матрицы в формате CSC
-            ;
+            // Вывод матрицы в формате csc
+            if (matrix_1.rows_count == 0 || matrix_1.columns_count == 0 || matrix_2.rows_count == 0 || matrix_2.columns_count == 0)
+                printf("Матрицы не заполнены\n");
+            else
+            {
+                csc_1 = convert_to_csc(&matrix_1);
+                print_csc_matrix(csc_1);
+                
+                csc_2 = convert_to_csc(&matrix_2);
+                print_csc_matrix(csc_2);
+                
+            }
         }
         else if (operation == MENU_ADD_DEF)
         {
-            // Сложение матриц в обычном виде
-            ;
+            if (matrix_1.rows_count == 0 || matrix_1.columns_count == 0 || matrix_2.rows_count == 0 || matrix_2.columns_count == 0)
+                printf("Матрицы не заполнены\n");
+            else
+            {
+                ;
+            }
         }
         else if (operation == MENU_ADD_CSC)
         {
             // Сложение матриц в формате CSC
-            ;
+            (void)csc_res;
         }
         else if (operation == MENU_COMPARE_EFFICIENCY)
         {

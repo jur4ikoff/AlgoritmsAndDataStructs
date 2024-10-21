@@ -69,10 +69,10 @@ void free_default_matrix(matrix_t *matrix)
 int random_fill_default_matrix(matrix_t *matrix)
 {
     int n, m, percentiage, rc = ERR_OK;
-    if ((rc = input_integer(&n, "Введите количество строк в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
+    if ((rc = input_integer(&n, "Введите количество строк и столбцов в матрице: ", 0, MAX_SIZE)) != ERR_OK)
         return rc;
 
-    if ((rc = input_integer(&m, "Введите количество столбцов в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
+    if ((rc = input_integer(&m, "", 0, MAX_SIZE)) != ERR_OK)
         return rc;
 
     if ((rc = input_integer(&percentiage, "Введите процент заполнения первой матрицы: ", 0, 100)) != ERR_OK)
