@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "errors.h"
-#include "utils.h"
 #include "constants.h"
 #include "utils.h"
 
@@ -23,6 +23,7 @@ int int_len(long long value)
     return count;
 }
 */
+
 /**
  * @brief Функция для ввода строки
  */
@@ -40,6 +41,38 @@ int input_string(char *string, size_t max_len, char *message)
     if (strlen(string) < 1)
         return ERR_EMPTY_STRING;
     return ERR_OK;
+}
+
+/**
+ * @brief Функция для вычисления вероятности
+ */
+bool random_chance(int percentage)
+{
+
+    if (percentage <= 0)
+        return false;
+    if (percentage >= 100)
+        return true;
+
+    int random_value = rand() % 100;
+    return random_value < percentage;
+}
+
+/**
+ * @brief Функция реализует ввод целого числа от пользователя
+ */
+int input_integer(int *number, char* message, int low_edge, int max_edge)
+{
+    printf("%s", message);
+    if (scanf("%d", number) != 1)
+        return ERR_INPUT_INTEGER_NUMBER;
+    fgetc(stdin);
+    
+    if (*number < low_edge || *number > max_edge)
+        return ERR_INPUT_INTEGER_NUMBER_RANGE;
+    
+    return ERR_OK;
+
 }
 
 /**

@@ -21,7 +21,6 @@ int create_default_matrix(FILE *file, matrix_t *matrix)
     if (column < 1 || column > MAX_SIZE)
         return ERR_RANGE_MATRIX_SIZE;
 
-    printf("row %d, column %d\n", row, column);
     matrix->rows_count = (size_t)row;
     matrix->columns_count = (size_t)column;
 
@@ -36,7 +35,7 @@ int create_default_matrix(FILE *file, matrix_t *matrix)
     return ERR_OK;
 }
 
-int fill_matrix(FILE *file, matrix_t *matrix)
+int fill_matrix_from_file(FILE *file, matrix_t *matrix)
 {
     int el;
 
@@ -66,11 +65,14 @@ void print_matrix(const matrix_t matrix)
     }
 }
 
-void free_matrix(matrix_t *matrix)
+void free_default_matrix(matrix_t *matrix)
 {
     for (size_t i = 0; i < matrix->rows_count; i++)
     {
-        free(matrix->values[i]);
+        if (matrix->values[i])
+            free(matrix->values[i]);
     }
-    free(matrix->values);
+
+    if (matrix->values)
+        free(matrix->values);
 }

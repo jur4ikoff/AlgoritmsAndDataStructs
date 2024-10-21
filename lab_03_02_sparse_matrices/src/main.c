@@ -54,8 +54,7 @@ typedef enum
 
 void print_menu(void)
 {
-    printf("\n"
-           "0 - Выход\n"
+    printf("0 - Выход\n"
            "1 - Заполнить матрицы вручную\n"
            "2 - Заполнить матрицы рандомно\n"
            "2 - Вывести матрицы\n"
@@ -68,17 +67,17 @@ void print_menu(void)
 
 int input_operation(menu_t *operation)
 {
-    printf("Введите номер операции: ");
-    int input;
-    if (scanf("%d", &input) != 1)
-        return ERR_INPUT_OPERATION;
-    fgetc(stdin);
-
-    if (input < 0 || input > MAX_OPERATION)
-        return ERR_RANGE_OPERATION;
+    printf(">>Введите номер операции: ");
+    int input, rc = ERR_OK;
+    if ((rc = input_integer(&input, ">>Введите номер операции: ", 0, MAX_OPERATION)) != ERR_OK)
+    {
+        if (rc == ERR_INPUT_INTEGER_NUMBER_RANGE)
+            rc = ERR_RANGE_OPERATION;
+        return rc;
+    }
 
     *operation = (menu_t)input;
-    return ERR_OK;
+    return rc;
 }
 
 void help(void)
@@ -94,7 +93,8 @@ int main(int argc, char **argv)
     int rc = ERR_OK;
     print_menu();
     char filename_first[MAX_PATH_SIZE + 1], filename_second[MAX_PATH_SIZE + 1];
-    matrix_t matrix_1; // matrix_2;
+    matrix_t matrix_1 = {0}, matrix_2 = {0};
+    FILE *file_1 = NULL, *file_2 = NULL;
     bool is_manual = false;
     if (argc == 2 && strcmp(argv[1], "--manual") == 0)
     {
@@ -110,19 +110,20 @@ int main(int argc, char **argv)
             return rc;
         }
 
-        switch (operation)
+        if (operation == MENU_EXIT)
         {
-        case MENU_EXIT:
-            // Выход из программы
-            printf("Успешное завершение работы программы\n");
-            return rc;
-        case MENU_FILL_MANUAL:
-            // Заполнение матриц вручную
+            printf(">>Успешное завершение работы программы\n");
+            break;
+        }
+        else if (operation == MENU_FILL_MANUAL)
+        { // Заполнение матриц вручную
             // Ввод имени файла для первого файла
             if (is_manual)
             {
-                if ((rc = input_string(filename_first, MAX_PATH_SIZE, "Введите путь к файлу с первой матрицей: ")) != ERR_OK)
+                if ((rc = input_string(filename_first, MAX_PATH_SIZE, ">>Введите путь к файлу с первой матрицей: ")) != ERR_OK)
                 {
+                    free_default_matrix(&matrix_1);
+                    free_default_matrix(&matrix_2);
                     print_error_message(rc);
                     return rc;
                 }
@@ -132,69 +133,140 @@ int main(int argc, char **argv)
                 strcpy(filename_first, "matrix_1.txt");
             }
 
-            FILE *file_first = fopen(filename_first, "r");
-            if (file_first == NULL)
+            file_1 = fopen(filename_first, "r");
+            if (file_1 == NULL)
             {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                print_error_message(ERR_FILENAME);
+                return ERR_FILENAME;
+            }
+            if ((rc = create_default_matrix(file_1, &matrix_1)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                fclose(file_1);
+                print_error_message(rc);
+                return rc;
+            }
+
+            if ((rc = fill_matrix_from_file(file_1, &matrix_1)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                fclose(file_1);
+                print_error_message(rc);
+                return rc;
+            }
+            fclose(file_1);
+            printf(">>Матрица из файла %s\n успешно прочитана\n", filename_first);
+
+            // Ввод имени файла для второго файла
+            if (is_manual)
+            {
+                if ((rc = input_string(filename_second, MAX_PATH_SIZE, ">>Введите путь к файлу со второй матрицей: ")) != ERR_OK)
+                {
+                    free_default_matrix(&matrix_1);
+                    free_default_matrix(&matrix_2);
+                    print_error_message(rc);
+                    return rc;
+                }
+            }
+            else
+                strcpy(filename_second, "matrix_2.txt");
+
+            file_2 = fopen(filename_second, "r");
+            if (file_2 == NULL)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
                 print_error_message(ERR_FILENAME);
                 return ERR_FILENAME;
             }
 
-            if ((rc = create_default_matrix(file_first, &matrix_1)) != ERR_OK)
+            if ((rc = create_default_matrix(file_2, &matrix_2)) != ERR_OK)
             {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                fclose(file_2);
                 print_error_message(rc);
                 return rc;
             }
 
-            if ((rc = fill_matrix(file_first, &matrix_1)) != ERR_OK)
+            if ((rc = fill_matrix_from_file(file_2, &matrix_2)) != ERR_OK)
             {
-                print_error_message(rc);
-                return rc;
-            }
-            print_matrix(matrix_1);
-
-            free_matrix(&matrix_1); // УБРАТЬ НАХУЙ
-
-            fclose(file_first);
-            // Ввод имени файла для второго файла
-            if ((rc = input_string(filename_second, MAX_PATH_SIZE, "Введите путь к файлу со второй матрицей: ")) != ERR_OK)
-            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                fclose(file_2);
                 print_error_message(rc);
                 return rc;
             }
 
-            // заполнение матрицы из файла
-
-            break;
-
-        case MENU_FILL_RANDOM:
+            fclose(file_2);
+            printf(">>Матрица из файла %s\n успешно прочитана\n", filename_second);
+        }
+        else if (operation == MENU_FILL_RANDOM)
+        {
             // Заполнение матрицы рандомно
-            break;
+            int n, m, percentiage;
+            if ((rc = input_integer(&n, "Введите количество строк в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                print_error_message(rc);
+                return rc;
+            }
 
-        case MENU_PRINT_DEF:
+            if ((rc = input_integer(&m, "Введите количество столбцов в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                print_error_message(rc);
+                return rc;
+            }
+
+            if ((rc = input_integer(&percentiage, "Введите процент заполнения первой матрицы: ", 0, 100)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                print_error_message(rc);
+                return rc;
+            }
+
+        }
+        else if (operation == MENU_PRINT_DEF)
+        {
             // Вывод матрицы в обычном виде
-            break;
-
-        case MENU_PRINT_CSC:
+            ;
+        }
+        else if (operation == MENU_PRINT_CSC)
+        {
             // Вывод матрицы в формате CSC
-            break;
-
-        case MENU_ADD_DEF:
+            ;
+        }
+        else if (operation == MENU_ADD_DEF)
+        {
             // Сложение матриц в обычном виде
-            break;
-
-        case MENU_ADD_CSC:
+            ;
+        }
+        else if (operation == MENU_ADD_CSC)
+        {
             // Сложение матриц в формате CSC
-            break;
-
-        case MENU_COMPARE_EFFICIENCY:
+            ;
+        }
+        else if (operation == MENU_COMPARE_EFFICIENCY)
+        {
             // Сравнение эффект
-            break;
-        case MENU_HELP:
+            ;
+        }
+        else if (operation == MENU_HELP)
+        {
             // Справочная информация
             help();
-            break;
         }
     }
 
+    free_default_matrix(&matrix_1);
+    free_default_matrix(&matrix_2);
     return rc;
 }

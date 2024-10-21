@@ -12,7 +12,7 @@ typedef struct
 
 int create_default_matrix(FILE *file, matrix_t *matrix);
 void print_matrix(const matrix_t matrix);
-int fill_matrix(FILE *file, matrix_t *matrix);
-void free_matrix(matrix_t *matrix);
+int fill_matrix_from_file(FILE *file, matrix_t *matrix);
+void free_default_matrix(matrix_t *matrix);
 
 #endif

@@ -10,9 +10,6 @@ void print_error_message(short int arg)
 {
     switch (arg)
     {
-    case ERR_INPUT_OPERATION:
-        printf("Ошибка ввода операции\n");
-        break;
     case ERR_RANGE_OPERATION:
         printf("Ошибка, диапазона при выборе операции. Можно число от 0 до %d\n", MAX_OPERATION);
         break;
@@ -33,6 +30,12 @@ void print_error_message(short int arg)
         break;
     case ERR_FILENAME:
         printf("Ошибка, неверное имя файла\n");
+        break;
+    case ERR_INPUT_INTEGER_NUMBER:
+        printf("Ошибка при вводе целого числа\n");
+        break;
+    case ERR_INPUT_INTEGER_NUMBER_RANGE:
+        printf("Ошибка, введенное число выходит за диапазон разрешенных значений\n");
         break;
     }
 }
