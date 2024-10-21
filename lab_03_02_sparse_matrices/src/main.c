@@ -31,10 +31,13 @@
 /* Чтобы заполнить матрицы самостоятельно, нужно запустить программу с флагом --manual (./app.exe --manual),
 Для того, чтобы программа работала без лишнего вывода, запустить с флагом --quite*/
 
+#include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include "errors.h"
 #include "constants.h"
+#include "utils.h"
+#include "default_matrix.h"
 
 typedef enum
 {
@@ -67,9 +70,8 @@ int input_operation(menu_t *operation)
 {
     printf("Введите номер операции: ");
     int input;
-    if (scanf("%d", &input) != ERR_OK)
+    if (scanf("%d", &input) != 1)
         return ERR_INPUT_OPERATION;
-
     fgetc(stdin);
 
     if (input < 0 || input > MAX_OPERATION)
@@ -87,10 +89,17 @@ void help(void)
            "На последующих строках находится целочисленная матрица\n\n");
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     int rc = ERR_OK;
     print_menu();
+    char filename_first[MAX_PATH_SIZE + 1], filename_second[MAX_PATH_SIZE + 1];
+    matrix_t matrix_1; // matrix_2;
+    bool is_manual = false;
+    if (argc == 2 && strcmp(argv[1], "--manual") == 0)
+    {
+        is_manual = true;
+    }
 
     while (true)
     {
@@ -107,9 +116,54 @@ int main(void)
             // Выход из программы
             printf("Успешное завершение работы программы\n");
             return rc;
-
         case MENU_FILL_MANUAL:
             // Заполнение матриц вручную
+            // Ввод имени файла для первого файла
+            if (is_manual)
+            {
+                if ((rc = input_string(filename_first, MAX_PATH_SIZE, "Введите путь к файлу с первой матрицей: ")) != ERR_OK)
+                {
+                    print_error_message(rc);
+                    return rc;
+                }
+            }
+            else
+            {
+                strcpy(filename_first, "matrix_1.txt");
+            }
+
+            FILE *file_first = fopen(filename_first, "r");
+            if (file_first == NULL)
+            {
+                print_error_message(ERR_FILENAME);
+                return ERR_FILENAME;
+            }
+
+            if ((rc = create_default_matrix(file_first, &matrix_1)) != ERR_OK)
+            {
+                print_error_message(rc);
+                return rc;
+            }
+
+            if ((rc = fill_matrix(file_first, &matrix_1)) != ERR_OK)
+            {
+                print_error_message(rc);
+                return rc;
+            }
+            print_matrix(matrix_1);
+
+            free_matrix(&matrix_1); // УБРАТЬ НАХУЙ
+
+            fclose(file_first);
+            // Ввод имени файла для второго файла
+            if ((rc = input_string(filename_second, MAX_PATH_SIZE, "Введите путь к файлу со второй матрицей: ")) != ERR_OK)
+            {
+                print_error_message(rc);
+                return rc;
+            }
+
+            // заполнение матрицы из файла
+
             break;
 
         case MENU_FILL_RANDOM:
