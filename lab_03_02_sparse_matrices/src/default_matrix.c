@@ -1,32 +1,20 @@
+#include <stdlib.h>
 #include "default_matrix.h"
 #include "constants.h"
 #include "errors.h"
-#include <stdlib.h>
+#include "utils.h"
 
 /**
  * @brief Функция для считывания матрицы из файла
  */
-int create_default_matrix(FILE *file, matrix_t *matrix)
+int create_default_matrix(matrix_t *matrix, size_t row, size_t column)
 {
-    int row, column;
-    if (fscanf(file, "%d", &row) != 1)
-        return ERR_FILE_INPUT;
-
-    if (fscanf(file, "%d", &column) != 1)
-        return ERR_FILE_INPUT;
-
-    if (row < 1 || row > MAX_SIZE)
-        return ERR_RANGE_MATRIX_SIZE;
-
-    if (column < 1 || column > MAX_SIZE)
-        return ERR_RANGE_MATRIX_SIZE;
-
     matrix->rows_count = (size_t)row;
     matrix->columns_count = (size_t)column;
 
     matrix->values = (int **)calloc(row, sizeof(int *));
 
-    for (int i = 0; i < row; i++)
+    for (size_t i = 0; i < row; i++)
     {
         // Выделяем память для каждого ряда
         matrix->values[i] = calloc(column, sizeof(int));
@@ -75,4 +63,22 @@ void free_default_matrix(matrix_t *matrix)
 
     if (matrix->values)
         free(matrix->values);
+}
+
+int run_random_default_matrix_fill(matrix_t *matrix)
+{
+    int n, m, percentiage, rc = ERR_OK;
+    if ((rc = input_integer(&n, "Введите количество строк в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
+        return rc;
+
+    if ((rc = input_integer(&m, "Введите количество столбцов в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
+        return rc;
+
+    if ((rc = input_integer(&percentiage, "Введите процент заполнения первой матрицы: ", 0, 100)) != ERR_OK)
+        return rc;
+
+    matrix->rows_count = (size_t)n;
+    matrix->columns_count = (size_t)m;
+
+    return rc;
 }

@@ -67,7 +67,6 @@ void print_menu(void)
 
 int input_operation(menu_t *operation)
 {
-    printf(">>Введите номер операции: ");
     int input, rc = ERR_OK;
     if ((rc = input_integer(&input, ">>Введите номер операции: ", 0, MAX_OPERATION)) != ERR_OK)
     {
@@ -112,11 +111,12 @@ int main(int argc, char **argv)
 
         if (operation == MENU_EXIT)
         {
-            printf(">>Успешное завершение работы программы\n");
+            printf("Успешное завершение работы программы\n");
             break;
         }
         else if (operation == MENU_FILL_MANUAL)
         { // Заполнение матриц вручную
+            int n, m;
             // Ввод имени файла для первого файла
             if (is_manual)
             {
@@ -141,7 +141,18 @@ int main(int argc, char **argv)
                 print_error_message(ERR_FILENAME);
                 return ERR_FILENAME;
             }
-            if ((rc = create_default_matrix(file_1, &matrix_1)) != ERR_OK)
+
+            if ((rc =  get_matrix_info(file_1, &n, &m)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                fclose(file_1);
+                print_error_message(rc);
+                return rc;
+            }
+
+
+            if ((rc = create_default_matrix(&matrix_1, n, m)) != ERR_OK)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
@@ -159,7 +170,7 @@ int main(int argc, char **argv)
                 return rc;
             }
             fclose(file_1);
-            printf(">>Матрица из файла %s\n успешно прочитана\n", filename_first);
+            printf(">>Матрица из файла %s успешно прочитана\n", filename_first);
 
             // Ввод имени файла для второго файла
             if (is_manual)
@@ -184,7 +195,16 @@ int main(int argc, char **argv)
                 return ERR_FILENAME;
             }
 
-            if ((rc = create_default_matrix(file_2, &matrix_2)) != ERR_OK)
+            if ((rc =  get_matrix_info(file_2, &n, &m)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                fclose(file_2);
+                print_error_message(rc);
+                return rc;
+            }
+
+            if ((rc = create_default_matrix(&matrix_2, n, m)) != ERR_OK)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
@@ -203,36 +223,11 @@ int main(int argc, char **argv)
             }
 
             fclose(file_2);
-            printf(">>Матрица из файла %s\n успешно прочитана\n", filename_second);
+            printf(">>Матрица из файла %s успешно прочитана\n", filename_second);
         }
         else if (operation == MENU_FILL_RANDOM)
         {
             // Заполнение матрицы рандомно
-            int n, m, percentiage;
-            if ((rc = input_integer(&n, "Введите количество строк в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
-            {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                print_error_message(rc);
-                return rc;
-            }
-
-            if ((rc = input_integer(&m, "Введите количество столбцов в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
-            {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                print_error_message(rc);
-                return rc;
-            }
-
-            if ((rc = input_integer(&percentiage, "Введите процент заполнения первой матрицы: ", 0, 100)) != ERR_OK)
-            {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                print_error_message(rc);
-                return rc;
-            }
-
         }
         else if (operation == MENU_PRINT_DEF)
         {

@@ -61,18 +61,37 @@ bool random_chance(int percentage)
 /**
  * @brief Функция реализует ввод целого числа от пользователя
  */
-int input_integer(int *number, char* message, int low_edge, int max_edge)
+int input_integer(int *number, char *message, int low_edge, int max_edge)
 {
     printf("%s", message);
     if (scanf("%d", number) != 1)
         return ERR_INPUT_INTEGER_NUMBER;
     fgetc(stdin);
-    
+
     if (*number < low_edge || *number > max_edge)
         return ERR_INPUT_INTEGER_NUMBER_RANGE;
-    
-    return ERR_OK;
 
+    return ERR_OK;
+}
+
+/**
+ * @brief Функция считывает из файла количество строк и количество столбцов
+ */
+int get_matrix_info(FILE *file, int *row, int *column)
+{
+    if (fscanf(file, "%d", row) != 1)
+        return ERR_FILE_INPUT;
+
+    if (fscanf(file, "%d", column) != 1)
+        return ERR_FILE_INPUT;
+
+    if (*row < 1 || *row > MAX_SIZE)
+        return ERR_RANGE_MATRIX_SIZE;
+
+    if (*column < 1 || *column > MAX_SIZE)
+        return ERR_RANGE_MATRIX_SIZE;
+
+    return ERR_OK;
 }
 
 /**
