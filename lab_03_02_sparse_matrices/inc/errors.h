@@ -12,5 +12,6 @@
 #define ERR_INPUT_INTEGER_NUMBER 8
 #define ERR_INPUT_INTEGER_NUMBER_RANGE 9
 #define ERR_MATRIX_SIZE_NOT_EQ 10
+#define ERR_MEMORY_ALLOCATION 11
 void print_error_message(short int arg);
 #endif

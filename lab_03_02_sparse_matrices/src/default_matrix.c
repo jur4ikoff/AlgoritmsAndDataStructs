@@ -14,11 +14,15 @@ int create_default_matrix(matrix_t *matrix, size_t row, size_t column)
     matrix->columns_count = (size_t)column;
 
     matrix->values = (int **)calloc(row, sizeof(int *));
+    if (matrix->values == NULL)
+        return ERR_MEMORY_ALLOCATION;
 
     for (size_t i = 0; i < row; i++)
     {
         // Выделяем память для каждого ряда
         matrix->values[i] = calloc(column, sizeof(int));
+        if (matrix->values[i] == NULL)
+            return ERR_MEMORY_ALLOCATION;
     }
 
     return ERR_OK;

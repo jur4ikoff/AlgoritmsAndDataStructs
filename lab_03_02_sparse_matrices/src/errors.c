@@ -40,5 +40,8 @@ void print_error_message(short int arg)
     case ERR_MATRIX_SIZE_NOT_EQ:
         printf("Ошибка, при сложении, матрицы должны быть одинакого размера");
         break;
+    case ERR_MEMORY_ALLOCATION:
+        printf("Ошибка при выделении памяти");
+        break;
     }
 }

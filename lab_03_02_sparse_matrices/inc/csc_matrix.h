@@ -13,6 +13,8 @@ typedef struct
     size_t rows_count;
     size_t columns_count;
     size_t nz_count;
+
+    int rc;
 } csc_t;
 
 csc_t *convert_to_csc(matrix_t *matrix);
