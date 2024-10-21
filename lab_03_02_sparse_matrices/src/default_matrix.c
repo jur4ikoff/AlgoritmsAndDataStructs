@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include "default_matrix.h"
 #include "constants.h"
 #include "errors.h"
@@ -47,7 +48,7 @@ void print_matrix(const matrix_t matrix)
     {
         for (size_t j = 0; j < matrix.columns_count; j++)
         {
-            printf("%d ", matrix.values[i][j]);
+            printf("%5d ", matrix.values[i][j]);
         }
         printf("\n");
     }
@@ -65,7 +66,7 @@ void free_default_matrix(matrix_t *matrix)
         free(matrix->values);
 }
 
-int run_random_default_matrix_fill(matrix_t *matrix)
+int random_fill_default_matrix(matrix_t *matrix)
 {
     int n, m, percentiage, rc = ERR_OK;
     if ((rc = input_integer(&n, "Введите количество строк в первой матрице: ", 0, MAX_SIZE)) != ERR_OK)
@@ -79,6 +80,20 @@ int run_random_default_matrix_fill(matrix_t *matrix)
 
     matrix->rows_count = (size_t)n;
     matrix->columns_count = (size_t)m;
+
+    if ((rc = create_default_matrix(matrix, matrix->rows_count, matrix->columns_count)))
+        return rc;
+
+    for (size_t i = 0; i < matrix->rows_count; i++)
+    {
+        for (size_t j = 0; j < matrix->columns_count; j++)
+        {
+            if (random_chance(percentiage))
+            {
+                matrix->values[i][j] = rand() % 10000;
+            }
+        }
+    }
 
     return rc;
 }

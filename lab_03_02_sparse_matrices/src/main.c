@@ -84,7 +84,8 @@ void help(void)
     printf("Программа для сложения разреженных матриц в обычном виде, и в формате csc\n"
            "Для того чтобы заполнить две матрицы вручную, нужно ввести путь к двум файлам следующей структуры:\n"
            "На первой строке количество строк и столбцов\n"
-           "На последующих строках находится целочисленная матрица\n\n");
+           "На последующих строках находится целочисленная матрица\n\n"
+           "Для удобного вывода, записывайте числа, длинной не больше 4 знаков\n");
 }
 
 int main(int argc, char **argv)
@@ -92,7 +93,7 @@ int main(int argc, char **argv)
     int rc = ERR_OK;
     print_menu();
     char filename_first[MAX_PATH_SIZE + 1], filename_second[MAX_PATH_SIZE + 1];
-    matrix_t matrix_1 = {0}, matrix_2 = {0};
+    matrix_t matrix_1 = {0}, matrix_2 = {0}, def_res = {0};
     FILE *file_1 = NULL, *file_2 = NULL;
     bool is_manual = false;
     if (argc == 2 && strcmp(argv[1], "--manual") == 0)
@@ -124,6 +125,7 @@ int main(int argc, char **argv)
                 {
                     free_default_matrix(&matrix_1);
                     free_default_matrix(&matrix_2);
+                    free_default_matrix(&def_res);
                     print_error_message(rc);
                     return rc;
                 }
@@ -138,24 +140,26 @@ int main(int argc, char **argv)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 print_error_message(ERR_FILENAME);
                 return ERR_FILENAME;
             }
 
-            if ((rc =  get_matrix_info(file_1, &n, &m)) != ERR_OK)
+            if ((rc = get_matrix_info(file_1, &n, &m)) != ERR_OK)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 fclose(file_1);
                 print_error_message(rc);
                 return rc;
             }
 
-
             if ((rc = create_default_matrix(&matrix_1, n, m)) != ERR_OK)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 fclose(file_1);
                 print_error_message(rc);
                 return rc;
@@ -165,6 +169,7 @@ int main(int argc, char **argv)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 fclose(file_1);
                 print_error_message(rc);
                 return rc;
@@ -179,6 +184,7 @@ int main(int argc, char **argv)
                 {
                     free_default_matrix(&matrix_1);
                     free_default_matrix(&matrix_2);
+                    free_default_matrix(&def_res);
                     print_error_message(rc);
                     return rc;
                 }
@@ -191,14 +197,16 @@ int main(int argc, char **argv)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 print_error_message(ERR_FILENAME);
                 return ERR_FILENAME;
             }
 
-            if ((rc =  get_matrix_info(file_2, &n, &m)) != ERR_OK)
+            if ((rc = get_matrix_info(file_2, &n, &m)) != ERR_OK)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 fclose(file_2);
                 print_error_message(rc);
                 return rc;
@@ -208,6 +216,7 @@ int main(int argc, char **argv)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 fclose(file_2);
                 print_error_message(rc);
                 return rc;
@@ -217,6 +226,7 @@ int main(int argc, char **argv)
             {
                 free_default_matrix(&matrix_1);
                 free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
                 fclose(file_2);
                 print_error_message(rc);
                 return rc;
@@ -228,11 +238,38 @@ int main(int argc, char **argv)
         else if (operation == MENU_FILL_RANDOM)
         {
             // Заполнение матрицы рандомно
+            if ((rc = random_fill_default_matrix(&matrix_1)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
+                print_error_message(rc);
+                return rc;
+            }
+            printf("Первая матрица успешно записана\n");
+
+            if ((rc = random_fill_default_matrix(&matrix_2)) != ERR_OK)
+            {
+                free_default_matrix(&matrix_1);
+                free_default_matrix(&matrix_2);
+                free_default_matrix(&def_res);
+                print_error_message(rc);
+                return rc;
+            }
+            printf("Вторая матрица успешно записана\n");
         }
         else if (operation == MENU_PRINT_DEF)
         {
             // Вывод матрицы в обычном виде
-            ;
+            if (matrix_1.rows_count == 0 || matrix_1.columns_count == 0 || matrix_2.rows_count == 0 || matrix_2.columns_count == 0)
+                printf("Матрицы не заполнены\n");
+            else
+            {
+                printf("\n————————————————————————————————————————————————————————————————————————————\nВывод первой матрицы:\n");
+                print_matrix(matrix_1);
+                printf("\n————————————————————————————————————————————————————————————————————————————\nВывод второй матрицы:\n");
+                print_matrix(matrix_2);
+            }
         }
         else if (operation == MENU_PRINT_CSC)
         {
