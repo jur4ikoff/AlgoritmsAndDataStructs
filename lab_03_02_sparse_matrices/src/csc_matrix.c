@@ -2,6 +2,7 @@
 #include "csc_matrix.h"
 #include "default_matrix.h"
 #include <stdlib.h>
+#include <string.h>
 
 static size_t count_non_zero_elements(matrix_t *matrix)
 {
@@ -55,7 +56,8 @@ void free_csc_matrix(csc_t *matrix)
     free(matrix->values);
     free(matrix->col_ptr);
     free(matrix->row_indices);
-    free(matrix);
+    
+    memset(matrix, 0, sizeof(*matrix));
 }
 
 void print_csc_matrix(csc_t *matrix)

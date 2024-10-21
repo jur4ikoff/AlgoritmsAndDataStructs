@@ -95,7 +95,7 @@ int main(int argc, char **argv)
     print_menu();
     char filename_first[MAX_PATH_SIZE + 1], filename_second[MAX_PATH_SIZE + 1];
     matrix_t matrix_1 = {0}, matrix_2 = {0}, def_res = {0};
-    csc_t *csc_1 = {0}, *csc_2 = {0}, *csc_res = {0};
+    csc_t csc_1 = {0}, csc_2 = {0}, csc_res = {0};
     FILE *file_1 = NULL, *file_2 = NULL;
     bool is_manual = false;
 
@@ -108,10 +108,7 @@ int main(int argc, char **argv)
     {
         menu_t operation;
         if ((rc = input_operation(&operation)) != ERR_OK)
-        {
-            print_error_message(rc);
-            return rc;
-        }
+            break;
 
         if (operation == MENU_EXIT)
         {
@@ -119,19 +116,14 @@ int main(int argc, char **argv)
             break;
         }
         else if (operation == MENU_FILL_MANUAL)
-        { // Заполнение матриц вручную
+        {
+            // Заполнение матриц вручную
             int n, m;
             // Ввод имени файла для первого файла
             if (is_manual)
             {
                 if ((rc = input_string(filename_first, MAX_PATH_SIZE, ">>Введите путь к файлу с первой матрицей: ")) != ERR_OK)
-                {
-                    free_default_matrix(&matrix_1);
-                    free_default_matrix(&matrix_2);
-                    free_default_matrix(&def_res);
-                    print_error_message(rc);
-                    return rc;
-                }
+                    break;
             }
             else
             {
@@ -140,42 +132,24 @@ int main(int argc, char **argv)
 
             file_1 = fopen(filename_first, "r");
             if (file_1 == NULL)
-            {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
-                print_error_message(ERR_FILENAME);
-                return ERR_FILENAME;
-            }
+                break;
 
             if ((rc = get_matrix_info(file_1, &n, &m)) != ERR_OK)
             {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
                 fclose(file_1);
-                print_error_message(rc);
-                return rc;
+                break;
             }
 
             if ((rc = create_default_matrix(&matrix_1, n, m)) != ERR_OK)
             {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
                 fclose(file_1);
-                print_error_message(rc);
-                return rc;
+                break;
             }
 
             if ((rc = fill_matrix_from_file(file_1, &matrix_1)) != ERR_OK)
             {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
                 fclose(file_1);
-                print_error_message(rc);
-                return rc;
+                break;
             }
             fclose(file_1);
             printf(">>Матрица из файла %s успешно прочитана\n", filename_first);
@@ -184,55 +158,31 @@ int main(int argc, char **argv)
             if (is_manual)
             {
                 if ((rc = input_string(filename_second, MAX_PATH_SIZE, ">>Введите путь к файлу со второй матрицей: ")) != ERR_OK)
-                {
-                    free_default_matrix(&matrix_1);
-                    free_default_matrix(&matrix_2);
-                    free_default_matrix(&def_res);
-                    print_error_message(rc);
-                    return rc;
-                }
+                    break;
             }
             else
                 strcpy(filename_second, "matrix_2.txt");
 
             file_2 = fopen(filename_second, "r");
             if (file_2 == NULL)
-            {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
-                print_error_message(ERR_FILENAME);
-                return ERR_FILENAME;
-            }
+                break;
 
             if ((rc = get_matrix_info(file_2, &n, &m)) != ERR_OK)
             {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
                 fclose(file_2);
-                print_error_message(rc);
-                return rc;
+                break;
             }
 
             if ((rc = create_default_matrix(&matrix_2, n, m)) != ERR_OK)
             {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
                 fclose(file_2);
-                print_error_message(rc);
-                return rc;
+                break;
             }
 
             if ((rc = fill_matrix_from_file(file_2, &matrix_2)) != ERR_OK)
             {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
                 fclose(file_2);
-                print_error_message(rc);
-                return rc;
+                break;
             }
 
             fclose(file_2);
@@ -242,23 +192,11 @@ int main(int argc, char **argv)
         {
             // Заполнение матрицы рандомно
             if ((rc = random_fill_default_matrix(&matrix_1)) != ERR_OK)
-            {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
-                print_error_message(rc);
-                return rc;
-            }
+                break;
             printf("Первая матрица успешно записана\n");
 
             if ((rc = random_fill_default_matrix(&matrix_2)) != ERR_OK)
-            {
-                free_default_matrix(&matrix_1);
-                free_default_matrix(&matrix_2);
-                free_default_matrix(&def_res);
-                print_error_message(rc);
-                return rc;
-            }
+                break;
             printf("Вторая матрица успешно записана\n");
         }
         else if (operation == MENU_PRINT_DEF)
@@ -281,12 +219,11 @@ int main(int argc, char **argv)
                 printf("Матрицы не заполнены\n");
             else
             {
-                csc_1 = convert_to_csc(&matrix_1);
-                print_csc_matrix(csc_1);
-                
-                csc_2 = convert_to_csc(&matrix_2);
-                print_csc_matrix(csc_2);
-                
+                csc_1 = *convert_to_csc(&matrix_1);
+                print_csc_matrix(&csc_1);
+
+                csc_2 = *convert_to_csc(&matrix_2);
+                print_csc_matrix(&csc_2);
             }
         }
         else if (operation == MENU_ADD_DEF)
@@ -317,5 +254,10 @@ int main(int argc, char **argv)
 
     free_default_matrix(&matrix_1);
     free_default_matrix(&matrix_2);
+    free_default_matrix(&def_res);
+    free_csc_matrix(&csc_1);
+    free_csc_matrix(&csc_2);
+    free_csc_matrix(&csc_res);
+    print_error_message(rc);
     return rc;
 }
