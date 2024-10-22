@@ -49,14 +49,10 @@ static double mean(double array[], size_t count)
     return mean;
 }
 
-static int create_random_matrix(matrix_t *matrix, size_t size, size_t percentiage)
+static void create_random_matrix(matrix_t *matrix, size_t size, size_t percentiage)
 {
-    int rc = ERR_OK;
     matrix->rows_count = (size_t)size;
     matrix->columns_count = (size_t)size;
-
-    if ((rc = create_default_matrix(matrix, matrix->rows_count, matrix->columns_count)))
-        return rc;
 
     for (size_t i = 0; i < matrix->rows_count; i++)
     {
@@ -68,7 +64,6 @@ static int create_random_matrix(matrix_t *matrix, size_t size, size_t percentiag
             }
         }
     }
-    return ERR_OK;
 }
 
 int run_profiling(void)
