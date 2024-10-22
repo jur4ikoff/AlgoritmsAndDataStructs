@@ -92,7 +92,7 @@ int run_profiling(void)
         
         while (size_cur <= MAX_EXP_SIZE)
         {
-            
+            printf("Замер матриц размером %zu, процент заполнения - %zu", size_cur, percentiage);
             create_default_matrix(&default_matrix_1, size_cur, size_cur);
             create_default_matrix(&default_matrix_2, size_cur, size_cur);
             create_default_matrix(&def_res, size_cur, size_cur);
