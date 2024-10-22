@@ -19,5 +19,6 @@ typedef struct
 
 csc_t convert_to_csc(matrix_t matrix);
 void free_csc_matrix(csc_t *matrix);
-void print_csc_matrix(csc_t *matrix);
+void print_csc_matrix(const csc_t matrix);
+int sum_csc_matrix(csc_t matrix_1, csc_t matrix_2, csc_t *result);
 #endif

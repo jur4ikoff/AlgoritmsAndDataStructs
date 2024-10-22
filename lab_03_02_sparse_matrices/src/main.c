@@ -226,7 +226,7 @@ int main(int argc, char **argv)
                     rc = csc_1.rc;
                     break;
                 }
-                print_csc_matrix(&csc_1);
+                print_csc_matrix(csc_1);
 
                 printf("\nВторая матрица\n");
                 csc_2 = convert_to_csc(matrix_2);
@@ -235,7 +235,7 @@ int main(int argc, char **argv)
                     rc = csc_2.rc;
                     break;
                 }
-                print_csc_matrix(&csc_2);
+                print_csc_matrix(csc_2);
             }
         }
         else if (operation == MENU_ADD_DEF)
@@ -256,7 +256,27 @@ int main(int argc, char **argv)
             if (matrix_1.rows_count == 0 || matrix_1.columns_count == 0 || matrix_2.rows_count == 0 || matrix_2.columns_count == 0)
                 printf("Матрицы не заполнены\n");
             else
-                (void)csc_res;
+            {
+                csc_1 = convert_to_csc(matrix_1);
+                if (csc_1.rc != ERR_OK)
+                {
+                    rc = csc_1.rc;
+                    break;
+                }
+
+                csc_2 = convert_to_csc(matrix_2);
+                if (csc_2.rc != ERR_OK)
+                {
+                    rc = csc_2.rc;
+                    break;
+                }
+
+                if ((rc = sum_csc_matrix(csc_1, csc_2, &csc_res)) != ERR_OK)
+                    break;
+
+                printf("Вывод матрицы\n");
+                print_csc_matrix(csc_res);
+            }
         }
         else if (operation == MENU_COMPARE_EFFICIENCY)
         {

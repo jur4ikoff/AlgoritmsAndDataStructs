@@ -80,32 +80,163 @@ void free_csc_matrix(csc_t *matrix)
     memset(matrix, 0, sizeof(*matrix));
 }
 
-void print_csc_matrix(csc_t *matrix)
+void print_csc_matrix(const csc_t matrix)
 {
-    if (matrix->nz_count == 0)
+    if (matrix.nz_count == 0)
     {
         printf("Матрица - пустая\n");
         return;
     }
 
     printf("Values\n");
-    for (size_t i = 0; i < matrix->nz_count; i++)
+    for (size_t i = 0; i < matrix.nz_count; i++)
     {
-        printf("%d ", matrix->values[i]);
+        printf("%d ", matrix.values[i]);
     }
     printf("\n");
 
     printf("Row Indices\n");
-    for (size_t i = 0; i < matrix->nz_count; i++)
+    for (size_t i = 0; i < matrix.nz_count; i++)
     {
-        printf("%d ", matrix->row_indices[i]);
+        printf("%d ", matrix.row_indices[i]);
     }
     printf("\n");
 
     printf("Column Pointers\n");
-    for (size_t i = 0; i <= matrix->columns_count; i++)
+    for (size_t i = 0; i <= matrix.columns_count; i++)
     {
-        printf("%d ", matrix->col_ptr[i]);
+        printf("%d ", matrix.col_ptr[i]);
     }
     printf("\n");
+}
+
+int add_csc_matrix(csc_t matrix_1, csc_t matrix_2, csc_t *result)
+{
+    if (matrix_1.rows_count != matrix_2.rows_count && matrix_1.columns_count != matrix_2.columns_count)
+        return ERR_MATRIX_SIZE_NOT_EQ;
+
+    result->rows_count = matrix_1.rows_count;
+    result->columns_count = matrix_1.columns_count;
+    result->nz_count = 0;
+
+    size_t non_zero_count = matrix_1.nz_count + matrix_2.nz_count;
+    result->values = malloc(non_zero_count * sizeof(int));
+    if (result->values == NULL)
+        return ERR_MEMORY_ALLOCATION;
+
+    result->row_indices = malloc(non_zero_count * sizeof(int));
+    if (result->row_indices == NULL)
+        return ERR_MEMORY_ALLOCATION;
+
+    result->col_ptr = malloc((result->columns_count + 1) * sizeof(int));
+    if (result->col_ptr == NULL)
+        return ERR_MEMORY_ALLOCATION;
+
+    result->rc = ERR_OK;
+    result->col_ptr[0] = 0;
+
+    size_t i = 0, j = 0;
+
+    for (size_t column = 0; column < result->columns_count; column++)
+    {
+        int sum = 0;
+
+        while ((int)i < matrix_1.col_ptr[column + 1])
+        {
+            sum += matrix_1.values[i];
+            result->row_indices[result->nz_count] = matrix_1.row_indices[i];
+            result->values[result->nz_count] = matrix_1.values[i];
+            result->nz_count++;
+            i++;
+        }
+
+        while ((int)j < matrix_2.col_ptr[column + 1])
+        {
+            sum += matrix_2.values[j];
+            result->row_indices[result->nz_count] = matrix_2.row_indices[j];
+            result->values[result->nz_count] = matrix_2.values[j];
+            result->nz_count++;
+            j++;
+        }
+
+        if (sum != 0)
+            result->values[result->nz_count - 1] = sum;
+
+        result->col_ptr[column + 1] = result->nz_count;
+    }
+
+    return ERR_OK;
+}
+
+int sum_csc_matrix(csc_t matrix_1, csc_t matrix_2, csc_t *result)
+{
+    if (matrix_1.rows_count != matrix_2.rows_count || matrix_1.columns_count != matrix_2.columns_count)
+    {
+        return ERR_MATRIX_SIZE_NOT_EQ;
+    }
+
+    size_t rows = matrix_1.rows_count;
+    size_t cols = matrix_1.columns_count;
+
+    // Инициализация результирующей матрицы
+    result->rows_count = rows;
+    result->columns_count = cols;
+
+    // В худшем максимальное количество ненулевых элементов будет равно сумме ненулевых элементов обеих матриц
+    result->nz_count = matrix_1.nz_count + matrix_2.nz_count;
+    result->values = (int *)malloc(result->nz_count * sizeof(int));
+    if (result->values == NULL)
+        return ERR_MEMORY_ALLOCATION;
+
+    result->row_indices = (int *)malloc(result->nz_count * sizeof(int));
+    if (result->row_indices == NULL)
+        return ERR_MEMORY_ALLOCATION;
+
+    result->col_ptr = (int *)calloc((cols + 1), sizeof(int));
+    if (result->col_ptr == NULL)
+        return ERR_MEMORY_ALLOCATION;
+    result->rc = 0;
+
+    // Суммируем две матрицы
+    int pos_result = 0; // Текущая позиция для заполнения в результирующей матрице
+    for (size_t j = 0; j < cols; ++j)
+    {
+        int idx_1 = matrix_1.col_ptr[j];
+        int idx_2 = matrix_2.col_ptr[j];
+
+        while (idx_1 < matrix_1.col_ptr[j + 1] || idx_2 < matrix_2.col_ptr[j + 1])
+        {
+            if (idx_1 < matrix_1.col_ptr[j + 1] && (idx_2 >= matrix_2.col_ptr[j + 1] || matrix_1.row_indices[idx_1] < matrix_2.row_indices[idx_2]))
+            {
+                // Добавляем элемент из первой матрицы
+                result->values[pos_result] = matrix_1.values[idx_1];
+                result->row_indices[pos_result] = matrix_1.row_indices[idx_1];
+                idx_1++;
+            }
+            else if (idx_2 < matrix_2.col_ptr[j + 1] && (idx_1 >= matrix_1.col_ptr[j + 1] || matrix_2.row_indices[idx_2] < matrix_1.row_indices[idx_1]))
+            {
+                // Добавляем элемент из второй матрицы
+                result->values[pos_result] = matrix_2.values[idx_2];
+                result->row_indices[pos_result] = matrix_2.row_indices[idx_2];
+                idx_2++;
+            }
+            else
+            {
+                // Элементы на одной строке, суммируем
+                result->values[pos_result] = matrix_1.values[idx_1] + matrix_2.values[idx_2];
+                result->row_indices[pos_result] = matrix_1.row_indices[idx_1];
+                idx_1++;
+                idx_2++;
+            }
+            pos_result++;
+        }
+
+        // Обновим указатель на столбцы
+        result->col_ptr[j + 1] = pos_result;
+    }
+
+    // Обновляем количество ненулевых элементов
+    result->nz_count = pos_result;
+
+    return ERR_OK;
 }
