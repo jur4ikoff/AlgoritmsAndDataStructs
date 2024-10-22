@@ -111,25 +111,3 @@ void *max(void *value_1, void *value_2, size_t width)
     }
     return value_1;
 }
-
-/**
- * @brief Функция меняет местами элементы массива
-
-static void swap(students_t *students, size_t index1, size_t index2)
-{
-    students_t temp = students[index1];
-    students[index1] = students[index2];
-    students[index2] = temp;
-}*/
-
-/**
- * @brief Функция удаяет элемент из массива по индексу
-
-void delete_from_array(students_t *array, size_t index_to_delete, size_t *count)
-{
-    for (size_t i = index_to_delete; i < *count - 1; i++)
-    {
-        swap(array, i, i + 1);
-    }
-    (*count)--;
-}*/

@@ -13,7 +13,7 @@ EXE_UNIT := unit_tests.exe
 CC := gcc # Выбор компилятора
 
 # gnu99 Для time.h
-CFLAGS := -std=c99 -I $(INC_DIR)/ -Werror -Wall -pedantic -Wfloat-conversion -Wfloat-equal -Wvla -Wextra # Флаги компиляции по умоланию
+CFLAGS := -std=gnu99 -I $(INC_DIR)/ -Werror -Wall -pedantic -Wfloat-conversion -Wfloat-equal -Wvla -Wextra # Флаги компиляции по умоланию
 LDFLAGS := -lm # Флаг линковки по умолчанию
 
 # Исходные файлы и объектные файлы

@@ -28,8 +28,7 @@
 матриц.
 */
 
-/* Чтобы заполнить матрицы самостоятельно, нужно запустить программу с флагом --manual (./app.exe --manual),
-Для того, чтобы программа работала без лишнего вывода, запустить с флагом --quite*/
+/* Чтобы заполнить путь к файлам с матрицей самостоятельно, нужно запустить программу с флагом --manual (./app.exe --manual)*/
 
 #include <string.h>
 #include <stdio.h>
@@ -39,6 +38,7 @@
 #include "utils.h"
 #include "default_matrix.h"
 #include "csc_matrix.h"
+#include "time_measuring.h"
 
 typedef enum
 {
@@ -280,8 +280,10 @@ int main(int argc, char **argv)
         }
         else if (operation == MENU_COMPARE_EFFICIENCY)
         {
-            // Сравнение эффект
-            ;
+            // Сравнение эффекта
+            printf("Запуск сравнения двух алгоритмов:\n");
+            if ((rc = run_profiling()) != ERR_OK)
+                break;
         }
         else if (operation == MENU_HELP)
         {

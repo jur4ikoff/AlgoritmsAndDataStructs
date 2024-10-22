@@ -1,191 +1,154 @@
-/*#include "time_measuring.h"
-#include <time.h>
-#include "database_operations.h"
-#include "table.h"
-#include "utils.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <string.h>
-#include "sort.h"
+#include <time.h>
+#include "time_measuring.h"
+#include "errors.h"
+#include "csc_matrix.h"
+#include "default_matrix.h"
 #include "utils.h"
 
-int compare_times(void)
+
+static double sum_time(double time_array[], size_t count)
 {
-    printf("Измерение времени выполнения программы с обычной сортировкой и сортировкой с помощью таблицы ключей\n"
-           "Чтобы выйти и получить результат, нажмите 0\n"
-           "Максимальное количество файлов - 10\n\n");
-
-    measuring measure_data[MAX_EXP_FILES];
-    students_t *array_students_1 = NULL, *array_students_2 = NULL;
-    table_t *table_1 = NULL, *table_2 = NULL;
-    struct timespec start, end;
-    long long time, sum = 0;
-
-    int rc = ERR_OK;
-    size_t read_count = 0;
-
-    array_students_1 = malloc(MAX_STUDENTS_COUNT * sizeof(students_t));
-    if (array_students_1 == NULL)
-        return ERR_MEMORY_ALLOCATION;
-
-    array_students_2 = malloc(MAX_STUDENTS_COUNT * sizeof(students_t));
-    if (array_students_2 == NULL)
-        return ERR_MEMORY_ALLOCATION;
-
-    table_1 = malloc(MAX_STUDENTS_COUNT * sizeof(table_t));
-    if (table_1 == NULL)
-        return ERR_MEMORY_ALLOCATION;
-
-    table_2 = malloc(MAX_STUDENTS_COUNT * sizeof(table_t));
-    if (table_2 == NULL)
-        return ERR_MEMORY_ALLOCATION;
-
-    while (read_count < MAX_EXP_FILES)
+    double sum = 0;
+    for (size_t i = 0; i < count; i++)
     {
-        char filename[MAX_PATH_LEN];
-        printf("Введите название файла: ");
-        if ((rc = input_string(filename, MAX_PATH_LEN)) != ERR_OK)
-        {
-            free(array_students_1);
-            free(table_1);
-            return rc;
-        }
-
-        if (strcmp(filename, "0") == 0)
-            break;
-
-        FILE *file = fopen(filename, "r");
-        if (file == NULL)
-        {
-            free(array_students_1);
-            free(table_1);
-            return ERR_FILENAME;
-        }
-
-        size_t count = 0;
-        measure_data[read_count].size = count;
-
-        for (size_t i = 0; i < EXP_COUNT; i++)
-        {
-            rewind(file);
-            if ((rc = database_import_students(file, array_students_1, &count)) != ERR_OK)
-            {
-                free(array_students_1);
-                free(table_1);
-                return rc;
-            }
-
-            clock_gettime(CLOCK_REALTIME, &start);
-            qsort(array_students_1, count, sizeof(students_t), compare_surnames);
-            clock_gettime(CLOCK_REALTIME, &end);
-            time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
-            sum += time;
-            measure_data[read_count].time_def_qsort = sum / EXP_COUNT;
-            sum = 0;
-        }
-
-        for (size_t i = 0; i < EXP_COUNT; i++)
-        {
-            rewind(file);
-            if ((rc = database_import_students(file, array_students_2, &count)) != ERR_OK)
-            {
-                free(array_students_1);
-                free(array_students_2);
-                free(table_1);
-                free(table_2);
-                return rc;
-            }
-
-            clock_gettime(CLOCK_REALTIME, &start);
-            mysort(array_students_2, count, sizeof(students_t), compare_surnames);
-            clock_gettime(CLOCK_REALTIME, &end);
-            time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
-            sum += time;
-            measure_data[read_count].time_def_mysort = sum / EXP_COUNT;
-            sum = 0;
-        }
-
-        for (size_t i = 0; i < EXP_COUNT; i++)
-        {
-            rewind(file);
-            if ((rc = database_import_students(file, array_students_1, &count)) != ERR_OK)
-            {
-                free(array_students_1);
-                free(table_1);
-                return rc;
-            }
-            create_key_table(table_1, array_students_1, count);
-
-            clock_gettime(CLOCK_REALTIME, &start);
-            mysort(table_1, count, sizeof(table_t), compare_table);
-            clock_gettime(CLOCK_REALTIME, &end);
-            time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
-            sum += time;
-            measure_data[read_count].time_key_mysort = sum / EXP_COUNT;
-            sum = 0;
-        }
-
-        for (size_t i = 0; i < EXP_COUNT; i++)
-        {
-            rewind(file);
-            if ((rc = database_import_students(file, array_students_2, &count)) != ERR_OK)
-            {
-                free(array_students_1);
-                free(array_students_2);
-                free(table_1);
-                free(table_2);
-                return rc;
-            }
-            create_key_table(table_2, array_students_1, count);
-
-            clock_gettime(CLOCK_REALTIME, &start);
-            qsort(table_2, count, sizeof(table_t), compare_table);
-            clock_gettime(CLOCK_REALTIME, &end);
-            time = (long long)((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec));
-            sum += time;
-            measure_data[read_count].time_key_qsort = sum / EXP_COUNT;
-            sum = 0;
-        }
-        printf("Таблица занимает в памяти - %lu байтов, Таблица ключей занимает в памяти - %lu байтов \n", sizeof(students_t) * count, sizeof(table_t) * count);
-
-        measure_data[read_count].size = count;
-        printf("В случае qsort, использование таблиц эффективнее на %.2f\n", (double)(measure_data[read_count].time_def_qsort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_def_qsort * 100);
-        // printf("qsort, эффективнее модернизированного bubble sort на %.2f%% (Для таблицы ключей)\n", (double)(measure_data[read_count].time_key_mysort - measure_data[read_count].time_key_qsort) / (double)measure_data[read_count].time_key_mysort * 100);
-        // printf("qsort, эффективнее модернизированного bubble sort на %.2f%%\n", (double)(measure_data[read_count].time_def_mysort - measure_data[read_count].time_def_qsort) / (double)measure_data[read_count].time_def_mysort * 100);
-        printf("Отношение быстрой сортировки основной таблицы к таблице ключей %.3f\n", (double)measure_data[read_count].time_def_qsort / (double)measure_data[read_count].time_key_qsort);
-        printf("Отношение cортировки пузырьком основной таблицы к таблице ключей %.3f\n", (double)measure_data[read_count].time_def_mysort / (double)measure_data[read_count].time_key_mysort);
-        read_count++;
+        sum += time_array[i];
     }
+    return sum;
+}
 
-    printf("Проведено эксперементов: %zu\n", read_count);
-    printf("Вывод результатов эксперемента в наносекундах\n");
-    printf("|____|____________|_____________|_________________|__________________|\n");
-    printf("|size| qsort main | mysort main | qsort key table | mysort key table |\n");
-    printf("|____|____________|_____________|_________________|__________________|\n");
-    int padding = 0;
-    for (size_t i = 0; i < read_count; i++)
+// Подсчет RSE
+static int calc_rse(double time_array[], size_t count, double *rse)
+{
+    double t_avg, dispersion = 0;
+    if (count <= 1)
+        return -1;
+    t_avg = sum_time(time_array, count) / count;
+
+    for (size_t i = 0; i < count; i++)
     {
-        printf("|%*s%zu%*s|", 0, "", measure_data[i].size, 4 - (int)int_len(measure_data[i].size), "");
-
-        // printf("$s ")
-        padding = (12 - (int)int_len(measure_data[i].time_def_qsort)) / 2;
-        printf("%*s%lld%*s|", padding, "", measure_data[i].time_def_qsort, 12 - padding - (int)int_len(measure_data[i].time_def_qsort), "");
-
-        padding = (13 - (int)int_len(measure_data[i].time_def_mysort)) / 2;
-        printf("%*s%lld%*s|", padding, "", measure_data[i].time_def_mysort, 13 - padding - (int)int_len(measure_data[i].time_def_mysort), "");
-
-        padding = (17 - (int)int_len(measure_data[i].time_key_qsort)) / 2;
-        printf("%*s%lld%*s|", padding, "", measure_data[i].time_key_qsort, 17 - padding - (int)int_len(measure_data[i].time_key_qsort), "");
-
-        padding = (18 - (int)int_len(measure_data[i].time_key_mysort)) / 2;
-        printf("%*s%lld%*s|\n", padding, "", measure_data[i].time_key_mysort, 18 - padding - (int)int_len(measure_data[i].time_key_mysort), "");
+        dispersion += pow((time_array[i] - t_avg), 2);
     }
-    printf("|____|____________|_____________|_________________|__________________|\n");
-
-    free(array_students_1);
-    free(array_students_2);
-    free(table_1);
-    free(table_2);
+    dispersion /= (count - 1);
+    double standard_deviation = sqrt(dispersion);
+    double std_error = standard_deviation / sqrt(count);
+    *rse = std_error * 100 / t_avg;
     return ERR_OK;
 }
-*/
-#include <stdio.h>
+
+static double mean(double array[], size_t count)
+{
+    double mean = 0;
+    for (size_t i = 0; i < count; i++)
+    {
+        mean += (array[i] - mean) / (i + 1);
+    }
+    return mean;
+}
+
+static int create_random_matrix(matrix_t *matrix, size_t size, size_t percentiage)
+{
+    int rc = ERR_OK;
+    matrix->rows_count = (size_t)size;
+    matrix->columns_count = (size_t)size;
+
+    if ((rc = create_default_matrix(matrix, matrix->rows_count, matrix->columns_count)))
+        return rc;
+
+    for (size_t i = 0; i < matrix->rows_count; i++)
+    {
+        for (size_t j = 0; j < matrix->columns_count; j++)
+        {
+            if (random_chance(percentiage))
+            {
+                matrix->values[i][j] = rand() % 10000;
+            }
+        }
+    }
+    return ERR_OK;
+}
+
+int run_profiling(void)
+{
+    struct timespec start_time, end_time;
+    size_t size_cur = 0, percentiage = 10, itteration_count = 0;
+    int rc = ERR_OK;
+    double time_array[MAX_ITERATIONS], rse = 100, time;
+    double cpu_time_default, cpu_time_csc;
+    matrix_t default_matrix_1 = {0}, default_matrix_2 = {0}, def_res = {0};
+    csc_t csc_matrix_1 = {0}, csc_matrix_2 = {0}, csc_res = {0};
+
+    while (percentiage < MAX_PERCENTIAGE)
+    {
+        char filename[MAX_PART_LEN];
+        snprintf(filename, sizeof(filename), "./data/matrix_%zu_fill.csv", percentiage);
+        FILE *file = fopen(filename, "w");
+        if (file == NULL)
+            return ERR_FILENAME;
+        fprintf(file, "size;def;csc\n");
+        
+        while (size_cur <= MAX_EXP_SIZE)
+        {
+            
+            create_default_matrix(&default_matrix_1, size_cur, size_cur);
+            create_default_matrix(&default_matrix_2, size_cur, size_cur);
+            create_default_matrix(&def_res, size_cur, size_cur);
+        
+            itteration_count = 0;
+            rse = 100;
+            // Прогон qsort
+            while ((itteration_count < MAX_ITERATIONS) && (rse > 1 || itteration_count < MIN_ITERATIONS))
+            {
+                create_random_matrix(&default_matrix_1, size_cur, percentiage); // Генерация рандомной матрицы
+                create_random_matrix(&default_matrix_2, size_cur, percentiage);
+
+                clock_gettime(CLOCK_REALTIME, &start_time);
+                add_matrix_t(default_matrix_1, default_matrix_2, &def_res);
+                clock_gettime(CLOCK_REALTIME, &end_time);
+                time = (double)((end_time.tv_sec - start_time.tv_sec) * 1e9 + (end_time.tv_nsec - start_time.tv_nsec));
+
+                time_array[itteration_count] = time;
+                itteration_count++;
+                calc_rse(time_array, itteration_count, &rse);
+            }
+            cpu_time_default = mean(time_array, itteration_count);
+
+            itteration_count = 0;
+            rse = 100;
+            // Прогон qsort
+            while ((itteration_count < MAX_ITERATIONS) && (rse > 1 || itteration_count < MIN_ITERATIONS))
+            {
+                create_random_matrix(&default_matrix_1, size_cur, percentiage); // Генерация рандомной матрицы
+                create_random_matrix(&default_matrix_2, size_cur, percentiage);
+                csc_matrix_1 = convert_to_csc(default_matrix_1);
+                csc_matrix_2 = convert_to_csc(default_matrix_2);
+
+                clock_gettime(CLOCK_REALTIME, &start_time);
+                sum_csc_matrix(csc_matrix_1, csc_matrix_2, &csc_res);
+                clock_gettime(CLOCK_REALTIME, &end_time);
+                time = (double)((end_time.tv_sec - start_time.tv_sec) * 1e9 + (end_time.tv_nsec - start_time.tv_nsec));
+
+                time_array[itteration_count] = time;
+                itteration_count++;
+                calc_rse(time_array, itteration_count, &rse);
+            }
+            cpu_time_csc = mean(time_array, itteration_count);
+            fprintf(file, "%zu;%.4f;%.4f\n", size_cur, cpu_time_default, cpu_time_csc);
+
+            free_default_matrix(&default_matrix_1);
+            free_default_matrix(&default_matrix_2);
+            free_default_matrix(&def_res);
+            free_csc_matrix(&csc_matrix_1);
+            free_csc_matrix(&csc_matrix_2);
+            free_csc_matrix(&csc_res);
+            size_cur += INCR_COEF;
+        }
+        percentiage += PERCENTIAGE_STEP;
+
+    fclose(file);
+    }
+    return rc;
+}
