@@ -65,27 +65,47 @@ static void create_random_matrix(matrix_t *matrix, size_t size, size_t percentia
     }
 }
 
+static long long get_total_size_csc(const csc_t matrix)
+{
+    long long total_size = sizeof(csc_t); // Размер самой структуры
+
+    // Добавляем размеры динамически выделенной памяти
+    total_size += matrix.nz_count * sizeof(int);            // Для values
+    total_size += matrix.nz_count * sizeof(int);            // Для row_indices
+    total_size += (matrix.columns_count + 1) * sizeof(int); // Для col_ptr (n+1)
+    return total_size;
+}
+
 int run_profiling(void)
 {
     struct timespec start_time, end_time;
-    size_t size_cur = 10, percentiage = 10, itteration_count = 0;
+    size_t size_cur = 2, percentiage = 10, itteration_count = 0;
     int rc = ERR_OK;
     double time_array[MAX_ITERATIONS], rse = 100, time;
     double cpu_time_default, cpu_time_csc;
     matrix_t default_matrix_1 = {0}, default_matrix_2 = {0}, def_res = {0};
     csc_t csc_matrix_1 = {0}, csc_matrix_2 = {0}, csc_res = {0};
+    long long memory_def, memory_csc;
 
-    while (percentiage <= MAX_PERCENTIAGE)
+    while (size_cur <= MAX_EXP_SIZE)
+
     {
-        size_cur = 10;
-        char filename[MAX_PART_LEN];
-        snprintf(filename, sizeof(filename), "./data/matrix_%zu_fill.csv", percentiage);
+        char filename[MAX_PART_LEN], memory_filename[MAX_PART_LEN];
+        snprintf(filename, sizeof(filename), "./data/matrix_%zu.csv", size_cur);
+        snprintf(memory_filename, sizeof(filename), "./data/memory_%zu.csv", size_cur);
+
         FILE *file = fopen(filename, "w");
         if (file == NULL)
             return ERR_FILENAME;
-        fprintf(file, "size;def;csc\n");
 
-        while (size_cur <= MAX_EXP_SIZE)
+        FILE *file_memory = fopen(memory_filename, "w");
+        if (file_memory == NULL)
+            return ERR_FILENAME;
+
+        fprintf(file, "fill;def;csc\n");
+        fprintf(file_memory, "fill;def;csc\n");
+        percentiage = 10;
+        while (percentiage <= MAX_PERCENTIAGE)
         {
             printf("Замер матриц размером %zu, процент заполнения - %zu\n", size_cur, percentiage);
             create_default_matrix(&default_matrix_1, size_cur, size_cur);
@@ -99,9 +119,11 @@ int run_profiling(void)
                 create_random_matrix(&default_matrix_1, size_cur, percentiage); // Генерация рандомной матрицы
                 create_random_matrix(&default_matrix_2, size_cur, percentiage);
 
+
                 clock_gettime(CLOCK_REALTIME, &start_time);
                 add_matrix_t(default_matrix_1, default_matrix_2, &def_res);
                 clock_gettime(CLOCK_REALTIME, &end_time);
+                memory_def = sizeof(def_res);
 
                 free_default_matrix(&def_res);
                 time = (double)((end_time.tv_sec - start_time.tv_sec) * 1e9 + (end_time.tv_nsec - start_time.tv_nsec));
@@ -119,12 +141,15 @@ int run_profiling(void)
             {
                 create_random_matrix(&default_matrix_1, size_cur, percentiage); // Генерация рандомной матрицы
                 create_random_matrix(&default_matrix_2, size_cur, percentiage);
+                print_matrix(default_matrix_1);
                 csc_matrix_1 = convert_to_csc(default_matrix_1);
                 csc_matrix_2 = convert_to_csc(default_matrix_2);
 
                 clock_gettime(CLOCK_REALTIME, &start_time);
                 sum_csc_matrix(csc_matrix_1, csc_matrix_2, &csc_res);
                 clock_gettime(CLOCK_REALTIME, &end_time);
+                printf("%zu %zu %zu\n", csc_matrix_1.nz_count, csc_matrix_2.nz_count, csc_res.nz_count);
+                memory_csc = get_total_size_csc(csc_res);
 
                 free_csc_matrix(&csc_matrix_1);
                 free_csc_matrix(&csc_matrix_2);
@@ -136,15 +161,18 @@ int run_profiling(void)
                 calc_rse(time_array, itteration_count, &rse);
             }
             cpu_time_csc = mean(time_array, itteration_count);
-            fprintf(file, "%zu;%.4f;%.4f\n", size_cur, cpu_time_default, cpu_time_csc);
+            fprintf(file, "%zu;%.4f;%.4f\n", percentiage, cpu_time_default, cpu_time_csc);
+            fprintf(file_memory, "%zu;%lld;%lld\n", percentiage, memory_def, memory_csc);
 
             free_default_matrix(&default_matrix_1);
             free_default_matrix(&default_matrix_2);
-            size_cur += INCR_COEF;
-        }
-        percentiage += PERCENTIAGE_STEP;
 
+            percentiage += PERCENTIAGE_STEP;
+        }
+
+        size_cur += INCR_COEF;
         fclose(file);
+        fclose(file_memory);
     }
     return rc;
 }
