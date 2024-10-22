@@ -9,7 +9,6 @@
 #include "default_matrix.h"
 #include "utils.h"
 
-
 static double sum_time(double time_array[], size_t count)
 {
     double sum = 0;
@@ -85,14 +84,13 @@ int run_profiling(void)
         if (file == NULL)
             return ERR_FILENAME;
         fprintf(file, "size;def;csc\n");
-        
+
         while (size_cur <= MAX_EXP_SIZE)
         {
             printf("Замер матриц размером %zu, процент заполнения - %zu\n", size_cur, percentiage);
             create_default_matrix(&default_matrix_1, size_cur, size_cur);
             create_default_matrix(&default_matrix_2, size_cur, size_cur);
-            create_default_matrix(&def_res, size_cur, size_cur);
-        
+
             itteration_count = 0;
             rse = 100;
             // Прогон qsort
@@ -104,6 +102,8 @@ int run_profiling(void)
                 clock_gettime(CLOCK_REALTIME, &start_time);
                 add_matrix_t(default_matrix_1, default_matrix_2, &def_res);
                 clock_gettime(CLOCK_REALTIME, &end_time);
+
+                free_default_matrix(&def_res);
                 time = (double)((end_time.tv_sec - start_time.tv_sec) * 1e9 + (end_time.tv_nsec - start_time.tv_nsec));
 
                 time_array[itteration_count] = time;
@@ -125,6 +125,10 @@ int run_profiling(void)
                 clock_gettime(CLOCK_REALTIME, &start_time);
                 sum_csc_matrix(csc_matrix_1, csc_matrix_2, &csc_res);
                 clock_gettime(CLOCK_REALTIME, &end_time);
+
+                free_csc_matrix(&csc_matrix_1);
+                free_csc_matrix(&csc_matrix_2);
+                free_csc_matrix(&csc_res);
                 time = (double)((end_time.tv_sec - start_time.tv_sec) * 1e9 + (end_time.tv_nsec - start_time.tv_nsec));
 
                 time_array[itteration_count] = time;
@@ -136,15 +140,11 @@ int run_profiling(void)
 
             free_default_matrix(&default_matrix_1);
             free_default_matrix(&default_matrix_2);
-            free_default_matrix(&def_res);
-            free_csc_matrix(&csc_matrix_1);
-            free_csc_matrix(&csc_matrix_2);
-            free_csc_matrix(&csc_res);
             size_cur += INCR_COEF;
         }
         percentiage += PERCENTIAGE_STEP;
 
-    fclose(file);
+        fclose(file);
     }
     return rc;
 }
