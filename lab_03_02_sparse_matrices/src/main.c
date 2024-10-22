@@ -220,11 +220,21 @@ int main(int argc, char **argv)
             else
             {
                 printf("\nПервая матрица\n");
-                csc_1 = *convert_to_csc(&matrix_1);
+                csc_1 = convert_to_csc(matrix_1);
+                if (csc_1.rc != ERR_OK)
+                {
+                    rc = csc_1.rc;
+                    break;
+                }
                 print_csc_matrix(&csc_1);
 
                 printf("\nВторая матрица\n");
-                csc_2 = *convert_to_csc(&matrix_2);
+                csc_2 = convert_to_csc(matrix_2);
+                if (csc_2.rc != ERR_OK)
+                {
+                    rc = csc_2.rc;
+                    break;
+                }
                 print_csc_matrix(&csc_2);
             }
         }

@@ -17,7 +17,7 @@ typedef struct
     int rc;
 } csc_t;
 
-csc_t *convert_to_csc(matrix_t *matrix);
+csc_t convert_to_csc(matrix_t matrix);
 void free_csc_matrix(csc_t *matrix);
 void print_csc_matrix(csc_t *matrix);
 #endif
