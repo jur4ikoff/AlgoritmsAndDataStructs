@@ -74,15 +74,16 @@ static int create_random_matrix(matrix_t *matrix, size_t size, size_t percentiag
 int run_profiling(void)
 {
     struct timespec start_time, end_time;
-    size_t size_cur = 0, percentiage = 10, itteration_count = 0;
+    size_t size_cur = 10, percentiage = 10, itteration_count = 0;
     int rc = ERR_OK;
     double time_array[MAX_ITERATIONS], rse = 100, time;
     double cpu_time_default, cpu_time_csc;
     matrix_t default_matrix_1 = {0}, default_matrix_2 = {0}, def_res = {0};
     csc_t csc_matrix_1 = {0}, csc_matrix_2 = {0}, csc_res = {0};
 
-    while (percentiage < MAX_PERCENTIAGE)
+    while (percentiage <= MAX_PERCENTIAGE)
     {
+        size_cur = 10;
         char filename[MAX_PART_LEN];
         snprintf(filename, sizeof(filename), "./data/matrix_%zu_fill.csv", percentiage);
         FILE *file = fopen(filename, "w");
@@ -92,7 +93,7 @@ int run_profiling(void)
         
         while (size_cur <= MAX_EXP_SIZE)
         {
-            printf("Замер матриц размером %zu, процент заполнения - %zu", size_cur, percentiage);
+            printf("Замер матриц размером %zu, процент заполнения - %zu\n", size_cur, percentiage);
             create_default_matrix(&default_matrix_1, size_cur, size_cur);
             create_default_matrix(&default_matrix_2, size_cur, size_cur);
             create_default_matrix(&def_res, size_cur, size_cur);

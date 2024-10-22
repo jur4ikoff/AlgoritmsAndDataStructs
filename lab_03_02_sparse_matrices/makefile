@@ -59,7 +59,7 @@ clean:
 	$(RM) *.exe $(OUT_DIR)/*.o *.o *.out $(OUT_DIR)/*.gcno $(OUT_DIR)/*.gcda $(OUT_DIR)/*.d *.gcov
 
 # Цель build release
-release: CFLAGS = CFLAGS := -std=c99 -I $(INC_DIR)/ -DNDEBUG -g0 # Флаги компиляции по умоланию 
+release: CFLAGS += -DNDEBUG -g0 # Флаги компиляции по умоланию 
 release: $(EXE_NAME)
 
 # Цель build debug

@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #define MAX_PART_LEN 256
-#define MAX_EXP_SIZE 1000
+#define MAX_EXP_SIZE 100
 #define MIN_ITERATIONS 10
 #define MAX_ITERATIONS 1000
 #define PERCENTIAGE_STEP 15
