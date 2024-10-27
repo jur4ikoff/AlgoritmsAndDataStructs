@@ -191,5 +191,8 @@ int run_profiling(void)
         fclose(file);
         fclose(file_memory);
     }
+
+    // Запуск скрипта для вывода информации
+    system("python3 src/print_res.py");
     return rc;
 }
