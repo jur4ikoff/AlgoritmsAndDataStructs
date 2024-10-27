@@ -28,6 +28,7 @@ int create_default_matrix(matrix_t *matrix, size_t row, size_t column)
     return ERR_OK;
 }
 
+// Заполнение матрицы из файла
 int fill_matrix_from_file(FILE *file, matrix_t *matrix)
 {
     int el;
@@ -46,6 +47,7 @@ int fill_matrix_from_file(FILE *file, matrix_t *matrix)
     return ERR_OK;
 }
 
+// Вывод матрицы на экран
 void print_matrix(const matrix_t matrix)
 {
     for (size_t i = 0; i < matrix.rows_count; i++)
@@ -58,6 +60,7 @@ void print_matrix(const matrix_t matrix)
     }
 }
 
+// Освобождение дефолтной матрицы
 void free_default_matrix(matrix_t *matrix)
 {
     for (size_t i = 0; i < matrix->rows_count; i++)
@@ -70,6 +73,7 @@ void free_default_matrix(matrix_t *matrix)
         free(matrix->values);
 }
 
+// Рандомное заполнение обычной матрицы
 int random_fill_default_matrix(matrix_t *matrix)
 {
     int n, m, percentiage, rc = ERR_OK;
@@ -102,6 +106,7 @@ int random_fill_default_matrix(matrix_t *matrix)
     return rc;
 }
 
+// Сложение обычных матриц
 int add_matrix_t(matrix_t matrix_1, matrix_t matrix_2, matrix_t *res)
 {
     int rc = ERR_OK;

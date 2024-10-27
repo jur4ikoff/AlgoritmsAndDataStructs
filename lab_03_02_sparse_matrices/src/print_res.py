@@ -16,8 +16,12 @@ for file in csv_files:
         full_path = os.path.join(data_directory, file)
         size = file.split(".")[0].split("_")[1]
         df = pd.read_csv(full_path, delimiter=";")
-        df['size'] = size
+        df["size"] = size
         memory_dataframes.append(df)
 
 memory_df = pd.concat(memory_dataframes, ignore_index=True)
+new_order = ["size", "fill", "def", "csc"]
+
+memory_df = memory_df.reindex(columns=new_order)
+memory_df = memory_df.sort_values(by='size')
 print(memory_df)

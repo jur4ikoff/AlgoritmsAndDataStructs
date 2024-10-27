@@ -10,6 +10,7 @@
 #include <string.h>
 #include <time.h>
 
+// Сложение массива double
 static double sum_time(double time_array[], size_t count)
 {
     double sum = 0;
@@ -39,6 +40,7 @@ static int calc_rse(double time_array[], size_t count, double *rse)
     return ERR_OK;
 }
 
+// Вычисление среднего
 static double mean(double array[], size_t count)
 {
     double mean = 0;
@@ -49,6 +51,7 @@ static double mean(double array[], size_t count)
     return mean;
 }
 
+// Заполнение матрицы нулями
 static void clear_matrix(matrix_t *matrix)
 {
     for (size_t i = 0; i < matrix->rows_count; i++)
@@ -60,6 +63,7 @@ static void clear_matrix(matrix_t *matrix)
     }
 }
 
+// Заполнение матрицы рандомными элементами
 static void create_random_matrix(matrix_t *matrix, size_t size, const size_t percentiage)
 {
     matrix->rows_count = (size_t)size;
@@ -78,6 +82,7 @@ static void create_random_matrix(matrix_t *matrix, size_t size, const size_t per
     }
 }
 
+// Подсчет размера csc матрицы
 static long long get_total_size_csc(size_t size, size_t percent)
 {
     long long total_size = sizeof(csc_t); // Размер самой структуры
@@ -96,8 +101,8 @@ int run_profiling(void)
     int rc = ERR_OK;
     double time_array[MAX_ITERATIONS], rse = 100, time;
     double cpu_time_default, cpu_time_csc;
-    matrix_t default_matrix_1 = { 0 }, default_matrix_2 = { 0 }, def_res = { 0 };
-    csc_t csc_matrix_1 = { 0 }, csc_matrix_2 = { 0 }, csc_res = { 0 };
+    matrix_t default_matrix_1 = {0}, default_matrix_2 = {0}, def_res = {0};
+    csc_t csc_matrix_1 = {0}, csc_matrix_2 = {0}, csc_res = {0};
     long long memory_def, memory_csc;
 
     while (size_cur <= MAX_EXP_SIZE)
@@ -176,15 +181,20 @@ int run_profiling(void)
                 clear_matrix(&default_matrix_2);
             }
             cpu_time_csc = mean(time_array, itteration_count);
+
+            // Получение объема памяти выделенной под матрицы
             memory_def = sizeof(def_res) + size_cur * size_cur * sizeof(int);
             memory_csc = sizeof(csc_res) + get_total_size_csc(size_cur, percentiage);
+
+            // Запись в файл
             fprintf(file, "%zu;%.4f;%.4f\n", percentiage, cpu_time_default, cpu_time_csc);
             fprintf(file_memory, "%zu;%lld;%lld\n", percentiage, memory_def, memory_csc);
 
-            percentiage += PERCENTIAGE_STEP;
-
+            // Освобождение памяти
             free_default_matrix(&default_matrix_1);
             free_default_matrix(&default_matrix_2);
+
+            percentiage += PERCENTIAGE_STEP;
         }
 
         size_cur += INCR_COEF;

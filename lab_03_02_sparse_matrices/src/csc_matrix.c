@@ -5,6 +5,7 @@
 #include <string.h>
 #include "errors.h"
 
+// Подсчет количества не нулевых символов
 static size_t count_non_zero_elements(matrix_t matrix)
 {
     size_t count = 0;
@@ -20,6 +21,7 @@ static size_t count_non_zero_elements(matrix_t matrix)
     return count;
 }
 
+// Конвиртирует обычную матрицу, в csc матрицу
 csc_t convert_to_csc(matrix_t matrix)
 {
     // print_matrix(*matrix);
@@ -71,6 +73,7 @@ csc_t convert_to_csc(matrix_t matrix)
     return csc_matrix;
 }
 
+// Освобождение csc матрицы
 void free_csc_matrix(csc_t *matrix)
 {
     free(matrix->values);
@@ -80,6 +83,7 @@ void free_csc_matrix(csc_t *matrix)
     memset(matrix, 0, sizeof(*matrix));
 }
 
+// Вывод csc матрицы на экран
 void print_csc_matrix(const csc_t matrix)
 {
     if (matrix.nz_count == 0)
@@ -110,64 +114,7 @@ void print_csc_matrix(const csc_t matrix)
     printf("\n");
 }
 
-int add_csc_matrix(csc_t matrix_1, csc_t matrix_2, csc_t *result)
-{
-    if (matrix_1.rows_count != matrix_2.rows_count && matrix_1.columns_count != matrix_2.columns_count)
-        return ERR_MATRIX_SIZE_NOT_EQ;
-
-    result->rows_count = matrix_1.rows_count;
-    result->columns_count = matrix_1.columns_count;
-    result->nz_count = 0;
-
-    size_t non_zero_count = matrix_1.nz_count + matrix_2.nz_count;
-    result->values = malloc(non_zero_count * sizeof(int));
-    if (result->values == NULL)
-        return ERR_MEMORY_ALLOCATION;
-
-    result->row_indices = malloc(non_zero_count * sizeof(int));
-    if (result->row_indices == NULL)
-        return ERR_MEMORY_ALLOCATION;
-
-    result->col_ptr = malloc((result->columns_count + 1) * sizeof(int));
-    if (result->col_ptr == NULL)
-        return ERR_MEMORY_ALLOCATION;
-
-    result->rc = ERR_OK;
-    result->col_ptr[0] = 0;
-
-    size_t i = 0, j = 0;
-
-    for (size_t column = 0; column < result->columns_count; column++)
-    {
-        int sum = 0;
-
-        while ((int)i < matrix_1.col_ptr[column + 1])
-        {
-            sum += matrix_1.values[i];
-            result->row_indices[result->nz_count] = matrix_1.row_indices[i];
-            result->values[result->nz_count] = matrix_1.values[i];
-            result->nz_count++;
-            i++;
-        }
-
-        while ((int)j < matrix_2.col_ptr[column + 1])
-        {
-            sum += matrix_2.values[j];
-            result->row_indices[result->nz_count] = matrix_2.row_indices[j];
-            result->values[result->nz_count] = matrix_2.values[j];
-            result->nz_count++;
-            j++;
-        }
-
-        if (sum != 0)
-            result->values[result->nz_count - 1] = sum;
-
-        result->col_ptr[column + 1] = result->nz_count;
-    }
-
-    return ERR_OK;
-}
-
+// Сложение csc матрицы
 int sum_csc_matrix(csc_t matrix_1, csc_t matrix_2, csc_t *result)
 {
     if (matrix_1.rows_count != matrix_2.rows_count || matrix_1.columns_count != matrix_2.columns_count)
