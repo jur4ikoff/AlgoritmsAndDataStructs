@@ -1,6 +1,8 @@
 import pandas as pd
 import os
 
+# pd.set_option('display.max_rows', None)
+
 # Получение пути к текущему скрипту
 script_path = os.path.abspath(__file__)
 # Получение директории, в которой находится скрипт
@@ -34,17 +36,33 @@ speed_df = speed_df.reindex(columns=new_order)
 
 memory_df['size'] = pd.to_numeric(memory_df['size'])
 memory_df['fill'] = pd.to_numeric(memory_df['fill'])
+memory_df['def'] = pd.to_numeric(memory_df['def'])
+memory_df['csc'] = pd.to_numeric(memory_df['csc'])
 memory_df = memory_df.sort_values(by=['size', "fill"], ascending=[True, True])
-memory_df['result'] = memory_df['def'] / memory_df['csc']
+memory_df['compare'] = memory_df['def'] / memory_df['csc']
 
 speed_df['size'] = pd.to_numeric(speed_df['size'])
 speed_df['fill'] = pd.to_numeric(speed_df['fill'])
+speed_df['def'] = pd.to_numeric(speed_df['def'])
+speed_df['csc'] = pd.to_numeric(speed_df['csc'])
 speed_df = speed_df.sort_values(by=['size', "fill"], ascending=[True, True])
-speed_df['result'] = speed_df['def'] / speed_df['csc']
+speed_df['compare'] = speed_df['def'] / speed_df['csc']
 
+print("Результаты по памяти")
 print(memory_df)
+print()
+print("Результаты по скорости")
 print(speed_df)
 
 
 memory_df.to_csv(f"{script_directory}/../memory.csv", sep=';', index=False)
 speed_df.to_csv(f"{script_directory}/../speed.csv",  sep=';', index=False)
+
+
+# print("Расчет корреляции")
+to_cor = speed_df[["size", "compare"]]
+correlation_matrix = to_cor.corr(method='pearson')
+
+print()
+print("Матрица корреляций размера и эффективности алгоритма:")
+print(correlation_matrix)
