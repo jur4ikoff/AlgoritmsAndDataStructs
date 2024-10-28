@@ -1,4 +1,4 @@
-# ЛР3 Обработка разреженных матриц
+![memory_chart](https://github.com/user-attachments/assets/08262f86-66b8-44ca-991d-b8521260e24e)# ЛР3 Обработка разреженных матриц
 
 ## Оглавление 
 - [ЛР3 Обработка разреженных матриц](#лр3-обработка-разреженных-матриц)
@@ -51,3 +51,10 @@
 
 
 ## Результат
+![speed_chart](https://github.com/user-attachments/assets/1796cb8f-3a96-4e9b-a8f0-a5d7099d9557)
+![memory_chart](https://github.com/user-attachments/assets/f4398278-50c4-4797-bdae-ff57d8089903)
+
+
+
+![speed_chart](https://github.com/user-attachments/assets/fe674ca8-acaf-4afe-b536-d29b15de41e7)
+![memory_chart](https://github.com/user-attachments/assets/45d72320-fab6-4bea-a472-64531fe9f026)
