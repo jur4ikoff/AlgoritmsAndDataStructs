@@ -97,19 +97,19 @@ static long long get_total_size_csc(size_t size, size_t percent)
 int run_profiling(void)
 {
     struct timespec start_time, end_time;
-    size_t size_cur = 0, percentiage = 10, itteration_count = 0;
+    int size_cur = 10, percentiage = 0, itteration_count = 0;
     int rc = ERR_OK;
     double time_array[MAX_ITERATIONS], rse = 100, time;
     double cpu_time_default, cpu_time_csc;
-    matrix_t default_matrix_1 = {0}, default_matrix_2 = {0}, def_res = {0};
-    csc_t csc_matrix_1 = {0}, csc_matrix_2 = {0}, csc_res = {0};
+    matrix_t default_matrix_1 = { 0 }, default_matrix_2 = { 0 }, def_res = { 0 };
+    csc_t csc_matrix_1 = { 0 }, csc_matrix_2 = { 0 }, csc_res = { 0 };
     long long memory_def, memory_csc;
 
     while (size_cur <= MAX_EXP_SIZE)
     {
         char filename[MAX_PART_LEN], memory_filename[MAX_PART_LEN];
-        snprintf(filename, sizeof(filename), "./data/matrix_%zu.csv", size_cur);
-        snprintf(memory_filename, sizeof(filename), "./data/memory_%zu.csv", size_cur);
+        snprintf(filename, sizeof(filename), "./data/matrix_%d.csv", size_cur);
+        snprintf(memory_filename, sizeof(filename), "./data/memory_%d.csv", size_cur);
 
         FILE *file = fopen(filename, "w");
         if (file == NULL)
@@ -121,10 +121,11 @@ int run_profiling(void)
 
         fprintf(file, "fill;def;csc\n");
         fprintf(file_memory, "fill;def;csc\n");
-        percentiage = 10;
+        percentiage = 0;
         while (percentiage <= MAX_PERCENTIAGE)
         {
-            printf("Замер матриц размером %zu, процент заполнения - %zu\n", size_cur, percentiage);
+
+            printf("Замер матриц размером %d, процент заполнения - %d\n", size_cur, percentiage);
             create_default_matrix(&default_matrix_1, size_cur, size_cur);
             create_default_matrix(&default_matrix_2, size_cur, size_cur);
 
@@ -187,8 +188,8 @@ int run_profiling(void)
             memory_csc = sizeof(csc_res) + get_total_size_csc(size_cur, percentiage);
 
             // Запись в файл
-            fprintf(file, "%zu;%.4f;%.4f\n", percentiage, cpu_time_default, cpu_time_csc);
-            fprintf(file_memory, "%zu;%lld;%lld\n", percentiage, memory_def, memory_csc);
+            fprintf(file, "%d;%.4f;%.4f\n", percentiage, cpu_time_default, cpu_time_csc);
+            fprintf(file_memory, "%d;%lld;%lld\n", percentiage, memory_def, memory_csc);
 
             // Освобождение памяти
             free_default_matrix(&default_matrix_1);
