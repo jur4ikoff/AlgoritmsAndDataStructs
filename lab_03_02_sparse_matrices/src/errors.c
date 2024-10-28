@@ -11,7 +11,7 @@ void print_error_message(short int arg)
     switch (arg)
     {
     case ERR_RANGE_OPERATION:
-        printf("Ошибка, диапазона при выборе операции. Можно число от 0 до %d\n", MAX_OPERATION);
+        printf("Ошибка при выборе операции. Можно число от 0 до %d\n", MAX_OPERATION);
         break;
     case ERR_INPUT_STRING:
         printf("Ошибка при вводе строки\n");

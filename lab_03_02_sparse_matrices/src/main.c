@@ -240,6 +240,7 @@ int main(int argc, char **argv)
         }
         else if (operation == MENU_ADD_DEF)
         {
+            // Сложение матриц в обычном виде
             if (matrix_1.rows_count == 0 || matrix_1.columns_count == 0 || matrix_2.rows_count == 0 || matrix_2.columns_count == 0)
                 printf("Матрицы не заполнены\n");
             else

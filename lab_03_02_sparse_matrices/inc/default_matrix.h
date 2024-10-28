@@ -2,7 +2,7 @@
 #define DEFAULT_MATRIX_H__
 #include <stdio.h>
 
-// Пока матрица только целочисленная
+// Матрица только целочисленная
 typedef struct
 {
     size_t rows_count;
