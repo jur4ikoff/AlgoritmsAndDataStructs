@@ -190,9 +190,17 @@ int main(int argc, char **argv)
         }
         else if (operation == MENU_FILL_RANDOM)
         {
-            // Заполнение матрицы рандомно
-            if ((rc = random_fill_default_matrix(&matrix_1)) != ERR_OK)
-                break;
+
+            // size_t test_count = 0;
+            /*for (size_t i = 0; i < 1000; i++)
+            {
+                if (random_chance(10))
+                    test_count++;
+            }*/
+            // printf("%.2f\n", (double)test_count / 1000);
+
+                // Заполнение матрицы рандомно
+                if ((rc = random_fill_default_matrix(&matrix_1)) != ERR_OK) break;
             printf("Первая матрица успешно записана\n");
 
             if ((rc = random_fill_default_matrix(&matrix_2)) != ERR_OK)
@@ -247,6 +255,7 @@ int main(int argc, char **argv)
             {
                 if ((rc = add_matrix_t(matrix_1, matrix_2, &def_res)) != ERR_OK)
                     break;
+
                 printf("Вывод результата сложения\n");
                 print_matrix(def_res);
             }

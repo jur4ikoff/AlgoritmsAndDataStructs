@@ -4,6 +4,7 @@
 #include "constants.h"
 #include "errors.h"
 #include "utils.h"
+#include <time.h>
 
 /**
  * @brief Функция для считывания матрицы из файла
@@ -92,16 +93,23 @@ int random_fill_default_matrix(matrix_t *matrix)
     if ((rc = create_default_matrix(matrix, matrix->rows_count, matrix->columns_count)))
         return rc;
 
+    srand(time(NULL));
+    // size_t test_count = 0;
+    // size_t all_count = 0;
     for (size_t i = 0; i < matrix->rows_count; i++)
     {
         for (size_t j = 0; j < matrix->columns_count; j++)
         {
             if (random_chance(percentiage))
             {
+                // test_count++;
                 matrix->values[i][j] = rand() % 10000;
             }
+            // all_count++;
         }
     }
+    // printf("%zu\n", test_count);
+    // printf("Заполненность %2.f\n", (double)test_count / (double)all_count * 100);
 
     return rc;
 }
@@ -120,7 +128,7 @@ int add_matrix_t(matrix_t matrix_1, matrix_t matrix_2, matrix_t *res)
     res->rows_count = matrix_1.rows_count;
     res->columns_count = matrix_1.columns_count;
 
-    for (size_t i = 0; i < res->columns_count; i++)
+    for (size_t i = 0; i < res->rows_count; i++)
     {
         for (size_t j = 0; j < res->columns_count; j++)
         {

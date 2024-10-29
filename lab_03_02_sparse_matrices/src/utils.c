@@ -4,6 +4,7 @@
 #include "errors.h"
 #include "constants.h"
 #include "utils.h"
+#include <time.h>
 
 /*
 // Получение длины целочисленного числа
@@ -48,7 +49,6 @@ int input_string(char *string, size_t max_len, char *message)
  */
 bool random_chance(int percentage)
 {
-
     if (percentage <= 0)
         return false;
     if (percentage >= 100)
