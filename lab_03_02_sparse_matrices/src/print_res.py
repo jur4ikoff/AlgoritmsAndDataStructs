@@ -60,9 +60,9 @@ speed_df.to_csv(f"{script_directory}/../speed.csv",  sep=';', index=False)
 
 
 # print("Расчет корреляции")
-to_cor = speed_df[["size", "compare"]]
-correlation_matrix = to_cor.corr(method='pearson')
+#to_cor = speed_df[["size", "compare"]]
+#correlation_matrix = to_cor.corr(method='pearson')
 
-print()
-print("Матрица корреляций размера и эффективности алгоритма:")
-print(correlation_matrix)
+#print()
+#print("Матрица корреляций размера и эффективности алгоритма:")
+#print(correlation_matrix)
