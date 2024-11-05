@@ -130,6 +130,8 @@ int main(int argc, char **argv)
                 strcpy(filename_first, "matrix_1.txt");
             }
 
+            int format;
+            input_integer(&format, ">В каком формате входные данные?\n1 - Обычный\n2 - Координатный\n", 1, 2);
             file_1 = fopen(filename_first, "r");
             if (file_1 == NULL)
                 break;
@@ -146,10 +148,21 @@ int main(int argc, char **argv)
                 break;
             }
 
-            if ((rc = fill_matrix_from_file(file_1, &matrix_1)) != ERR_OK)
+            if (format == 1)
             {
-                fclose(file_1);
-                break;
+                if ((rc = fill_default_matrix_from_file(file_1, &matrix_1)) != ERR_OK)
+                {
+                    fclose(file_1);
+                    break;
+                }
+            }
+            else if (format == 2)
+            {
+                if ((rc = fill_coord_matrix_from_file(file_1, &matrix_1)) != ERR_OK)
+                {
+                    fclose(file_1);
+                    break;
+                }
             }
             fclose(file_1);
             printf(">>Матрица из файла %s успешно прочитана\n", filename_first);
@@ -179,10 +192,21 @@ int main(int argc, char **argv)
                 break;
             }
 
-            if ((rc = fill_matrix_from_file(file_2, &matrix_2)) != ERR_OK)
+            if (format == 1)
             {
-                fclose(file_2);
-                break;
+                if ((rc = fill_default_matrix_from_file(file_2, &matrix_2)) != ERR_OK)
+                {
+                    fclose(file_2);
+                    break;
+                }
+            }
+            else if (format == 2)
+            {
+                if ((rc = fill_coord_matrix_from_file(file_2, &matrix_2)) != ERR_OK)
+                {
+                    fclose(file_2);
+                    break;
+                }
             }
 
             fclose(file_2);
@@ -199,8 +223,9 @@ int main(int argc, char **argv)
             }*/
             // printf("%.2f\n", (double)test_count / 1000);
 
-                // Заполнение матрицы рандомно
-                if ((rc = random_fill_default_matrix(&matrix_1)) != ERR_OK) break;
+            // Заполнение матрицы рандомно
+            if ((rc = random_fill_default_matrix(&matrix_1)) != ERR_OK)
+                break;
             printf("Первая матрица успешно записана\n");
 
             if ((rc = random_fill_default_matrix(&matrix_2)) != ERR_OK)

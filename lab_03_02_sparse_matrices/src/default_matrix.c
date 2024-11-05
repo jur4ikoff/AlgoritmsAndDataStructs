@@ -30,7 +30,7 @@ int create_default_matrix(matrix_t *matrix, size_t row, size_t column)
 }
 
 // Заполнение матрицы из файла
-int fill_matrix_from_file(FILE *file, matrix_t *matrix)
+int fill_default_matrix_from_file(FILE *file, matrix_t *matrix)
 {
     int el;
 
@@ -45,6 +45,30 @@ int fill_matrix_from_file(FILE *file, matrix_t *matrix)
         }
     }
 
+    return ERR_OK;
+}
+
+// Заполнение матрицы из файла в координатном формате
+int fill_coord_matrix_from_file(FILE *file, matrix_t *matrix)
+{
+    int i, j, el;
+    size_t count = 0;
+
+    while (fscanf(file, "%d %d %d", &i, &j, &el) == 3)
+    {
+        if (i < 0 || (size_t)i > matrix->rows_count)
+            return ERR_FILE_INPUT;
+        if (j < 0 || (size_t)j > matrix->columns_count)
+            return ERR_FILE_INPUT;
+
+        count++;
+        matrix->values[i][j] = el;
+    }
+    if (!feof(file))
+        return ERR_FILE_INPUT;
+
+    if (count > matrix->rows_count * matrix->columns_count)
+        return ERR_FILE_INPUT;
     return ERR_OK;
 }
 
