@@ -160,7 +160,7 @@ int sum_csc_matrix(csc_t matrix_1, csc_t matrix_2, csc_t *result)
                 result->row_indices[pos_result] = matrix_1.row_indices[idx_1];
                 idx_1++;
             }
-            else if (idx_2 < matrix_2.col_ptr[j + 1] && (idx_1 >= matrix_1.col_ptr[j + 1] || matrix_2.row_indices[idx_2] < matrix_1.row_indices[idx_1]))
+            else if (idx_2 < matrix_2.col_ptr[j + 1] && (idx_1 >= matrix_1.col_ptr[j + 1] || matrix_1.row_indices[idx_1] > matrix_2.row_indices[idx_2]))
             {
                 // Добавляем элемент из второй матрицы
                 result->values[pos_result] = matrix_2.values[idx_2];

@@ -94,22 +94,22 @@ int random_fill_default_matrix(matrix_t *matrix)
         return rc;
 
     srand(time(NULL));
-    // size_t test_count = 0;
-    // size_t all_count = 0;
+    size_t test_count = 0;
+    size_t all_count = 0;
     for (size_t i = 0; i < matrix->rows_count; i++)
     {
         for (size_t j = 0; j < matrix->columns_count; j++)
         {
             if (random_chance(percentiage))
             {
-                // test_count++;
+                test_count++;
                 matrix->values[i][j] = rand() % 10000;
             }
-            // all_count++;
+            all_count++;
         }
     }
     // printf("%zu\n", test_count);
-    // printf("Заполненность %2.f\n", (double)test_count / (double)all_count * 100);
+    printf("Заполненность %2.f%%\n", (double)test_count / (double)all_count * 100);
 
     return rc;
 }
