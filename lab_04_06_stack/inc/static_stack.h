@@ -11,8 +11,7 @@ typedef struct
 
 void static_stack_init(static_stack_t *stack);
 int static_stack_push(static_stack_t *stack, char element);
-int static_stack_pop(static_stack_t *stack, char *element);
-int static_stack_peek(static_stack_t *stack, char *element);
-void print_static_stack(const static_stack_t stack);
+char static_stack_pop(static_stack_t *stack, int *rc);
+void static_stack_print(const static_stack_t stack);
 
 #endif

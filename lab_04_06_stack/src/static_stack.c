@@ -1,6 +1,7 @@
 #include "static_stack.h"
 #include "errors.h"
 #include <string.h>
+#include "constants.h"
 
 void static_stack_init(static_stack_t *stack)
 {
@@ -13,31 +14,34 @@ int static_stack_push(static_stack_t *stack, char element)
     if (stack->top >= MAX_STACK_SIZE)
         return ERR_STATIC_STACK_OVERFLOW;
 
-    stack->data[stack->top++] = element;
+    stack->data[++stack->top] = element;
     return ERR_OK;
 }
 
-int static_stack_pop(static_stack_t *stack, char *element)
+char static_stack_pop(static_stack_t *stack, int *rc)
 {
+    *rc = ERR_OK;
     if (stack->top < 0)
-        return ERR_STATIC_STACK_UNDERFLOW;
+    {
+        *rc = ERR_STATIC_STACK_UNDERFLOW;
+        return 0;
+    }
 
-    *element = stack->data[stack->top--];
-    return ERR_OK;
+    char element = stack->data[stack->top];
+    stack->top--;
+
+    return element;
 }
 
-int static_stack_peek(static_stack_t *stack, char *element)
+void static_stack_print(const static_stack_t stack)
 {
-    if (stack->top < 0)
-        return ERR_STATIC_STACK_UNDERFLOW;
+    if (stack.top < 0)
+    {
+        printf("%sСтек пустой%s\n", YELLOW, RESET);
+        return;
+    }
 
-    *element = stack->data[stack->top];
-    return ERR_OK;
-}
-
-void print_static_stack(const static_stack_t stack)
-{
-    for (int i = 0; i < stack.top; i++)
+    for (int i = 0; i < stack.top + 1; i++)
     {
         printf("%c ", stack.data[i]);
     }
