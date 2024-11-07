@@ -47,3 +47,28 @@ void static_stack_print(const static_stack_t stack)
     }
     printf("\n");
 }
+
+/**
+ * @brief Функция определяет является ли содержимое стека паллиндромом
+ * @param string Строка для определения
+ * @return 0 - Если стек не является паллиндромом, иначе ненулевое значение
+ */
+int static_stack_is_palindrome(char *string)
+{
+    char *ptr = NULL;
+    static_stack_t stack;
+    static_stack_init(&stack);
+    for (ptr = string; *ptr != 0; ptr++)
+    {
+        static_stack_push(&stack, *ptr);
+    }
+
+    int rc = 0;
+    for (ptr = string; *ptr != 0; ptr++)
+    {
+        if (static_stack_pop(&stack, &rc) != *ptr)
+            return 0;
+    }
+
+    return 1;
+}

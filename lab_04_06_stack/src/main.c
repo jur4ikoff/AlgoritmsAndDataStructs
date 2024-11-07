@@ -21,6 +21,7 @@
 #include <errors.h>
 #include <stdio.h>
 #include "static_stack.h"
+#include <string.h>
 
 typedef enum
 {
@@ -56,6 +57,19 @@ int input_menu_operation(operations_t *operation)
     return ERR_OK;
 }
 
+int input_string(char *string, size_t len)
+{
+    if (!fgets(string, len, stdin))
+        return ERR_STRING;
+
+    char *newline = strchr(string, '\n');
+    if (!newline)
+        return ERR_STRING_OVERFLOW;
+
+    *newline = 0;
+    return ERR_OK;
+}
+
 int input_test_operation(test_operations_t *operation)
 {
     printf(">Выберите операцию: ");
@@ -73,6 +87,7 @@ int input_test_operation(test_operations_t *operation)
 // Обработка ошибок
 void print_error_message(int arg)
 {
+    printf("%s", RED);
     switch (arg)
     {
     case ERR_OPERATION:
@@ -84,7 +99,14 @@ void print_error_message(int arg)
     case ERR_STATIC_STACK_UNDERFLOW:
         printf("Ошибка, попытка удаление из пустого стека\n");
         break;
+    case ERR_STRING:
+        printf("Ошибка при вводе строки\n");
+        break;
+    case ERR_STRING_OVERFLOW:
+        printf("Переполнение стоки\n");
+        break;
     }
+    printf("%s", RESET);
 }
 
 void print_menu(void)
@@ -115,7 +137,17 @@ int main(void)
         }
         else if (operation == OP_TASK)
         {
-            ;
+            printf("В этом режие можно определить является ли строка палиндромом\n");
+            printf(">Введите строку для определения: ");
+            char string[MAX_STRING_SIZE];
+            fgetc(stdin);
+            if ((rc = input_string(string, MAX_STRING_SIZE)) != ERR_OK)
+                goto all_exit;
+
+            if (static_stack_is_palindrome(string) == 0)
+                printf("Строка не паллиндром\n");
+            else
+                printf("Строка паллиндром\n");
         }
         else if (operation == OP_TEST_STATIC)
         {

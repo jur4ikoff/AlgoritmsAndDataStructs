@@ -2,6 +2,7 @@
 #define CONST_H__
 
 #define MAX_STACK_SIZE 1000
+#define MAX_STRING_SIZE 128
 
 #define RED "\033[0;31m"
 #define YELLOW "\033[0;33m"
