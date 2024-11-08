@@ -18,10 +18,10 @@
 - Необходимо так же выдать на экран список адресов освобождаемых элементов при удалении элементов стека.
 */
 
+#include "list_stack.h"
+#include "static_stack.h"
 #include <errors.h>
 #include <stdio.h>
-#include "static_stack.h"
-#include "list_stack.h"
 #include <string.h>
 
 typedef enum
@@ -91,21 +91,24 @@ void print_error_message(int arg)
     printf("%s", RED);
     switch (arg)
     {
-    case ERR_OPERATION:
-        printf("Выбрана неверная операция\n");
-        break;
-    case ERR_STATIC_STACK_OVERFLOW:
-        printf("Переполнение статического стека\n");
-        break;
-    case ERR_STATIC_STACK_UNDERFLOW:
-        printf("Ошибка, попытка удаление из пустого стека\n");
-        break;
-    case ERR_STRING:
-        printf("Ошибка при вводе строки\n");
-        break;
-    case ERR_STRING_OVERFLOW:
-        printf("Переполнение стоки\n");
-        break;
+        case ERR_OPERATION:
+            printf("Выбрана неверная операция\n");
+            break;
+        case ERR_STATIC_STACK_OVERFLOW:
+            printf("Переполнение статического стека\n");
+            break;
+        case ERR_STATIC_STACK_UNDERFLOW:
+            printf("Ошибка, попытка удаление из пустого стека\n");
+            break;
+        case ERR_STRING:
+            printf("Ошибка при вводе строки\n");
+            break;
+        case ERR_STRING_OVERFLOW:
+            printf("Переполнение стоки\n");
+            break;
+        case ERR_MEMORY_ALLOCATION:
+            printf("Ошибка при выделении памяти\n");
+            break;
     }
     printf("%s", RESET);
 }
@@ -124,6 +127,7 @@ int main(void)
 {
     int rc = 0;
     operations_t operation = (operations_t)1;
+    list_stack_t list_stack = { 0 };
 
     print_menu();
 
@@ -163,7 +167,7 @@ int main(void)
             static_stack_t static_stack;
             static_stack_init(&static_stack);
 
-            while (operation != TEST_EXIT)
+            while (test_choose_operation != TEST_EXIT)
             {
                 if ((rc = input_test_operation(&test_choose_operation)) != ERR_OK)
                     goto all_exit;
@@ -202,7 +206,21 @@ int main(void)
 
         else if (operation == OP_TEST_LIST)
         {
-            ;
+            char el_1 = 'a', el_2 = 'b', el_3 = 'c';
+            list_stack_init(&list_stack);
+            if ((rc = list_stack_push(&list_stack, &el_1, sizeof(el_1))) != ERR_OK)
+            {
+                goto all_exit;
+            }
+            if ((rc = list_stack_push(&list_stack, &el_2, sizeof(el_2))) != ERR_OK)
+            {
+                goto all_exit;
+            }
+            if ((rc = list_stack_push(&list_stack, &el_3, sizeof(el_3))) != ERR_OK)
+            {
+                goto all_exit;
+            }
+            list_stack_print_char(list_stack);
         }
         else
         {
@@ -210,8 +228,10 @@ int main(void)
             goto all_exit;
         }
     }
-all_exit:
+    all_exit:
     if (rc)
         print_error_message(rc);
+
+    list_stack_free(&list_stack);
     return rc;
 }
