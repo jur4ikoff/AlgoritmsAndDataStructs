@@ -21,6 +21,7 @@
 #include <errors.h>
 #include <stdio.h>
 #include "static_stack.h"
+#include "list_stack.h"
 #include <string.h>
 
 typedef enum
