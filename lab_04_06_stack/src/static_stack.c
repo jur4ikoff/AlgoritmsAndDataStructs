@@ -12,7 +12,7 @@ void static_stack_init(static_stack_t *stack)
 int static_stack_push(static_stack_t *stack, char element)
 {
     if (stack->top >= MAX_STACK_SIZE)
-        return ERR_STATIC_STACK_OVERFLOW;
+        return ERR_STACK_OVERFLOW;
 
     stack->data[++stack->top] = element;
     return ERR_OK;
@@ -23,7 +23,7 @@ char static_stack_pop(static_stack_t *stack, int *rc)
     *rc = ERR_OK;
     if (stack->top < 0)
     {
-        *rc = ERR_STATIC_STACK_UNDERFLOW;
+        *rc = ERR_STACK_OVERFLOW;
         return 0;
     }
 
@@ -41,7 +41,7 @@ void static_stack_print(const static_stack_t stack)
         return;
     }
 
-    for (int i = 0; i < stack.top + 1; i++)
+    for (int i = stack.top; i >= 0; i--)
     {
         printf("%c ", stack.data[i]);
     }

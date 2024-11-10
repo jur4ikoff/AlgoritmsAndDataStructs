@@ -20,6 +20,5 @@ void list_stack_init(list_stack_t *stack);
 int list_stack_push(list_stack_t *stack, const void *element, size_t size);
 void list_stack_print_char(const list_stack_t stack);
 void list_stack_free(list_stack_t *stack);
-
-
+int list_stack_pop(list_stack_t *stack, void *element, size_t size);
 #endif

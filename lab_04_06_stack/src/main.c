@@ -41,7 +41,8 @@ typedef enum
     TEST_PRINT,
     TEST_ADD,
     TEST_POP,
-    TEST_COUNT
+    TEST_COUNT,
+    TEST_UNKNOWN
 } test_operations_t;
 
 int input_menu_operation(operations_t *operation)
@@ -73,14 +74,13 @@ int input_string(char *string, size_t len)
 
 int input_test_operation(test_operations_t *operation)
 {
-    printf(">Выберите операцию: ");
+    printf(">Выберите тестовую операцию: ");
     int buffer;
     if (scanf("%d", &buffer) != 1)
         return ERR_OPERATION;
 
     if (buffer < 0 || buffer >= TEST_COUNT)
         return ERR_OPERATION;
-
     *operation = (test_operations_t)buffer;
     return ERR_OK;
 }
@@ -94,11 +94,11 @@ void print_error_message(int arg)
         case ERR_OPERATION:
             printf("Выбрана неверная операция\n");
             break;
-        case ERR_STATIC_STACK_OVERFLOW:
+        case ERR_STACK_OVERFLOW:
             printf("Переполнение статического стека\n");
             break;
-        case ERR_STATIC_STACK_UNDERFLOW:
-            printf("Ошибка, попытка удаление из пустого стека\n");
+        case ERR_STACK_EMPTY:
+            printf("Ошибка, стек пустой\n");
             break;
         case ERR_STRING:
             printf("Ошибка при вводе строки\n");
@@ -128,6 +128,8 @@ int main(void)
     int rc = 0;
     operations_t operation = (operations_t)1;
     list_stack_t list_stack = { 0 };
+    static_stack_t static_stack;
+    char el_to_add, element;
 
     print_menu();
 
@@ -162,35 +164,33 @@ int main(void)
                    "2 - Добавление элемента\n"
                    "3 - Удаление элемента\n");
 
-            test_operations_t test_choose_operation = 1;
-
-            static_stack_t static_stack;
+            test_operations_t test_operation = TEST_UNKNOWN;
             static_stack_init(&static_stack);
 
-            while (test_choose_operation != TEST_EXIT)
+            while (test_operation != TEST_EXIT)
             {
-                if ((rc = input_test_operation(&test_choose_operation)) != ERR_OK)
+                if ((rc = input_test_operation(&test_operation)) != ERR_OK)
                     goto all_exit;
 
-                if (test_choose_operation == TEST_PRINT)
+                if (test_operation == TEST_EXIT)
+                    break;
+                else if (test_operation == TEST_PRINT)
                 {
                     static_stack_print(static_stack);
                 }
-                else if (test_choose_operation == TEST_ADD)
+                else if (test_operation == TEST_ADD)
                 {
                     printf(">Введите символ для добавления: ");
                     fgetc(stdin);
-                    char el_to_add = getchar();
-                    printf("%c\n", el_to_add);
+                    el_to_add = getchar();
                     if ((rc = static_stack_push(&static_stack, el_to_add)) != ERR_OK)
                         goto all_exit;
                     printf("%sСимвол добавлен%s\n", GREEN, RESET);
-                    printf("КОЛИЧЕСТВО ЭЛЕМЕНТОВ %d\n", static_stack.top);
                 }
-                else if (test_choose_operation == TEST_POP)
+                else if (test_operation == TEST_POP)
                 {
                     printf(">Удаление последнего символа\n");
-                    char element = static_stack_pop(&static_stack, &rc);
+                    element = static_stack_pop(&static_stack, &rc);
                     if (rc != ERR_OK)
                         printf("%sПопытка удаления из пустого стека%s\n", YELLOW, RESET);
                     else
@@ -203,29 +203,52 @@ int main(void)
                 }
             }
         }
-
         else if (operation == OP_TEST_LIST)
         {
-            char el_1 = 'a', el_2 = 'b', el_3 = 'c';
+            printf("\nВ этом режиме можно протестировать функции для работы со стеком на основе массива\n"
+                   "0 - Выход\n"
+                   "1 - Вывод на экран\n"
+                   "2 - Добавление элемента\n"
+                   "3 - Удаление элемента\n");
+
+            test_operations_t test_operation = 1;
             list_stack_init(&list_stack);
-            if ((rc = list_stack_push(&list_stack, &el_1, sizeof(el_1))) != ERR_OK)
+
+            while (test_operation != TEST_EXIT)
             {
-                goto all_exit;
+                if ((rc = input_test_operation(&test_operation)) != ERR_OK)
+                    goto all_exit;
+
+                if (test_operation == TEST_EXIT)
+                    break;
+                else if (test_operation == TEST_PRINT)
+                {
+                    list_stack_print_char(list_stack);
+                }
+                else if (test_operation == TEST_ADD)
+                {
+                    printf(">Введите символ для добавления: ");
+                    fgetc(stdin);
+                    el_to_add = getchar();
+                    if ((rc = list_stack_push(&list_stack, &el_to_add, sizeof(el_to_add))) != ERR_OK)
+                        goto all_exit;
+                    printf("%sСимвол добавлен%s\n", GREEN, RESET);
+                }
+                else if (test_operation == TEST_POP)
+                {
+                    printf(">Удаление последнего символа\n");
+                    char element;
+                    if ((rc = list_stack_pop(&list_stack, &element, sizeof(char))) != ERR_OK)
+                        printf("%sПопытка удаления из пустого стека%s\n", YELLOW, RESET);
+                    else
+                        printf("%sУдален элемент %c%s\n", GREEN, element, RESET);
+                }
+                else
+                {
+                    rc = ERR_OPERATION;
+                    goto all_exit;
+                }
             }
-            if ((rc = list_stack_push(&list_stack, &el_2, sizeof(el_2))) != ERR_OK)
-            {
-                goto all_exit;
-            }
-            if ((rc = list_stack_push(&list_stack, &el_3, sizeof(el_3))) != ERR_OK)
-            {
-                goto all_exit;
-            }
-            list_stack_print_char(list_stack);
-        }
-        else
-        {
-            rc = ERR_OPERATION;
-            goto all_exit;
         }
     }
     all_exit:

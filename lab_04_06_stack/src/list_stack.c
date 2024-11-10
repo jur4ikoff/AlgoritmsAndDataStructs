@@ -58,6 +58,28 @@ void list_stack_print_char(const list_stack_t stack)
     printf("\n");
 }
 
+int list_stack_pop(list_stack_t *stack, void *element, size_t size)
+{
+    if (stack->top == NULL)
+        return ERR_STACK_EMPTY;
+
+    
+    node_t *node_to_delete = stack->top;
+    
+    stack->top=stack->top->next;
+    stack->count--;
+
+    if (element)
+    {
+        memcpy(element, node_to_delete->data, size);
+    }
+
+    free(node_to_delete->data);
+    free(node_to_delete);
+
+    return ERR_OK;
+}
+
 void list_stack_free(list_stack_t *stack)
 {
     while (stack->top)
