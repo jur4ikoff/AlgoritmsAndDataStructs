@@ -133,5 +133,5 @@ void run_profiling(void)
     fclose(file_memory);
 
     // Запуск скрипта для вывода информации
-    // system("python3 src/print_res.py");
+    system("python3 src/print_res.py");
 }
