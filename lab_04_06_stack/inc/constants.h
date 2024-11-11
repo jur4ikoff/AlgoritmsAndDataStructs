@@ -1,7 +1,7 @@
 #ifndef CONST_H__
 #define CONST_H__
 
-#define MAX_STACK_SIZE 1000
+#define MAX_STACK_SIZE 100000
 #define MAX_STRING_SIZE 128
 
 #define RED "\033[0;31m"

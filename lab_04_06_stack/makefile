@@ -21,7 +21,7 @@ $(OUT_DIR)/%.o : $(SRC_DIR)/%.c
 
 # Компоновка в исполняемый файл
 $(EXE_NAME) : $(obj_files)
-	$(CC) $(obj_files) -o $@ 
+	$(CC) $(obj_files) -o $@ $(LINK_FLAGS)
 
 # Обозначение фиктивных целей
 .PHONY : clean release debug asan msan ubsan 

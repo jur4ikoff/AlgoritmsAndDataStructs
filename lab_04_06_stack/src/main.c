@@ -20,6 +20,7 @@
 
 #include "list_stack.h"
 #include "static_stack.h"
+#include "time_calc.h"
 #include <errors.h>
 #include <stdio.h>
 #include <string.h>
@@ -119,7 +120,7 @@ void print_menu(void)
            "0 - Выход\n"
            "1 - Узнать является ли строка паллиндромом\n"
            "2 - Тестирование стека на статическом массиве\n"
-           "3 - Тестирование стека на связном списке\n"
+           "3 - Тестирование стека на списке\n"
            "4 - Замерный эксперимент\n");
 }
 
@@ -151,7 +152,7 @@ int main(void)
             if ((rc = input_string(string, MAX_STRING_SIZE)) != ERR_OK)
                 goto all_exit;
 
-            if (static_stack_is_palindrome(string) == 0)
+            if (list_stack_is_palindrome(string) == 0)
                 printf("Строка не паллиндром\n");
             else
                 printf("Строка паллиндром\n");
@@ -185,16 +186,19 @@ int main(void)
                     el_to_add = getchar();
                     if ((rc = static_stack_push(&static_stack, el_to_add)) != ERR_OK)
                         goto all_exit;
-                    printf("%sСимвол добавлен%s\n", GREEN, RESET);
+
+                    const void *new_addr = static_stack.data + static_stack.top;
+                    printf("%sЭлемент добавлен, его адрес %p%s\n", GREEN, new_addr, RESET);
                 }
                 else if (test_operation == TEST_POP)
                 {
                     printf(">Удаление последнего символа\n");
+                    const void *new_addr = static_stack.data + static_stack.top;
                     element = static_stack_pop(&static_stack, &rc);
                     if (rc != ERR_OK)
                         printf("%sПопытка удаления из пустого стека%s\n", YELLOW, RESET);
-                    else
-                        printf("%sУдален элемент %c%s\n", GREEN, element, RESET);
+
+                    printf("%sУдален элемент %c Его адрес: %p%s\n", GREEN, element, new_addr, RESET);
                 }
                 else
                 {
@@ -205,7 +209,7 @@ int main(void)
         }
         else if (operation == OP_TEST_LIST)
         {
-            printf("\nВ этом режиме можно протестировать функции для работы со стеком на основе массива\n"
+            printf("\nВ этом режиме можно протестировать функции для работы со стеком на основе списка\n"
                    "0 - Выход\n"
                    "1 - Вывод на экран\n"
                    "2 - Добавление элемента\n"
@@ -232,16 +236,19 @@ int main(void)
                     el_to_add = getchar();
                     if ((rc = list_stack_push(&list_stack, &el_to_add, sizeof(el_to_add))) != ERR_OK)
                         goto all_exit;
-                    printf("%sСимвол добавлен%s\n", GREEN, RESET);
+
+                    const void *new_addr = list_stack.top;
+                    printf("%sЭлемент добавлен, его адрес %p%s\n", GREEN, new_addr, RESET);
                 }
                 else if (test_operation == TEST_POP)
                 {
                     printf(">Удаление последнего символа\n");
                     char element;
+                    const void *new_addr = list_stack.top;
                     if ((rc = list_stack_pop(&list_stack, &element, sizeof(char))) != ERR_OK)
                         printf("%sПопытка удаления из пустого стека%s\n", YELLOW, RESET);
                     else
-                        printf("%sУдален элемент %c%s\n", GREEN, element, RESET);
+                        printf("%sУдален элемент %c Его адрес: %p%s\n", GREEN, element, new_addr, RESET);
                 }
                 else
                 {
@@ -249,6 +256,16 @@ int main(void)
                     goto all_exit;
                 }
             }
+        }
+        else if (operation == OP_EFFICIENCY)
+        {
+            // Оценка эффиктивности структур данных
+            run_profiling();
+        }
+        else
+        {
+            rc = ERR_OPERATION;
+            goto all_exit;
         }
     }
     all_exit:
