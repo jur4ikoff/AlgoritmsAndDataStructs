@@ -23,7 +23,7 @@ ax.set_title('График зависимости памяти, занимаем
 
 plt.legend(loc="upper left")
 plt.grid(True)
-plt.savefig(f"{data_directory}/charts/memory_chart_1.svg")
+plt.savefig(f"{data_directory}/charts/memory_chart_3.svg")
 plt.show()
 
 
@@ -41,5 +41,5 @@ ax.set_title('График зависимости скорости работы 
 
 plt.legend(loc="upper left")
 plt.grid(True)
-plt.savefig(f"{data_directory}/charts/speed_chart_1.svg")
+plt.savefig(f"{data_directory}/charts/speed_chart_3.svg")
 plt.show()
