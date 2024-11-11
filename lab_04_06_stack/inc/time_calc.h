@@ -3,10 +3,10 @@
 
 #include <time.h>
 
-#define MIN_ITERATIONS 20
-#define MAX_ITERATIONS 1750
-#define MAX_SIZE 10000
-#define SIZE_STEP 125
+#define MIN_ITERATIONS 30
+#define MAX_ITERATIONS 3000
+#define MAX_SIZE 2000
+#define SIZE_STEP 50
 #define MAX_PATH_LEN 128
 
 
