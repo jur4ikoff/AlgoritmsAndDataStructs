@@ -118,7 +118,7 @@ void run_profiling(void)
 
         // Получение объема памяти выделенной под матрицы
         long long memory_static = sizeof(static_stack_t);
-        long long memory_list = sizeof(list_stack_t) * size;
+        long long memory_list = sizeof(list_stack_t) * (size + 1);
 
         // Запись в файл
         fprintf(file, "%d;%.4f;%.4f\n", size, time_static_stack, time_list_stack);

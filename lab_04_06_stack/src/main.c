@@ -65,6 +65,9 @@ int input_string(char *string, size_t len)
     if (!fgets(string, len, stdin))
         return ERR_STRING;
 
+    if (strlen(string) < 2)
+        return ERR_STRING;
+
     char *newline = strchr(string, '\n');
     if (!newline)
         return ERR_STRING_OVERFLOW;
@@ -92,24 +95,24 @@ void print_error_message(int arg)
     printf("%s", RED);
     switch (arg)
     {
-        case ERR_OPERATION:
-            printf("Выбрана неверная операция\n");
-            break;
-        case ERR_STACK_OVERFLOW:
-            printf("Переполнение статического стека\n");
-            break;
-        case ERR_STACK_EMPTY:
-            printf("Ошибка, стек пустой\n");
-            break;
-        case ERR_STRING:
-            printf("Ошибка при вводе строки\n");
-            break;
-        case ERR_STRING_OVERFLOW:
-            printf("Переполнение стоки\n");
-            break;
-        case ERR_MEMORY_ALLOCATION:
-            printf("Ошибка при выделении памяти\n");
-            break;
+    case ERR_OPERATION:
+        printf("Выбрана неверная операция\n");
+        break;
+    case ERR_STACK_OVERFLOW:
+        printf("Переполнение статического стека\n");
+        break;
+    case ERR_STACK_EMPTY:
+        printf("Ошибка, стек пустой\n");
+        break;
+    case ERR_STRING:
+        printf("Ошибка при вводе строки\n");
+        break;
+    case ERR_STRING_OVERFLOW:
+        printf("Переполнение стоки\n");
+        break;
+    case ERR_MEMORY_ALLOCATION:
+        printf("Ошибка при выделении памяти\n");
+        break;
     }
     printf("%s", RESET);
 }
@@ -128,7 +131,7 @@ int main(void)
 {
     int rc = 0;
     operations_t operation = (operations_t)1;
-    list_stack_t list_stack = { 0 };
+    list_stack_t list_stack = {0};
     static_stack_t static_stack;
     char el_to_add, element;
 
@@ -186,9 +189,11 @@ int main(void)
                     el_to_add = getchar();
                     if ((rc = static_stack_push(&static_stack, el_to_add)) != ERR_OK)
                         goto all_exit;
-
-                    const void *new_addr = static_stack.data + static_stack.top;
-                    printf("%sЭлемент добавлен, его адрес %p%s\n", GREEN, new_addr, RESET);
+                    else
+                    {
+                        const void *new_addr = static_stack.data + static_stack.top;
+                        printf("%sЭлемент добавлен, его адрес %p%s\n", GREEN, new_addr, RESET);
+                    }
                 }
                 else if (test_operation == TEST_POP)
                 {
@@ -197,8 +202,8 @@ int main(void)
                     element = static_stack_pop(&static_stack, &rc);
                     if (rc != ERR_OK)
                         printf("%sПопытка удаления из пустого стека%s\n", YELLOW, RESET);
-
-                    printf("%sУдален элемент %c Его адрес: %p%s\n", GREEN, element, new_addr, RESET);
+                    else
+                        printf("%sУдален элемент %c Его адрес: %p%s\n", GREEN, element, new_addr, RESET);
                 }
                 else
                 {
@@ -268,7 +273,7 @@ int main(void)
             goto all_exit;
         }
     }
-    all_exit:
+all_exit:
     if (rc)
         print_error_message(rc);
 
