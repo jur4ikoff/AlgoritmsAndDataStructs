@@ -32,7 +32,7 @@ int input_menu_operation(operations_t *operation)
     return ERR_OK;
 }*/
 
-/*int input_test_operation(test_operations_t *operation)
+int input_test_operation(test_operations_t *operation)
 {
     printf(">Выберите тестовую операцию: ");
     int buffer;
@@ -43,7 +43,7 @@ int input_menu_operation(operations_t *operation)
         return ERR_OPERATION;
     *operation = (test_operations_t)buffer;
     return ERR_OK;
-}*/
+}
 
 void print_menu(void)
 {
@@ -52,4 +52,13 @@ void print_menu(void)
            "2 - Тестирование очереди на списке\n"
            "3 - Симуляция работы\n"
            "4 - Замерный эксперимент\n");
+}
+
+void print_test_menu(void)
+{
+    printf("\nВ этом режиме можно протестировать работу с очередью\n"
+           "0 - Выход\n"
+           "1 - Вывод всей очереди на экран\n"
+           "2 - Добавление элемента\n"
+           "3 - Удаление элемента\n");
 }

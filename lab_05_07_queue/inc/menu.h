@@ -14,17 +14,19 @@ typedef enum
 
 } operations_t;
 
-/*typedef enum
+typedef enum
 {
     TEST_EXIT,
     TEST_PRINT,
     TEST_ADD,
     TEST_POP,
     TEST_COUNT,
-    TEST_UNKNOWN
-} test_operations_t;*/
+    TEST_INIT
+} test_operations_t;
 
 void print_menu(void);
-int input_menu_operation(operations_t *operation);
+void print_test_menu(void);
 
+int input_menu_operation(operations_t *operation);
+int input_test_operation(test_operations_t *operation);
 #endif

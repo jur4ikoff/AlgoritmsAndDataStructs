@@ -33,6 +33,7 @@ ________________________________________________________________________________
 #include "constants.h"
 #include "errors.h"
 #include "menu.h"
+#include "arr_queue.h"
 
 // Обработка ошибок
 void print_error_message(int arg)
@@ -52,6 +53,7 @@ int main(void)
     int rc = ERR_OK;
     size_t itteration_count = 0;
     operations_t menu_operaton = OP_INIT;
+    // arr_queue_t arr_queue = {0};
 
     while (1)
     {
@@ -66,8 +68,29 @@ int main(void)
             printf("%sУспешный выход из программы%s\n", GREEN, RESET);
             break;
         }
+        else if (menu_operaton == OP_TEST_STATIC)
+        {
+            // Тестирование очереди на статическом массиве
+            // Запуск подпрограммы для тестирования очереди на статическом массиве
 
-        printf("%d\n", menu_operaton);
+            arr_test();
+        }
+        else if (menu_operaton == OP_TEST_LIST)
+        {
+            // print_test_menu();
+        }
+        else if (menu_operaton == OP_SIMULATION)
+        {
+            // Запуск симуляции
+        }
+        else if (menu_operaton == OP_EFFICIENCY)
+        {
+            // запуск замерного эксперемента
+        }
+        else
+        {
+            printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
+        }
         itteration_count++;
     }
 
