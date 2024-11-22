@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "errors.h"
+#include "constants.h"
 #include <stdio.h>
 
 int input_menu_operation(operations_t *operation)
@@ -31,6 +32,25 @@ int input_menu_operation(operations_t *operation)
     *newline = 0;
     return ERR_OK;
 }*/
+
+// Обработка ошибок
+void print_error_message(int arg)
+{
+    printf("%s", RED);
+    switch (arg)
+    {
+    case ERR_OPERATION:
+        printf("Выбрана неверная операция\n");
+        break;
+    case ERR_QUEUE_OVERFLOW:
+        printf("Очередь переполнена\n");
+        break;
+    case ERR_QUEUE_UNDERFLOW:
+        printf("Удаление из пустой очереди\n");
+        break;
+    }
+    printf("%s", RESET);
+}
 
 int input_test_operation(test_operations_t *operation)
 {

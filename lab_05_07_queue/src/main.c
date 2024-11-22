@@ -35,19 +35,6 @@ ________________________________________________________________________________
 #include "menu.h"
 #include "arr_queue.h"
 
-// Обработка ошибок
-void print_error_message(int arg)
-{
-    printf("%s", RED);
-    switch (arg)
-    {
-    case ERR_OPERATION:
-        printf("Выбрана неверная операция\n");
-        break;
-    }
-    printf("%s", RESET);
-}
-
 int main(void)
 {
     int rc = ERR_OK;
@@ -73,7 +60,9 @@ int main(void)
             // Тестирование очереди на статическом массиве
             // Запуск подпрограммы для тестирования очереди на статическом массиве
 
-            arr_test();
+            if ((rc = arr_test()) != ERR_OK)
+                print_menu();
+    
         }
         else if (menu_operaton == OP_TEST_LIST)
         {

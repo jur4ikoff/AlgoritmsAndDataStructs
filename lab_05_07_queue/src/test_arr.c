@@ -2,25 +2,13 @@
 #include "errors.h"
 #include "menu.h"
 
-void arr_queue_print_char(const arr_queue_t queue)
-{
-    if (queue.count == 0)
-    {
-        printf("%sОчередь пустая%s\n", YELLOW, RESET);
-        return;
-    }
-    for (size_t i = 0; i < queue.count; i++)
-    {
-        printf("%c ", queue.data->element);
-    }
-    printf("\n");
-}
-
-void arr_test(void)
+int arr_test(void)
 {
     int rc = ERR_OK;
     size_t itteration_count = 0;
     test_operations_t test_operation = TEST_INIT;
+    arr_queue_t queue = {0};
+    arr_queue_create(&queue);
 
     while (test_operation != TEST_EXIT)
     {
@@ -30,21 +18,29 @@ void arr_test(void)
         if ((rc = input_test_operation(&test_operation)) != ERR_OK)
         {
             printf("%sВыбрана неверная операция, выход в главное меню%s\n", YELLOW, RESET);
-            return;
+            return rc;
         }
-        printf("%d\n", test_operation);
 
         if (test_operation == TEST_EXIT)
         {
             printf("%sВыход из режима тестирования%s\n", GREEN, RESET);
-            return;
+            return rc;
         }
         else if (test_operation == TEST_PRINT)
         {
-            // print queque
+            arr_queue_print_char(queue);
         }
         else if (test_operation == TEST_ADD)
         {
+            printf(">Выберите элемент для вставки: ");
+            fgetc(stdin);
+            char element = getchar();
+            if ((rc = arr_queue_push(&queue, element)) != ERR_OK)
+            {
+                print_error_message(rc);
+                return rc;
+            }
+            printf("%sУспешное добавление в очередь элемента: %c%s\n", GREEN, element, RESET);
             // Добавлене элемента в очередь
         }
         else if (test_operation == TEST_POP)
@@ -54,4 +50,6 @@ void arr_test(void)
 
         itteration_count++;
     }
+
+    return ERR_OK;
 }

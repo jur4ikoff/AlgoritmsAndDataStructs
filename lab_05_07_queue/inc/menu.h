@@ -26,6 +26,7 @@ typedef enum
 
 void print_menu(void);
 void print_test_menu(void);
+void print_error_message(int arg);
 
 int input_menu_operation(operations_t *operation);
 int input_test_operation(test_operations_t *operation);

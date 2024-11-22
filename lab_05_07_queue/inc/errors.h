@@ -3,5 +3,7 @@
 
 #define ERR_OK 0
 #define ERR_OPERATION 1
+#define ERR_QUEUE_OVERFLOW 2
+#define ERR_QUEUE_UNDERFLOW 3
 
 #endif
