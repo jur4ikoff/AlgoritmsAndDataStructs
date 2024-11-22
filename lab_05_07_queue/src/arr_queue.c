@@ -25,7 +25,6 @@ int arr_queue_create(arr_queue_t *queue)
 
 void arr_queue_print_char(const arr_queue_t queue)
 {
-    // printf("%ld\n", sizeof(queue.data) / sizeof(queue.data[0]));
     if (queue.start - queue.end == 0)
     {
         printf("%sОчередь пустая%s\n", YELLOW, RESET);
@@ -45,7 +44,6 @@ int arr_queue_push(arr_queue_t *queue, char element)
     if (queue->start > queue->end)
         return ERR_QUEUE_OVERFLOW;
 
-    // printf("%ld %d %ld\n", queue->end - queue->start, sizeof(data_t));
     if (queue->end - queue->start >= (long int)queue->size)
         return ERR_QUEUE_OVERFLOW;
 

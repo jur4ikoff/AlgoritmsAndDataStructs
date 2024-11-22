@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #define MAX_STRING_SIZE 128
+#define MAX_QUEUE_SIZE 1000
 
 #define RED "\033[0;31m"
 #define YELLOW "\033[0;33m"
