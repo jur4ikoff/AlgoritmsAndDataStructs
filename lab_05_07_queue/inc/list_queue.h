@@ -3,12 +3,20 @@
 #include "constants.h"
 #include <stdio.h>
 
+typedef struct __node_t
+{
+    data_t data; // Данные
+    struct __node_t *next;
+    struct __node_t *prev;
+} node_t;
+
 typedef struct __list_queue_t
 {
+    node_t *head;
+    node_t *end;
+
     size_t UP_LIMIT; // Максимальное количество элементов
-    data_t data; // Данные
-    struct __list_queue_t *next;
-    struct __list_queue_t *prev;
+    size_t size;
 } list_queue_t;
 
 int list_test(void);
