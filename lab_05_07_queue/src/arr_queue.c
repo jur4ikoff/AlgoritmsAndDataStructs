@@ -44,24 +44,29 @@ int arr_queue_push(arr_queue_t *queue, char element)
 {
     if (queue->start > queue->end)
         return ERR_QUEUE_OVERFLOW;
-    printf("%ld %d %ld\n", sizeof(data_t), (int)(queue->end - queue->start), queue->size * sizeof(data_t));
+
     if ((int)(queue->end - queue->start) >= (int)(queue->size * sizeof(data_t)))
         return ERR_QUEUE_OVERFLOW;
 
     queue->end->element = element;
     queue->end++;
 
-    if (queue->end > queue->data + sizeof(queue->data) * queue->size)
+    if (queue->end == queue->data + queue->size)
         move_elements_to_begin(queue);
-printf("%ld %d %ld\n\n", sizeof(data_t), (int)(queue->end - queue->start), queue->size * sizeof(data_t));
+
     return ERR_OK;
 }
 
-/*int arr_queue_pop(arr_queue_t *queue, char *element)
+int arr_queue_pop(arr_queue_t *queue, char *element)
 {
-    if (queue->start > queue->end)
+    if (queue->start == queue->end)
+        return ERR_QUEUE_UNDERFLOW;
+
+    if (queue->start >= queue->data + queue->size)
         return ERR_QUEUE_OVERFLOW;
 
-    if ((size_t)(queue->end - queue->start) >= queue->size * sizeof(data_t))
-        return ERR_QUEUE_OVERFLOW;
-}*/
+    *element = queue->start->element;
+    queue->start++;
+
+    return ERR_OK;
+}

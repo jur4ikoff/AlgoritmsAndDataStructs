@@ -62,6 +62,7 @@ int input_test_operation(test_operations_t *operation)
     if (buffer < 0 || buffer >= TEST_COUNT)
         return ERR_OPERATION;
     *operation = (test_operations_t)buffer;
+    fgetc(stdin);
     return ERR_OK;
 }
 

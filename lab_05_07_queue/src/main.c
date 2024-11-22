@@ -53,7 +53,7 @@ int main(void)
         if (menu_operaton == OP_EXIT)
         {
             printf("%sУспешный выход из программы%s\n", GREEN, RESET);
-            break;
+            break; 
         }
         else if (menu_operaton == OP_TEST_STATIC)
         {
@@ -61,8 +61,10 @@ int main(void)
             // Запуск подпрограммы для тестирования очереди на статическом массиве
 
             if ((rc = arr_test()) != ERR_OK)
+            {
                 print_menu();
-    
+                itteration_count = 0;
+            }
         }
         else if (menu_operaton == OP_TEST_LIST)
         {

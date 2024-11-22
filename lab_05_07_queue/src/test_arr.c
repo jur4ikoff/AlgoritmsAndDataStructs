@@ -16,10 +16,7 @@ int arr_test(void)
             print_test_menu();
 
         if ((rc = input_test_operation(&test_operation)) != ERR_OK)
-        {
-            printf("%sВыбрана неверная операция, выход в главное меню%s\n", YELLOW, RESET);
             return rc;
-        }
 
         if (test_operation == TEST_EXIT)
         {
@@ -33,19 +30,25 @@ int arr_test(void)
         else if (test_operation == TEST_ADD)
         {
             printf(">Выберите элемент для вставки: ");
-            fgetc(stdin);
             char element = getchar();
             if ((rc = arr_queue_push(&queue, element)) != ERR_OK)
             {
-                print_error_message(rc);
-                return rc;
+                printf("%sПереполнение очереди%s\n", YELLOW, RESET);
             }
-            printf("%sУспешное добавление в очередь элемента: %c%s\n", GREEN, element, RESET);
+            else
+                printf("%sУспешное добавление в очередь элемента: %c%s\n", GREEN, element, RESET);
             // Добавлене элемента в очередь
         }
         else if (test_operation == TEST_POP)
         {
             // Удаление из очереди
+            char element;
+            if ((rc = arr_queue_pop(&queue, &element)) != ERR_OK)
+            {
+                printf("%sПопытка удаления из пустой очереди%s\n", YELLOW, RESET);
+            }
+            else
+                printf("%sУспешное удаление из очереди элемента: %c%s\n", GREEN, element, RESET);
         }
 
         itteration_count++;

@@ -18,6 +18,7 @@ typedef void (*func_arr_queue_ptr)(data_t *data, void *arg);
 int arr_queue_create(arr_queue_t *queue);
 void arr_queue_print_char(const arr_queue_t queue);
 int arr_queue_push(arr_queue_t *queue, char element);
+int arr_queue_pop(arr_queue_t *queue, char *element);
 
 
 int arr_test(void);
