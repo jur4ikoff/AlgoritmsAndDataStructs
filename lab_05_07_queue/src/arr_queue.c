@@ -45,7 +45,8 @@ int arr_queue_push(arr_queue_t *queue, char element)
     if (queue->start > queue->end)
         return ERR_QUEUE_OVERFLOW;
 
-    if ((int)(queue->end - queue->start) >= (int)(queue->size * sizeof(data_t)))
+    // printf("%ld %d %ld\n", queue->end - queue->start, sizeof(data_t));
+    if (queue->end - queue->start >= (long int)queue->size)
         return ERR_QUEUE_OVERFLOW;
 
     queue->end->element = element;

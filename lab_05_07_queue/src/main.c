@@ -53,7 +53,7 @@ int main(void)
         if (menu_operaton == OP_EXIT)
         {
             printf("%sУспешный выход из программы%s\n", GREEN, RESET);
-            break; 
+            break;
         }
         else if (menu_operaton == OP_TEST_STATIC)
         {

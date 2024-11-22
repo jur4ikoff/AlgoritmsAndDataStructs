@@ -19,5 +19,6 @@ typedef struct __request_t
 typedef struct __data_t
 {
     char element;
+    request_t request_data;
 } data_t;
 #endif
