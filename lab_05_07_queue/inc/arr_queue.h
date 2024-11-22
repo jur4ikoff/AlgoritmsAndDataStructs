@@ -5,13 +5,13 @@
 
 typedef struct __arr_queue_t
 {
-    size_t size; // Максимальное количество элементов
+    size_t UP_LIMIT; // Максимальное количество элементов
     data_t data[MAX_QUEUE_SIZE];
     data_t *start; // Указатель на начало
     data_t *end;   // Указатель на конец
 } arr_queue_t;
 
-int arr_queue_create(arr_queue_t *queue);
+int arr_queue_init(arr_queue_t *queue);
 void arr_queue_print_char(const arr_queue_t queue);
 int arr_queue_push(arr_queue_t *queue, char element);
 int arr_queue_pop(arr_queue_t *queue, char *element);

@@ -15,9 +15,9 @@ static void move_elements_to_begin(arr_queue_t *queue)
     queue->start = queue->data;
 }
 
-int arr_queue_create(arr_queue_t *queue)
+int arr_queue_init(arr_queue_t *queue)
 {
-    queue->size = MAX_QUEUE_SIZE;
+    queue->UP_LIMIT = MAX_QUEUE_SIZE;
     queue->start = queue->data;
     queue->end = queue->data;
     return ERR_OK;
@@ -44,13 +44,13 @@ int arr_queue_push(arr_queue_t *queue, char element)
     if (queue->start > queue->end)
         return ERR_QUEUE_OVERFLOW;
 
-    if (queue->end - queue->start >= (long int)queue->size)
+    if (queue->end - queue->start >= (long int)queue->UP_LIMIT)
         return ERR_QUEUE_OVERFLOW;
 
     queue->end->element = element;
     queue->end++;
 
-    if (queue->end == queue->data + queue->size)
+    if (queue->end == queue->data + queue->UP_LIMIT)
         move_elements_to_begin(queue);
 
     return ERR_OK;
@@ -61,7 +61,7 @@ int arr_queue_pop(arr_queue_t *queue, char *element)
     if (queue->start == queue->end)
         return ERR_QUEUE_UNDERFLOW;
 
-    if (queue->start >= queue->data + queue->size)
+    if (queue->start >= queue->data + queue->UP_LIMIT)
         return ERR_QUEUE_OVERFLOW;
 
     *element = queue->start->element;
