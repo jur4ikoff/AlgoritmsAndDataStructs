@@ -7,7 +7,7 @@
 
 int input_symbol(char *element)
 {
-    
+
     if (scanf(" %c", element) != 1)
         return ERR_SYMBOL_INPUT;
 
@@ -55,8 +55,12 @@ int arr_test(void)
                 printf("%sПереполнение очереди%s\n", YELLOW, RESET);
             }
             else
+            {
+                // Добавлене элемента в очередь
+                printf("%ld\n", sizeof(data_t));
                 printf("%sУспешное добавление в очередь элемента: %c%s\n", GREEN, element, RESET);
-            // Добавлене элемента в очередь
+                printf("%sАдрес начала списка %p, адрес конца списка%p%s\n", GREEN, (void *)queue.start, (void *)queue.end, RESET);
+            }
         }
         else if (test_operation == TEST_POP)
         {
@@ -67,7 +71,10 @@ int arr_test(void)
                 printf("%sПопытка удаления из пустой очереди%s\n", YELLOW, RESET);
             }
             else
-                printf("%sУспешное удаление из очереди элемента: %c%s\n", GREEN, element, RESET);
+            {
+                printf("%sУспешное удаление из очереди элемента: %c %s\n", GREEN, element, RESET);
+                printf("%sАдрес начала списка %p, адрес конца списка%p%s\n", GREEN, (void *)queue.start, (void *)queue.end, RESET);
+            }
         }
 
         itteration_count++;
@@ -109,18 +116,17 @@ int list_test(void)
             char element;
             if ((rc = input_symbol(&element)) != ERR_OK)
                 return rc;
-            data_t *data = malloc(sizeof(data_t));
-            if (!data)
-                return ERR_MEMORY_ALLOCATION;
 
-            data->element = element;
-            if ((rc = list_queue_push(&queue, data)) != ERR_OK)
+            if ((rc = list_queue_push(&queue, element)) != ERR_OK)
             {
                 printf("%sПереполнение очереди%s\n", YELLOW, RESET);
             }
             else
+            {
+                // Добавлене элемента в очередь
                 printf("%sУспешное добавление в очередь элемента: %c%s\n", GREEN, element, RESET);
-            // Добавлене элемента в очередь
+                printf("%sАдрес начала списка %p, адрес конца списка %p%s\n", GREEN, (void *)queue.head, (void *)queue.end, RESET);
+            }
         }
         else if (test_operation == TEST_POP)
         {
@@ -131,7 +137,11 @@ int list_test(void)
                 printf("%sПопытка удаления из пустой очереди%s\n", YELLOW, RESET);
             }
             else
+            {
+                
                 printf("%sУспешное удаление из очереди элемента: %c%s\n", GREEN, element, RESET);
+                printf("%sАдрес начала списка %p, адрес конца списка %p%s\n", GREEN, (void *)queue.head, (void *)queue.end, RESET);
+            }
         }
 
         itteration_count++;
