@@ -1,15 +1,29 @@
 #include "arr_queue.h"
-#include "list_queue.h"
-#include "errors.h"
-#include "menu.h"
 #include "constants.h"
+#include "errors.h"
+#include "list_queue.h"
+#include "menu.h"
+#include <stdlib.h>
+
+int input_symbol(char *element)
+{
+    
+    if (scanf(" %c", element) != 1)
+        return ERR_SYMBOL_INPUT;
+
+    if (getchar() != '\n')
+        return ERR_SYMBOL_INPUT;
+
+    return ERR_OK;
+}
 
 int arr_test(void)
 {
     int rc = ERR_OK;
     size_t itteration_count = 0;
     test_operations_t test_operation = TEST_INIT;
-    arr_queue_t queue = {0};
+    arr_queue_t queue = { 0 };
+
     arr_queue_init(&queue);
 
     while (test_operation != TEST_EXIT)
@@ -31,8 +45,11 @@ int arr_test(void)
         }
         else if (test_operation == TEST_ADD)
         {
-            printf(">Выберите элемент для вставки: ");
-            char element = getchar();
+            printf(">Выберите один символ для вставки: ");
+            char element;
+            if ((rc = input_symbol(&element)) != ERR_OK)
+                return rc;
+
             if ((rc = arr_queue_push(&queue, element)) != ERR_OK)
             {
                 printf("%sПереполнение очереди%s\n", YELLOW, RESET);
@@ -64,7 +81,8 @@ int list_test(void)
     int rc = ERR_OK;
     size_t itteration_count = 0;
     test_operations_t test_operation = TEST_INIT;
-    list_queue_t queue = {0};
+    list_queue_t queue = { 0 };
+
     list_queue_init(&queue);
 
     while (test_operation != TEST_EXIT)
@@ -87,9 +105,16 @@ int list_test(void)
         }
         else if (test_operation == TEST_ADD)
         {
-            printf(">Выберите элемент для вставки: ");
-            char element = getchar();
-            if ((rc = list_queue_push(&queue, element)) != ERR_OK)
+            printf(">Выберите один символ для вставки: ");
+            char element;
+            if ((rc = input_symbol(&element)) != ERR_OK)
+                return rc;
+            data_t *data = malloc(sizeof(data_t));
+            if (!data)
+                return ERR_MEMORY_ALLOCATION;
+
+            data->element = element;
+            if ((rc = list_queue_push(&queue, data)) != ERR_OK)
             {
                 printf("%sПереполнение очереди%s\n", YELLOW, RESET);
             }

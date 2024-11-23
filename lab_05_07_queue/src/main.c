@@ -72,6 +72,7 @@ int main(void)
             // Тестирование очереди на списке
             if ((rc = list_test()) != ERR_OK)
             {
+                print_error_message(rc);
                 print_menu();
                 itteration_count = 0;
             }

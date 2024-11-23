@@ -1,6 +1,6 @@
 #include "menu.h"
-#include "errors.h"
 #include "constants.h"
+#include "errors.h"
 #include <stdio.h>
 
 int input_menu_operation(operations_t *operation)
@@ -17,40 +17,29 @@ int input_menu_operation(operations_t *operation)
     return ERR_OK;
 }
 
-/*int input_string(char *string, size_t len)
-{
-    if (!fgets(string, len, stdin))
-        return ERR_STRING;
-
-    if (strlen(string) < 1)
-        return ERR_STRING;
-
-    char *newline = strchr(string, '\n');
-    if (!newline)
-        return ERR_STRING_OVERFLOW;
-
-    *newline = 0;
-    return ERR_OK;
-}*/
-
-// Обработка ошибок
 void print_error_message(int arg)
 {
     printf("%s", RED);
     switch (arg)
     {
-    case ERR_OPERATION:
-        printf("Выбрана неверная операция\n");
-        break;
-    case ERR_QUEUE_OVERFLOW:
-        printf("Очередь переполнена\n");
-        break;
-    case ERR_QUEUE_UNDERFLOW:
-        printf("Удаление из пустой очереди\n");
-        break;
-    case ERR_MEMORY_ALLOCATION:
-        printf("Ошибка при выделении памяти\n");
-        break;
+        case ERR_OPERATION:
+            printf("Выбрана неверная операция\n");
+            break;
+        case ERR_QUEUE_OVERFLOW:
+            printf("Очередь переполнена\n");
+            break;
+        case ERR_QUEUE_UNDERFLOW:
+            printf("Удаление из пустой очереди\n");
+            break;
+        case ERR_MEMORY_ALLOCATION:
+            printf("Ошибка при выделении памяти\n");
+            break;
+        case ERR_DATA:
+            printf("Ошибка при создании нового элемента\n");
+            break;
+        case ERR_SYMBOL_INPUT:
+            printf("Ошибка при вводе символа\n");
+            break;
     }
     printf("%s", RESET);
 }
