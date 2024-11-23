@@ -69,7 +69,12 @@ int main(void)
         }
         else if (menu_operaton == OP_TEST_LIST)
         {
-            // print_test_menu();
+            // Тестирование очереди на списке
+            if ((rc = list_test()) != ERR_OK)
+            {
+                print_menu();
+                itteration_count = 0;
+            }
         }
         else if (menu_operaton == OP_SIMULATION)
         {

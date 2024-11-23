@@ -48,6 +48,9 @@ void print_error_message(int arg)
     case ERR_QUEUE_UNDERFLOW:
         printf("Удаление из пустой очереди\n");
         break;
+    case ERR_MEMORY_ALLOCATION:
+        printf("Ошибка при выделении памяти\n");
+        break;
     }
     printf("%s", RESET);
 }
