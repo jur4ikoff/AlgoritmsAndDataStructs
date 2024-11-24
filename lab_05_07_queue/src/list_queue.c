@@ -45,7 +45,6 @@ int list_queue_push(list_queue_t *queue, char src)
 
     data->element = src;
     node->next = NULL;
-    node->prev = NULL;
     node->data = data;
 
     if (!queue->head)
@@ -56,7 +55,6 @@ int list_queue_push(list_queue_t *queue, char src)
     else
     {
         queue->end->next = node;
-        node->prev = queue->end;
         queue->end = node;
     }
     queue->count++;

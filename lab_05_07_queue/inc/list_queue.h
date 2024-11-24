@@ -7,7 +7,6 @@ typedef struct __node_t
 {
     data_t *data; // Данные
     struct __node_t *next;
-    struct __node_t *prev;
 } node_t;
 
 typedef struct __list_queue_t
