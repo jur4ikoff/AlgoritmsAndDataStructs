@@ -102,6 +102,7 @@ int list_test(void)
 
         if (test_operation == TEST_EXIT)
         {
+            list_queue_free(&queue);
             printf("%sВыход из режима тестирования%s\n", GREEN, RESET);
             return rc;
         }
@@ -115,7 +116,10 @@ int list_test(void)
             printf(">Выберите один символ для вставки: ");
             char element;
             if ((rc = input_symbol(&element)) != ERR_OK)
+            {
+                list_queue_free(&queue);
                 return rc;
+            }
 
             if ((rc = list_queue_push(&queue, element)) != ERR_OK)
             {
@@ -138,7 +142,7 @@ int list_test(void)
             }
             else
             {
-                
+
                 printf("%sУспешное удаление из очереди элемента: %c%s\n", GREEN, element, RESET);
                 printf("%sАдрес начала списка %p, адрес конца списка %p%s\n", GREEN, (void *)queue.head, (void *)queue.end, RESET);
             }

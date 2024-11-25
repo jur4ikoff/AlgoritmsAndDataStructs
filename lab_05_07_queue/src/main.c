@@ -42,7 +42,6 @@ int main(void)
     int rc = ERR_OK;
     size_t itteration_count = 0;
     operations_t menu_operaton = OP_INIT;
-    // arr_queue_t arr_queue = {0};
 
     while (1)
     {
@@ -81,10 +80,7 @@ int main(void)
         else if (menu_operaton == OP_SIMULATION)
         {
             // Запуск симуляции
-        }
-        else if (menu_operaton == OP_EFFICIENCY)
-        {
-            // запуск замерного эксперемента
+            run_simulation_list_queue();
         }
         else
         {

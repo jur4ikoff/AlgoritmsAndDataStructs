@@ -8,7 +8,6 @@ typedef enum
     OP_TEST_STATIC,
     OP_TEST_LIST,
     OP_SIMULATION,
-    OP_EFFICIENCY,
     OP_COUNT,
     OP_INIT
 
