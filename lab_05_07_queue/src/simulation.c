@@ -24,33 +24,33 @@ int T2_UPPER = 1;
 
 void run_simulation_list_queue(char *logfile, float *exp_time)
 {
-    // struct timespec start, end;
-    //  size_t entered = 0, left = 0;
-    // size_t act = 0;
-    // float current_time = 0.0f, total_idle_time = 0.0f;
-    // float next_arrival_time = 0.0f; // Время прибытия следующей заявки
-    // float state = 0.0f;
-    (void)exp_time;
-    list_queue_t queue = { 0 };
+    /*struct timespec start, end;
+    size_t entered = 0, left = 0;
+    size_t act = 0;
+    float current_time = 0.0f, total_idle_time = 0.0f;
+    float next_arrival_time = 0.0f; // Время прибытия следующей заявки
+    float state = 0.0f;
+    
 
+    list_queue_t queue = { 0 };
     list_queue_init(&queue);
 
-    // clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     printf("%sСимуляция обслуживания %d заявок обслуживающего аппарата%s\n", GREEN, MAX_REQUEST_COUNT, RESET);
 
-    /*while (left < MAX_REQUEST_COUNT)
+    while (left < MAX_REQUEST_COUNT)
     {
-        while (queue->is_empty(queue) || current_time > next_arrival_time)
+        while (list_queue_is_empty(queue) || current_time > next_arrival_time)
         {
             next_arrival_time += rand_in_range_float(T1_LOWER, T1_UPPER);
-            if (queue->is_empty(queue) && next_arrival_time > current_time)
+            if (list_queue_is_empty(queue) && next_arrival_time > current_time)
             {
                 total_idle_time += next_arrival_time - current_time;
                 current_time = next_arrival_time;
             }
             entered++;
-            data_t req = { .req = { .arrival_time = next_arrival_time } };
-            if ((rc = queue->push(queue, &req)) != ERR_OK)
+            data_t req = { .request_data = { .arrival_time = next_arrival_time } };
+            if ((list_queue_push(&queue, &req)) != ERR_OK)
                 goto exit;
         }
 
@@ -115,11 +115,13 @@ void run_simulation_list_queue(char *logfile, float *exp_time)
            calculated_req_cnt, entered, ABS((entered - calculated_req_cnt) / calculated_req_cnt * 100),
            act, total_idle_time,
            calculated_time, current_time, ABS((current_time - calculated_time) / calculated_time * 100));
+
     */
+   (void)exp_time;
     (void)logfile;
-    goto exit;
+    /*goto exit;
     exit:
-    list_queue_free(&queue);
+    list_queue_free(&queue);*/
 }
 
 /**

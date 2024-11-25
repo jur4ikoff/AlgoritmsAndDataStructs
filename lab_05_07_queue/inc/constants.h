@@ -13,7 +13,7 @@
 typedef struct __request_t
 {
     size_t processing_count;
-    float arival_time;
+    float arrival_time;
     float service_time;
 } request_t;
 

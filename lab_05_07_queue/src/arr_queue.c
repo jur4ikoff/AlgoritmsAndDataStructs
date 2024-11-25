@@ -39,7 +39,7 @@ void arr_queue_print_char(const arr_queue_t queue)
     printf("\n");
 }
 
-int arr_queue_push(arr_queue_t *queue, char element)
+int arr_queue_push(arr_queue_t *queue, data_t *element)
 {
     if (queue->start > queue->end)
         return ERR_QUEUE_OVERFLOW;
@@ -47,7 +47,7 @@ int arr_queue_push(arr_queue_t *queue, char element)
     if (queue->end - queue->start >= (long int)queue->UP_LIMIT)
         return ERR_QUEUE_OVERFLOW;
 
-    queue->end->element = element;
+    *queue->end = *element;
     queue->end++;
 
     if (queue->end == queue->data + queue->UP_LIMIT)
@@ -56,7 +56,7 @@ int arr_queue_push(arr_queue_t *queue, char element)
     return ERR_OK;
 }
 
-int arr_queue_pop(arr_queue_t *queue, char *element)
+int arr_queue_pop(arr_queue_t *queue, data_t *data)
 {
     if (queue->start == queue->end)
         return ERR_QUEUE_UNDERFLOW;
@@ -64,7 +64,7 @@ int arr_queue_pop(arr_queue_t *queue, char *element)
     if (queue->start >= queue->data + queue->UP_LIMIT)
         return ERR_QUEUE_OVERFLOW;
 
-    *element = queue->start->element;
+    data->element = queue->start->element;
     queue->start++;
 
     return ERR_OK;
