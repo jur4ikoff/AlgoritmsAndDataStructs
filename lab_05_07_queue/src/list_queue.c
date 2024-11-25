@@ -88,3 +88,14 @@ void list_queue_free(list_queue_t *queue)
         cur = tmp;
     }
 }
+
+
+/**
+ * @brief Функция проверяет пустая ли очередь
+ * @param queue Очередь
+ * @return 1 - Пустая, 0 - Не пустая
+ */
+int list_queue_is_empty(const list_queue_t queue)
+{
+    return queue.count == 0; 
+}

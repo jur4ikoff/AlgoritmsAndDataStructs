@@ -24,4 +24,5 @@ void list_queue_print_char(const list_queue_t queue);
 int list_queue_push(list_queue_t *queue, char src);
 int list_queue_pop(list_queue_t *queue, char *element);
 void list_queue_free(list_queue_t *queue);
+int list_queue_is_empty(const list_queue_t queue);
 #endif

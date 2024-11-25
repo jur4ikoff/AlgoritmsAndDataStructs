@@ -69,3 +69,13 @@ int arr_queue_pop(arr_queue_t *queue, char *element)
 
     return ERR_OK;
 }
+
+/**
+ * @brief Функция проверяет пустая ли очередь
+ * @param queue Очередь
+ * @return 1 - Пустая, 0 - Не пустая
+ */
+int arr_queue_is_empty(const arr_queue_t queue)
+{
+    return queue.end - queue.start == 0;
+}
