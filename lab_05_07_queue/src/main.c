@@ -35,6 +35,7 @@ ________________________________________________________________________________
 #include "menu.h"
 #include "arr_queue.h"
 #include "list_queue.h"
+#include "simulation.h"
 
 int main(void)
 {
