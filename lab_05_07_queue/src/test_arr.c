@@ -4,6 +4,7 @@
 #include "list_queue.h"
 #include "menu.h"
 #include <stdlib.h>
+#include <time.h>
 
 /**
  * @brief Ввод символа в структуру
@@ -28,6 +29,8 @@ int arr_test(void)
     size_t itteration_count = 0;
     test_operations_t test_operation = TEST_INIT;
     arr_queue_t queue = { 0 };
+    struct timespec start, end;
+    double time;
 
     arr_queue_init(&queue);
 
@@ -53,32 +56,46 @@ int arr_test(void)
             printf(">Выберите один символ для вставки: ");
             data_t data;
             if ((rc = input_symbol_to_data(&data)) != ERR_OK)
+            {
+                print_error_message(rc);
                 return rc;
-
+            }
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             if ((rc = arr_queue_push(&queue, &data)) != ERR_OK)
             {
                 printf("%sПереполнение очереди%s\n", YELLOW, RESET);
+                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             }
             else
             {
                 // Добавление элемента в очередь
+                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+                time = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3;
                 printf("%sУспешное добавление в очередь элемента: %c%s\n", GREEN, data.element, RESET);
-                printf("%sАдрес начала списка %p, адрес конца списка%p %s\n", GREEN, (void *)queue.start, (void *)queue.end, RESET);
+                printf("%sАдрес начала списка %p, адрес конца списка%p Время добавления %.2f мкс%s\n", GREEN, (void *)queue.start, (void *)queue.end, time, RESET);
             }
         }
         else if (test_operation == TEST_POP)
         {
             // Удаление из очереди
             data_t data;
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             if ((rc = arr_queue_pop(&queue, &data)) != ERR_OK)
             {
                 printf("%sПопытка удаления из пустой очереди%s\n", YELLOW, RESET);
+                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             }
             else
             {
+                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+                time = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3;
                 printf("%sУспешное удаление из очереди элемента: %c %s\n", GREEN, data.element, RESET);
-                printf("%sАдрес начала списка %p, адрес конца списка%p %s\n", GREEN, (void *)queue.start, (void *)queue.end, RESET);
+                printf("%sАдрес начала списка %p, адрес конца списка%p Время удаления %.2f мкс%s\n", GREEN, (void *)queue.start, (void *)queue.end, time, RESET);
             }
+        }
+        else if (test_operation == TEST_UNKNOWN)
+        {
+            printf("%sНеизвестная операция%s\n", YELLOW, RESET);
         }
 
         itteration_count++;

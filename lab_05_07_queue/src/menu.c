@@ -52,7 +52,10 @@ int input_test_operation(test_operations_t *operation)
         return ERR_OPERATION;
 
     if (buffer < 0 || buffer >= TEST_COUNT)
-        return ERR_OPERATION;
+    {
+        *operation = TEST_UNKNOWN;
+        return ERR_OK;
+    }
     *operation = (test_operations_t)buffer;
     fgetc(stdin);
     return ERR_OK;

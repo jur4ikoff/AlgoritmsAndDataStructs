@@ -20,7 +20,8 @@ typedef enum
     TEST_ADD,
     TEST_POP,
     TEST_COUNT,
-    TEST_INIT
+    TEST_INIT,
+    TEST_UNKNOWN
 } test_operations_t;
 
 void print_menu(void);
