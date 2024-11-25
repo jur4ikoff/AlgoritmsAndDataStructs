@@ -80,7 +80,10 @@ int main(void)
         else if (menu_operaton == OP_SIMULATION)
         {
             // Запуск симуляции
-            run_simulation_list_queue();
+            char logfile[] = "./data/data.csv";
+            float list_time;
+            run_simulation_list_queue(logfile, &list_time);
+
         }
         else
         {

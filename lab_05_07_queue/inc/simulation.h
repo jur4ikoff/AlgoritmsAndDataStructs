@@ -7,6 +7,8 @@ extern int T1_UPPER;
 extern int T2_LOWER;
 extern int T2_UPPER;
 
-void run_simulation_list_queue(void);
+extern int MAX_EXP_COUNT;
+
+void run_simulation_list_queue(char *logfile, float *exp_time);
 
 #endif
