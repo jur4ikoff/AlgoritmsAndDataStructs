@@ -146,7 +146,7 @@ int list_test(void)
                 return rc;
             }
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            if ((rc = list_queue_push(&queue, &data, sizeof(data))) != ERR_OK)
+            if ((rc = list_queue_push(&queue, &data, sizeof(data_t))) != ERR_OK)
             {
                 printf("%sПереполнение очереди%s\n", YELLOW, RESET);
                 clock_gettime(CLOCK_MONOTONIC_RAW, &end);
