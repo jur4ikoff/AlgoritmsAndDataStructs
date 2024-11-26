@@ -14,7 +14,6 @@ typedef struct __request_t
 {
     size_t processing_count;
     float arrival_time;
-    float service_time;
 } request_t;
 
 typedef struct __data_t

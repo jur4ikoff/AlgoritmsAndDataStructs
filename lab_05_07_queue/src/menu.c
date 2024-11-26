@@ -17,6 +17,12 @@ int input_menu_operation(operations_t *operation)
     return ERR_OK;
 }
 
+void print_guide(void)
+{
+    printf("Лабораторная работа по теме \"тип данных: очередь\",\n"
+           "представленном в виде массива и односвязного списка.\n");
+}
+
 void print_error_message(int arg)
 {
     printf("%s", RED);
@@ -66,8 +72,8 @@ void print_menu(void)
     printf("0 - Выход\n"
            "1 - Тестирование очереди на статическом массиве\n"
            "2 - Тестирование очереди на списке\n"
-           "3 - Симуляция работы\n"
-           "4 - Замерный эксперимент\n");
+           "3 - Симуляция работы\n");
+           // "4 - Замерный эксперимент\n");
 }
 
 void print_test_menu(void)

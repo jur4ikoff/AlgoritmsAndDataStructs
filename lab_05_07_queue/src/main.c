@@ -28,14 +28,15 @@ ________________________________________________________________________________
 _______________________________________________________________________________________
 */
 
-#include <stdio.h>
-#include <string.h>
+#include "arr_queue.h"
 #include "constants.h"
 #include "errors.h"
-#include "menu.h"
-#include "arr_queue.h"
 #include "list_queue.h"
+#include "menu.h"
 #include "simulation.h"
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
 
 int main(void)
 {
@@ -43,6 +44,7 @@ int main(void)
     size_t itteration_count = 0;
     operations_t menu_operaton = OP_INIT;
 
+    print_guide();
     while (1)
     {
         if (itteration_count % 3 == 0)
@@ -80,9 +82,22 @@ int main(void)
         else if (menu_operaton == OP_SIMULATION)
         {
             // Запуск симуляции
-            float list_time;
+            float list_time, arr_time;
             run_simulation_list_queue(&list_time);
+            printf("\n\n");
+            run_simulation_arr_queue(&arr_time);
+            /*struct timespec req = { 1, 500000000 }; // Задержка 1.5 секунды
+            printf("Задержка на 1.5 секунды...\n");
+            nanosleep(&req, NULL);
+            */
 
+            printf("\n____________________\n");
+            printf("Результаты симуляции\n");
+            printf("Время выполнения:\n"
+                   "- При использовании очереди на основе массива: %.2f мкс\n"
+                   "- При использовании очереди на основе связного списка: %.2f мкс\n",
+                   arr_time, list_time);
+            printf("Использование очереди на основе массива эффективнее в %.2f раза\n", list_time / arr_time);
         }
         else
         {
@@ -91,7 +106,7 @@ int main(void)
         itteration_count++;
     }
 
-exit:
+    exit:
     if (rc)
         print_error_message(rc);
     return rc;

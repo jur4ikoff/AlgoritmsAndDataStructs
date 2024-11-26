@@ -24,6 +24,7 @@ typedef enum
     TEST_UNKNOWN
 } test_operations_t;
 
+void print_guide(void);
 void print_menu(void);
 void print_test_menu(void);
 void print_error_message(int arg);
