@@ -21,8 +21,8 @@ typedef struct __list_queue_t
 int list_test(void);
 void list_queue_init(list_queue_t *queue);
 void list_queue_print_char(const list_queue_t queue);
-int list_queue_push(list_queue_t *queue, char src);
-int list_queue_pop(list_queue_t *queue, char *element);
+int list_queue_push(list_queue_t *queue, const void *src_data, size_t src_size);
+int list_queue_pop(list_queue_t *queue, void *dst_data, size_t src_size);
 void list_queue_free(list_queue_t *queue);
 int list_queue_is_empty(const list_queue_t queue);
 #endif

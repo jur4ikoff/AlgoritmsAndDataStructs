@@ -29,13 +29,13 @@ void list_queue_print_char(const list_queue_t queue)
     printf("\n");
 }
 
-int list_queue_push(list_queue_t *queue, char src)
+int list_queue_push(list_queue_t *queue, const void *src_data, size_t src_size)
 {
     if (queue->count >= queue->UP_LIMIT)
         return ERR_QUEUE_OVERFLOW;
 
     node_t *node = malloc(sizeof(node_t));
-    data_t *data = malloc(sizeof(data_t));
+    data_t *data = malloc(sizeof(src_size));
     if (!node || !data)
     {
         return ERR_MEMORY_ALLOCATION;
@@ -43,7 +43,7 @@ int list_queue_push(list_queue_t *queue, char src)
         free(data);
     }
 
-    data->element = src;
+    memcpy(data, src_data, src_size);
     node->next = NULL;
     node->data = data;
 
@@ -61,15 +61,16 @@ int list_queue_push(list_queue_t *queue, char src)
     return ERR_OK;
 }
 
-int list_queue_pop(list_queue_t *queue, char *element)
+int list_queue_pop(list_queue_t *queue, void *dst_data, size_t src_size)
 {
     if (queue->count <= 0)
         return ERR_QUEUE_UNDERFLOW;
 
-    node_t *next = queue->head;
-    *element = next->data->element;
-    queue->head = next->next;
+    if (dst_data)
+        memcpy(dst_data, queue->head->data, src_size);
 
+    node_t *next = queue->head;
+    queue->head = next->next;
 
     free(next->data);
     free(next);
@@ -89,7 +90,6 @@ void list_queue_free(list_queue_t *queue)
     }
 }
 
-
 /**
  * @brief Функция проверяет пустая ли очередь
  * @param queue Очередь
@@ -97,5 +97,5 @@ void list_queue_free(list_queue_t *queue)
  */
 int list_queue_is_empty(const list_queue_t queue)
 {
-    return queue.count == 0; 
+    return queue.count == 0;
 }

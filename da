@@ -1,0 +1,773 @@
+[33mcommit 6d5231b2783bb5c250ab2ecb2ba5d67d0e70846d[m[33m ([m[1;36mHEAD -> [m[1;32mlab_05[m[33m, [m[1;31morigin/lab_05[m[33m)[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Nov 26 02:48:29 2024 +0300
+
+    update push and pop in static arr + fix cored dump
+
+[33mcommit dee4849109d9604ce5dce83e247142e92a21f29a[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Nov 26 02:10:45 2024 +0300
+
+    update push and pop functions in arr_queue
+
+[33mcommit 91d23fe30062e08eccfa5d67b1a0ecd7b9d63709[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Nov 26 01:31:50 2024 +0300
+
+    add isEmpty
+
+[33mcommit b3718b9e2543294bc576f47360de1a0e9015e283[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Nov 26 01:25:47 2024 +0300
+
+    Списываем симуляцию.с
+
+[33mcommit be45da98351fcd3adb6fddbbbea091b8a3bccc68[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Nov 26 00:52:30 2024 +0300
+
+    add
+
+[33mcommit 432d93c59ee89ff8eb0f8be28f2022cf25167f03[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Nov 25 16:44:14 2024 +0300
+
+    add rand float
+
+[33mcommit 611200cf9803f7d95282f60543eeeb9a8af1e0ab[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Nov 25 16:36:49 2024 +0300
+
+    testing on memory leaks
+
+[33mcommit b490266be03efc49522d9ac5927c0e45243ccc49[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Mon Nov 25 15:36:29 2024 +0300
+
+    complete data structs
+
+[33mcommit 09fddffd58cc77a48eb32df3365736dc51854471[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sun Nov 24 11:22:07 2024 +0300
+
+    change double linked list to one linked list
+
+[33mcommit fc4b4e5ccb1b935d275eda7a90b670544474122c[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sat Nov 23 22:40:29 2024 +0300
+
+    add operations on list queue
+
+[33mcommit da6afc3432126fdf5c4f65e7f391baa33a0be7a2[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sat Nov 23 20:42:24 2024 +0300
+
+    push to list
+
+[33mcommit 24f30e589f683fc210ac4ec7e9f2ac5f0ba8730e[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sat Nov 23 19:27:53 2024 +0300
+
+    test
+
+[33mcommit 41d4bbfd8d10a3017c356ac999439623cb2360be[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sat Nov 23 00:14:22 2024 +0300
+
+    yet not working
+
+[33mcommit caae1e18948ffa4d54a47f761ad43fe9007a108d[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Fri Nov 22 23:57:34 2024 +0300
+
+    fatal error
+
+[33mcommit 4a23e6e13a1623aab1d912fe4baee51928801589[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Nov 22 23:04:44 2024 +0300
+
+    add functions headers
+
+[33mcommit 117f6f0f07ff4fe5ff9bdb591f763c745c1f577f[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Nov 22 17:14:09 2024 +0300
+
+    fix bugs
+
+[33mcommit 3ea14a0e64a9202162b7743a77505692be90bc80[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Nov 22 16:35:13 2024 +0300
+
+    fix bug
+
+[33mcommit 5ccabe20c165a397447b7123495eff24d0696a68[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Nov 22 16:07:08 2024 +0300
+
+    add pop
+
+[33mcommit 22e3356b1b92b899d38bcd03be7e5403b415c4a7[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Nov 22 14:48:29 2024 +0300
+
+    add push operation to static queue
+
+[33mcommit 732adb89ee888b7d8226109fe93c59300157fde4[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Nov 21 20:52:30 2024 +0300
+
+    add few operations on static array stack
+
+[33mcommit 70661dcd8d6af698f5265a5d9e4b03c2bfd2db82[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Wed Nov 20 03:04:12 2024 +0300
+
+    Initial commit
+
+[33mcommit 6516b142ef5be4cf031744d97c2624a9e9f42352[m
+Merge: c1f58b4 bb99c87
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Wed Nov 6 14:29:16 2024 +0300
+
+    Merge pull request #3 from jur4ikoff/lab_03
+    
+    Lab 03
+
+[33mcommit bb99c87c496a4b13af2b49cd14595937fe655eb3[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Nov 5 11:48:42 2024 +0300
+
+    add otchet
+
+[33mcommit b78375fa805670abf46edee1bfb7ecb4953d8ea5[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Nov 5 11:41:26 2024 +0300
+
+    test
+
+[33mcommit 1c35a31c20d198c9ff0c9e9ed0bfdf452bd15e66[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Nov 5 09:44:41 2024 +0300
+
+    add new fix
+
+[33mcommit 97b9a9cff4c21c817aa4c13d67d839d76d181106[m[33m ([m[1;31morigin/lab_03[m[33m)[m
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Mon Nov 4 23:12:49 2024 +0300
+
+    Add files via upload
+
+[33mcommit 56df6ac2f361c1d0df75260a95ec42088eceb21c[m
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Mon Nov 4 23:12:34 2024 +0300
+
+    Delete lab_03_02_sparse_matrices/Попов Ю.А. Отчет по ЛР3.pdf
+
+[33mcommit eff3debaa6d6dca4ba2c8a5c03c9d6d0de838fae[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sat Nov 2 10:45:51 2024 +0300
+
+    update
+
+[33mcommit f32fc23e2b021a8a957f2f8c3c37a4a584a001b5[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Oct 29 16:32:49 2024 +0300
+
+    fix bugs
+
+[33mcommit 726cc1194aa7bb7c20c68e4800f4c601f4eb8bf9[m
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Mon Oct 28 19:43:10 2024 +0300
+
+    Add files via upload
+
+[33mcommit c70b8c59545166554194758d17d449dcc4a71a01[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 28 19:26:47 2024 +0300
+
+    add corr:
+
+[33mcommit 1e5b1806b815f68d016fce069ccc0becc516fa2a[m
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Mon Oct 28 18:11:28 2024 +0300
+
+    Update readme.md
+
+[33mcommit f72887cea4373d08ffe8b86fa828fc40e1bfbc57[m
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Mon Oct 28 18:11:03 2024 +0300
+
+    Update readme.md
+
+[33mcommit 56f1513c56c5cc4561830065321cb349369ffd92[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 28 18:08:33 2024 +0300
+
+    test
+
+[33mcommit 1b76d8a4da17b51e38ca31505e9c8f979de495ca[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 28 18:07:36 2024 +0300
+
+    add charts
+
+[33mcommit 51d6a3f7a9cba2d80a29345e3cacb006bfa4a890[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 28 04:15:53 2024 +0300
+
+    add comments
+
+[33mcommit 234c94a72bcd8f23595c6d3c4b29dabf5fec509b[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sun Oct 27 23:42:42 2024 +0300
+
+    add comments
+
+[33mcommit f66330a171e026ff5c2edb99fd0ff3bf7407177d[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sun Oct 27 23:26:56 2024 +0300
+
+    fix scripts
+
+[33mcommit 94e20ec1563fc5f250381463edfc14aaecdd0bad[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sat Oct 26 02:59:07 2024 +0300
+
+    fix experiment
+
+[33mcommit 9dd7b2fa246b7d4834c76b92c54df164a17ba556[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sat Oct 26 02:58:11 2024 +0300
+
+    test
+
+[33mcommit b3f5adca0b87e579bdf554a6a37eb48f5c4d8d2a[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 06:19:53 2024 +0300
+
+    few to ready
+
+[33mcommit 9bb6b9ef18d07d77633c0ee2c15b7c8a4fb130c1[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 05:43:37 2024 +0300
+
+    fix memory leack
+
+[33mcommit 60a389d726c71d1907b109ea990d86043c8b4218[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 05:29:00 2024 +0300
+
+    test
+
+[33mcommit e853e40b438b2b52fa3f2d179b5ed4e02ed52824[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 05:24:14 2024 +0300
+
+    try to find memory leack
+
+[33mcommit 8d2356fb3ede247414eefc8700190e69717d540d[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 05:11:16 2024 +0300
+
+    test
+
+[33mcommit 49658e02ff92f6c223b867bc2b955918b04ace9d[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 05:09:51 2024 +0300
+
+    add measuring
+
+[33mcommit c20c297b73f1157121733d9a1bea129d87d153e9[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 03:48:56 2024 +0300
+
+    ready sum csc matrix
+
+[33mcommit 07a1034e25ec2a3a9678d4a16fe53dd48771e119[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 03:09:41 2024 +0300
+
+    kepp is simple
+
+[33mcommit a8f631863eaeb981916c4c7402d8dcf00e16c70e[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 02:53:32 2024 +0300
+
+    add memory check in create_def_mat finc
+
+[33mcommit 49e905d0c45806da001e6b12be9514f7b9b450b5[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 02:08:28 2024 +0300
+
+    add function to sum to default matrix
+
+[33mcommit 1d76f0569b6ffb1245b37d743e6e9ee773b4fd84[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 01:05:16 2024 +0300
+
+    cleaning code
+
+[33mcommit 3ab8310d60ca53700c8150f5915d645534108ec8[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Oct 22 00:47:40 2024 +0300
+
+    save
+
+[33mcommit 21855ddc978d30fb4979f0bb41b931d1ec058ed9[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 21 20:53:54 2024 +0300
+
+    add random fill matrix and print
+
+[33mcommit 32826dbd05ae600af89012145cc62927e9243721[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 21 20:25:48 2024 +0300
+
+    redone func create matrix
+
+[33mcommit bb5f83358b6d0e891de329e6768857645cac54ee[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 21 20:07:56 2024 +0300
+
+    finish with read matrix from file
+
+[33mcommit 6994ddc3f4fa39d5d0eb1e9be4ff37c5390b7fc0[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 21 17:55:38 2024 +0300
+
+    add main function to work with default matrix
+
+[33mcommit 957f63111be1212ef1a3597f1adea72a4a2d2294[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Oct 21 00:26:32 2024 +0300
+
+    add menu
+
+[33mcommit 4bf514688cbe3b24142af55e118a61d3e9bb8d4e[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Oct 20 22:45:57 2024 +0300
+
+    start work
+
+[33mcommit a102360bdf479120d2e410b7d5ffe7ecb5bf1223[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Oct 20 22:20:00 2024 +0300
+
+    Initial commit
+
+[33mcommit c1f58b410220d0dc83448ee04f189ada0c859cda[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sun Oct 13 21:18:59 2024 +0300
+
+    add 2 lab
+
+[33mcommit d381c1b88297411ceb408ebb32c866ae4619be87[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Sep 26 20:57:50 2024 +0300
+
+    add documentation
+
+[33mcommit d590e1bbb45ebd940bd8ae9e94ce48a7c959869b[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Sep 26 20:34:02 2024 +0300
+
+    aa
+
+[33mcommit b5e2416c7f780f52543ad4ef820d08925c0a9a99[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Thu Sep 26 20:05:44 2024 +0300
+
+    ready
+
+[33mcommit 55490cc949c8594fe32a341f91fc4a55faacaa67[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Sep 26 14:35:06 2024 +0300
+
+    add documentation
+
+[33mcommit 9fc5f5085bdc32d788e7bb259ed25aa725119000[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Sep 26 14:34:54 2024 +0300
+
+    add documentation
+
+[33mcommit ef5ae08479842014aef8dbc29a85a6a44181d689[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Sep 26 13:17:46 2024 +0300
+
+    test
+
+[33mcommit 032c99e84011f3d1a12c9bb7bb221bd4b2655fa6[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Sep 26 11:40:40 2024 +0300
+
+    add help info
+
+[33mcommit 49a5e79551c8da72f78427c4ec7e33a8b38023f9[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Sep 24 10:49:59 2024 +0300
+
+    test
+
+[33mcommit db726970aceba6ae8a17edda46396e9b40dc505a[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Sep 24 02:04:58 2024 +0300
+
+    Production, dont work long numbers
+
+[33mcommit 8819d7ea9c45be68b3c1ade8590a0381ea99950d[m
+Merge: 8f4694e b5754c4
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Tue Sep 24 01:32:26 2024 +0300
+
+    Merge pull request #1 from jur4ikoff/develop
+    
+    Develop
+
+[33mcommit b5754c4face9185a1512b473d62ef7bd3466a1aa[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Sep 24 01:22:47 2024 +0300
+
+    aa
+
+[33mcommit a1d4e0863c891472c733d7b3b57f7768057ede33[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Sep 24 01:10:36 2024 +0300
+
+    test
+
+[33mcommit 95d80d98d33ad0c6b8869b7d5a3040166d2fd790[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Sep 24 00:23:39 2024 +0300
+
+    restruct:
+
+[33mcommit ed6d0c2209f5705aaef943cb01e43663797516ee[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Sep 24 00:20:39 2024 +0300
+
+    update find part divisible
+
+[33mcommit 6267471cc496a2474b3d7a1c5b957e7d493bfe18[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Sep 23 23:50:32 2024 +0300
+
+    Bolb
+
+[33mcommit 390fb9e5cdf03c37430bb92c1ab47e3275f966cd[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Sep 23 23:03:20 2024 +0300
+
+    add new struct, correct files
+
+[33mcommit a1d010762b7a83c3e44064ac6e068d7fc2a2b16a[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Sep 23 22:39:37 2024 +0300
+
+    almost working
+
+[33mcommit 269430bb843271e51e90218b2dd8462e5a842661[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Sep 23 19:34:55 2024 +0300
+
+    add
+
+[33mcommit 8f4694e85023f413682461b246eeb160050fa728[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Sep 23 19:23:31 2024 +0300
+
+    update in input number
+
+[33mcommit 6440267d51d60ca3b40ed564b03815a836dd52bb[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 22 23:26:05 2024 +0300
+
+    update
+
+[33mcommit 6648069991a74a096de726fe457d3d513d3a9afe[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 22 22:51:12 2024 +0300
+
+    fix sign_dewf
+
+[33mcommit 5cfb23f37abe46f9af1b9bc485c3cc55f7747145[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 22 21:49:20 2024 +0300
+
+    add input integer number
+
+[33mcommit 2122bf5792298c0730d887914e0334e09924692e[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 22 20:50:08 2024 +0300
+
+    update scripts
+
+[33mcommit 0d1e8c80a7dc19edd338f12b98af867fdf9fa47d[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 22 20:28:51 2024 +0300
+
+    rename struct variable
+
+[33mcommit 6b1692e26b4b208542b41a130350e6b7aab4fa8b[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 22 20:22:40 2024 +0300
+
+    add right file struct
+
+[33mcommit 8dc26b2457dc55d122b3946575610fa41e0c4ad2[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 22 19:34:29 2024 +0300
+
+    add shift order
+
+[33mcommit 9c22ecf2a7ac5688058280735789de5b2da7359f[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sat Sep 21 23:45:20 2024 +0300
+
+    test
+
+[33mcommit 34e2e94da57cc1319f86edc0cfad428577444fc8[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sat Sep 21 13:10:15 2024 +0300
+
+    test
+
+[33mcommit 4d154fdedd407b49aefd39af691b617f1020252a[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sat Sep 21 01:12:05 2024 +0300
+
+    test
+
+[33mcommit b539790ae9d5be4b8a626ef177238822b58d2899[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Sep 20 22:23:20 2024 +0300
+
+    test
+
+[33mcommit 8ac80c36cccb7d64748617b79b7bad26b4594df3[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Fri Sep 20 01:16:20 2024 +0300
+
+    fix some bugs
+
+[33mcommit 49b7326dc0cf17043c5c6ac7b98d2a72926f0906[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Thu Sep 19 21:28:27 2024 +0300
+
+    fixx
+
+[33mcommit ed5d2d40b7eb0a51013c0a13f7d5a77376cec614[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Thu Sep 19 00:33:33 2024 +0300
+
+    mantise calulate correctly
+
+[33mcommit fbd78e03e657ff8ee7907d26d2be1cf87d92f817[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Wed Sep 18 23:20:00 2024 +0300
+
+    fix bugs
+
+[33mcommit 2ba8475a1adbdb4a1a3a1f8617e9b13a5278efd4[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Wed Sep 18 19:41:38 2024 +0300
+
+    fix bug with sign
+
+[33mcommit c2202a8959833b1e544682ad08c71f644908cd9a[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Wed Sep 18 15:15:18 2024 +0300
+
+    fix find_part_div
+
+[33mcommit b55da361c8b6ac1bc67550c5e1c7031a3a1bcbfa[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Wed Sep 18 14:36:15 2024 +0300
+
+    something work
+
+[33mcommit 99311c0a702ff76320bcaf6c49db590b544a31d1[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Wed Sep 18 01:16:20 2024 +0300
+
+    add remain
+
+[33mcommit 0a226eb53360190f34fd2438c7db48b2ff9f86a5[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Tue Sep 17 22:37:32 2024 +0300
+
+    test
+
+[33mcommit 518f3c51922047c22a320af13e0ca3caf6244ad2[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Tue Sep 17 01:34:39 2024 +0300
+
+    add part_divisible
+
+[33mcommit e30f7e5e9073bca1ef1b019de4d5a48f9500d4ee[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Mon Sep 16 22:37:20 2024 +0300
+
+    attemp to add a sign checking
+
+[33mcommit 9a18aeef148d3fdcbc4430cd6c6bae600f4e41bc[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Mon Sep 16 19:02:33 2024 +0300
+
+    test
+
+[33mcommit 509d948f5816ffc45f41c159fe88728cda68e6c0[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Mon Sep 16 18:25:42 2024 +0300
+
+    test
+
+[33mcommit f0259e731356497246cf8183862939b5b90dc61a[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sun Sep 15 23:50:29 2024 +0300
+
+    add input
+
+[33mcommit b1ec616222e8d1752b142e9412b391826dc0e584[m
+Author: Linux <ypopov2005@gmail.com>
+Date:   Sat Sep 14 20:17:34 2024 +0300
+
+    not work
+
+[33mcommit e03a30f97a4a897a8f32a510a46a6d1119fd3ad6[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Fri Sep 6 23:51:00 2024 +0300
+
+    insection sort
+
+[33mcommit 51ef4fe4c49839160176871848575c0efb1a7da1[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Sep 6 01:10:54 2024 +0300
+
+    add lections
+
+[33mcommit df3a065cf7769f4eff3573cc03f6acff237f5059[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Fri Sep 6 01:01:12 2024 +0300
+
+    Initial commit for 1 lab work TADS
+
+[33mcommit f9fcebebf4b77bec0c9c5c9b1a1d4fab128aaeca[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Mon Sep 2 21:01:49 2024 +0300
+
+    test
+
+[33mcommit 267e34150dcca57873627ba084017e556794134a[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Fri Aug 30 02:23:30 2024 +0300
+
+    13
+
+[33mcommit ad92fc29612da46d0d513c7b606cb1492a3006cf[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Thu Aug 29 02:44:45 2024 +0300
+
+    11 task
+
+[33mcommit 97f90bb19cf6fccae94623694ad4cd5b84d33e09[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Thu Aug 29 02:38:03 2024 +0300
+
+    add B3
+
+[33mcommit b99bd3af84163ff3e7101c9bc123f9b299477053[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Fri Aug 23 00:20:56 2024 +0300
+
+    test
+
+[33mcommit 2ee1686435f1a48f60a263c1f7c3c698870e99de[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Tue Aug 13 03:58:59 2024 +0300
+
+    task 9
+
+[33mcommit b60aebd88b270ac4360a0350fc938271fb7ed565[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Tue Aug 13 03:37:12 2024 +0300
+
+    lesson 8
+
+[33mcommit 51fe560fc2c9c899635bacfa9a9e062b38762b90[m
+Author: 1234 <ypopov2005@gmail.com>
+Date:   Mon Aug 12 03:52:50 2024 +0300
+
+    test
+
+[33mcommit ae6c57feefdf5156b5e59a58f78927fa5bd190d3[m
+Author: 1234 <1234>
+Date:   Mon Aug 12 03:50:30 2024 +0300
+
+    task on binary search
+
+[33mcommit 8190d28abc0d2f6b5d3297005a18b268b7cc4a43[m
+Author: 1234 <1234>
+Date:   Mon Aug 12 03:39:43 2024 +0300
+
+    bred
+
+[33mcommit 94770e088b4b8d0e6bf3a700d6f68a2bb59c2068[m
+Author: 1 <ypopov2005@gmail.com>
+Date:   Sat Aug 10 00:00:06 2024 +0300
+
+    test
+
+[33mcommit dfc2bd145e71f1d7b902c85f45fda319b3d2b75a[m
+Author: 1 <abc@gmail.com>
+Date:   Fri Aug 9 02:52:39 2024 +0300
+
+    stack && queue
+
+[33mcommit ed61bbefb28f334b62600aed66bff53484589b64[m
+Author: 1 <abc@gmail.com>
+Date:   Tue Aug 6 03:25:26 2024 +0300
+
+    add task from RK
+
+[33mcommit 3eb61c67af5c36484675f4af4c39da7bd208b253[m
+Author: 1 <abc@gmail.com>
+Date:   Tue Aug 6 03:03:38 2024 +0300
+
+    rework merge sort to python style
+
+[33mcommit e8d5d63e5e5c915a37748b18c4605720da987025[m
+Author: 1 <abc@gmail.com>
+Date:   Tue Aug 6 02:50:57 2024 +0300
+
+    advanced sorts
+
+[33mcommit 22eee44ac87ca3424364183db3731063d10087f1[m
+Author: 1234 <1234>
+Date:   Tue Aug 6 00:45:11 2024 +0300
+
+    3 task
+
+[33mcommit 1913867f79c98e7697db7ee7c0481458e9400d12[m
+Author: 1 <abc@gmail.com>
+Date:   Sun Aug 4 04:22:26 2024 +0300
+
+    move gitignore
+
+[33mcommit 38a90f6cea0c785d8c6036570301c9207638c3d6[m
+Author: 1 <abc@gmail.com>
+Date:   Sun Aug 4 04:18:35 2024 +0300
+
+    add gitignore
+
+[33mcommit 0530e0225b511980a953d771179c82a86f71209c[m
+Author: Yuri <91603315+jur4ikoff@users.noreply.github.com>
+Date:   Sun Aug 4 04:16:53 2024 +0300
+
+    Delete .DS_Store
+
+[33mcommit 80b39139059d6bf7a82608799a42b0408c5da8e4[m
+Author: 1 <abc@gmail.com>
+Date:   Sun Aug 4 04:15:07 2024 +0300
+
+    OneLinkedList on Python
