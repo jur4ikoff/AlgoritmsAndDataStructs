@@ -90,7 +90,7 @@ int arr_test(void)
                 clock_gettime(CLOCK_MONOTONIC_RAW, &end);
                 time = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3;
                 printf("%sУспешное удаление из очереди элемента: %c %s\n", GREEN, data.element, RESET);
-                printf("%sАдрес начала списка %p, адрес конца списка%p Время удаления %.2f мкс%s\n", GREEN, (void *)queue.start, (void *)queue.end, time, RESET);
+                printf("%sАдрес начала списка %p, адрес конца списка %p Время удаления %.2f мкс%s\n", GREEN, (void *)queue.start, (void *)queue.end, time, RESET);
             }
         }
         else if (test_operation == TEST_UNKNOWN)
@@ -103,7 +103,6 @@ int arr_test(void)
 
     return ERR_OK;
 }
-
 
 int list_test(void)
 {
@@ -121,7 +120,10 @@ int list_test(void)
             print_test_menu();
 
         if ((rc = input_test_operation(&test_operation)) != ERR_OK)
+        {
+            list_queue_free(&queue);
             return rc;
+        }
 
         if (test_operation == TEST_EXIT)
         {
@@ -155,7 +157,7 @@ int list_test(void)
                 clock_gettime(CLOCK_MONOTONIC_RAW, &end);
                 time = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3;
                 printf("%sУспешное добавление в очередь элемента: %c%s\n", GREEN, data.element, RESET);
-                printf("%sАдрес начала списка %p, адрес конца списка%p Время добавления %.2f мкс%s\n", GREEN, (void *)queue.head, (void *)queue.end, time, RESET);
+                printf("%sАдрес начала списка %p, адрес конца списка %p Время добавления %.2f мкс%s\n", GREEN, (void *)queue.head, (void *)queue.end, time, RESET);
             }
         }
         else if (test_operation == TEST_POP)
