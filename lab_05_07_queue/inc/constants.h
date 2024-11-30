@@ -1,6 +1,5 @@
 #ifndef __CONST__H__
 #define __CONST__H__
-#include <stdio.h>
 
 #define MAX_STRING_SIZE 128
 #define MAX_QUEUE_SIZE 1001
@@ -9,6 +8,8 @@
 #define YELLOW "\033[0;33m"
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
+
+#include <stdio.h>
 
 typedef struct __request_t
 {

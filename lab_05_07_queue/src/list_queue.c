@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Инициализация очереди на списке
 void list_queue_init(list_queue_t *queue)
 {
     queue->head = NULL;
@@ -12,6 +13,7 @@ void list_queue_init(list_queue_t *queue)
     queue->count = 0;
 }
 
+// Вывод очереди на экран
 void list_queue_print_char(const list_queue_t queue)
 {
     node_t *cur = queue.head;
@@ -29,18 +31,25 @@ void list_queue_print_char(const list_queue_t queue)
     printf("\n");
 }
 
+/**
+ * @brief Функция реализацет добавление элемента в очередь
+ * @param queue Указатель на очередь
+ * @param src_data Данные
+ * @param src_size Размер данных
+ * @return Код возврата
+ */
 int list_queue_push(list_queue_t *queue, const void *src_data, size_t src_size)
 {
     if (queue->count >= queue->UP_LIMIT)
         return ERR_QUEUE_OVERFLOW;
 
     node_t *node = malloc(sizeof(node_t));
-    data_t *data = malloc(sizeof(src_size));
+    data_t *data = malloc(sizeof(data_t));
     if (!node || !data)
     {
-        return ERR_MEMORY_ALLOCATION;
         free(node);
         free(data);
+        return ERR_MEMORY_ALLOCATION;
     }
 
     memcpy(data, src_data, src_size);
@@ -61,6 +70,13 @@ int list_queue_push(list_queue_t *queue, const void *src_data, size_t src_size)
     return ERR_OK;
 }
 
+/**
+ * @brief Функция реализацет удаление элемента из очереди
+ * @param queue Указатель на очередь
+ * @param src_data Данные
+ * @param src_size Размер данных
+ * @return Код возврата
+ */
 int list_queue_pop(list_queue_t *queue, void *dst_data, size_t src_size)
 {
     if (queue->count <= 0)

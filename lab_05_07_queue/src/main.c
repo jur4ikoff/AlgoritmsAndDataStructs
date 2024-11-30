@@ -40,21 +40,26 @@ ________________________________________________________________________________
 
 int main(void)
 {
+    // Инициализация переменных
     int rc = ERR_OK;
     size_t itteration_count = 0;
     operations_t menu_operaton = OP_INIT;
 
+    // Вывод информации о программе
     print_guide();
     while (1)
     {
+        // Вывод меню раз в 3 иттерации
         if (itteration_count % 3 == 0)
             print_menu();
 
+        // Ввод операции
         if ((rc = input_menu_operation(&menu_operaton)) != ERR_OK)
             goto exit;
 
         if (menu_operaton == OP_EXIT)
         {
+            // Выход из программы
             printf("%sУспешный выход из программы%s\n", GREEN, RESET);
             break;
         }
@@ -62,7 +67,6 @@ int main(void)
         {
             // Тестирование очереди на статическом массиве
             // Запуск подпрограммы для тестирования очереди на статическом массиве
-
             if ((rc = arr_test()) != ERR_OK)
             {
                 print_menu();
@@ -81,16 +85,16 @@ int main(void)
         }
         else if (menu_operaton == OP_SIMULATION)
         {
-            // Запуск симуляции
-            float list_time, arr_time;
+            float list_time = 0.0, arr_time = 0.0;
+
+            // Запуск симуляции для очереди на листе
             run_simulation_list_queue(&list_time);
             printf("\n\n");
-            run_simulation_arr_queue(&arr_time);
-            /*struct timespec req = { 1, 500000000 }; // Задержка 1.5 секунды
-            printf("Задержка на 1.5 секунды...\n");
-            nanosleep(&req, NULL);
-            */
 
+            // Запуск симуляции для очереди на массиве
+            run_simulation_arr_queue(&arr_time);
+
+            // Вывод результатов
             printf("\n____________________\n");
             printf("Результаты симуляции\n");
             printf("Время выполнения:\n"
@@ -105,8 +109,8 @@ int main(void)
         }
         itteration_count++;
     }
-
-    exit:
+    // Метка для общего выхода из программы
+exit:
     if (rc)
         print_error_message(rc);
     return rc;

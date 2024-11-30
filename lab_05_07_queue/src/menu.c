@@ -3,6 +3,8 @@
 #include "errors.h"
 #include <stdio.h>
 
+
+// Ввод операции для меню
 int input_menu_operation(operations_t *operation)
 {
     printf(">Выберите операцию: ");
@@ -17,12 +19,14 @@ int input_menu_operation(operations_t *operation)
     return ERR_OK;
 }
 
+// Вывод информации о программе
 void print_guide(void)
 {
     printf("Лабораторная работа по теме \"тип данных: очередь\",\n"
            "представленном в виде массива и односвязного списка.\n");
 }
 
+// Вывод сообщения об ошибке
 void print_error_message(int arg)
 {
     printf("%s", RED);
@@ -50,6 +54,7 @@ void print_error_message(int arg)
     printf("%s", RESET);
 }
 
+// Ввод теестовой операции
 int input_test_operation(test_operations_t *operation)
 {
     printf(">Выберите тестовую операцию: ");
@@ -67,6 +72,7 @@ int input_test_operation(test_operations_t *operation)
     return ERR_OK;
 }
 
+// Вывод меню
 void print_menu(void)
 {
     printf("0 - Выход\n"
@@ -76,6 +82,7 @@ void print_menu(void)
            // "4 - Замерный эксперимент\n");
 }
 
+// Вывод меню для тестирования очередей
 void print_test_menu(void)
 {
     printf("\nВ этом режиме можно протестировать работу с очередью\n"

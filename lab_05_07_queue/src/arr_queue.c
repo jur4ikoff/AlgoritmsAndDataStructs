@@ -2,6 +2,11 @@
 #include "errors.h"
 #include <stdio.h>
 
+
+/**
+ * @brief Функция перемещает элементы с конца массива в начало
+ * @param queue Указатель на очередь
+ */
 static void move_elements_to_begin(arr_queue_t *queue)
 {
     int n = queue->end - queue->start;
@@ -15,15 +20,22 @@ static void move_elements_to_begin(arr_queue_t *queue)
     queue->start = queue->data;
 }
 
-int arr_queue_init(arr_queue_t *queue)
+/**
+ * @brief Функция инициализации очереди
+ * @param queue Указатель на очередь
+ */
+void arr_queue_init(arr_queue_t *queue)
 {
     queue->UP_LIMIT = MAX_QUEUE_SIZE;
     queue->start = queue->data;
     queue->end = queue->data;
     queue->count = 0;
-    return ERR_OK;
 }
 
+/**
+ * @brief Вывод очереди на экран
+ * @param queue переменная, содержащую очередь
+ */
 void arr_queue_print_char(const arr_queue_t queue)
 {
     if (queue.start - queue.end == 0)
@@ -40,6 +52,12 @@ void arr_queue_print_char(const arr_queue_t queue)
     printf("\n");
 }
 
+/**
+ * @brief Функция реализаует добавление элемента в очередь
+ * @param queue Указатель на очередь
+ * @param src_data Указатель на данные
+ * @return Код возврата
+ */
 int arr_queue_push(arr_queue_t *queue, data_t *element)
 {
     if (queue->start > queue->end)
@@ -57,6 +75,12 @@ int arr_queue_push(arr_queue_t *queue, data_t *element)
     return ERR_OK;
 }
 
+/**
+ * @brief Функция реализаует удаление элемента из очереди
+ * @param queue Указатель на очередь
+ * @param src_data Указатель на данные
+ * @return Код возврата
+ */
 int arr_queue_pop(arr_queue_t *queue, data_t *data)
 {
     if (queue->start == queue->end)
