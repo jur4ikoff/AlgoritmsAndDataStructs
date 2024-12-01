@@ -86,14 +86,13 @@ int main(void)
         else if (menu_operaton == OP_SIMULATION)
         {
             float list_time = 0.0, arr_time = 0.0;
-            printf("%d %d %d %d\n", T1_LOWER, T1_UPPER, T2_LOWER, T2_UPPER);
             // Запуск симуляции для очереди на листе
-            
+
             run_simulation_list_queue(&list_time);
             printf("\n\n");
-            run_simulation_arr_queue(&arr_time);
-            // Запуск симуляции для очереди на массиве
             
+            // Запуск симуляции для очереди на массиве
+             run_simulation_arr_queue(&arr_time);
 
             // Вывод результатов
             printf("\n____________________\n");

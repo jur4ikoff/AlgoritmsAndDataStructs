@@ -121,8 +121,13 @@ void run_simulation_list_queue(float *exp_time)
 
     // Подсчет времени
     float average_enter_wait = (float)(T1_UPPER + T1_LOWER) / 2;
+    float average_enter_out = (float)(T2_UPPER + T2_LOWER) / 2;
     float calc_request_count = current_time / average_enter_wait;
-    float calculated_time = average_enter_wait * MAX_REQUEST_COUNT;
+    float calculated_time;
+    if (average_enter_wait > average_enter_out)
+        calculated_time = average_enter_wait * MAX_REQUEST_COUNT;
+    else
+        calculated_time = average_enter_out * MAX_REQUEST_COUNT + average_enter_wait * MAX_REQUEST_COUNT;
 
     // Вывод времени и погрешности
     printf("\nВычисление погрешностей.\n"
@@ -139,8 +144,9 @@ void run_simulation_list_queue(float *exp_time)
 // Запуск симуляции для очереди на статическом массиве
 void run_simulation_arr_queue(float *exp_time)
 {
-    // Инициализации переменных
+    // Инициализируем функцию srand от unix времени
     srand(time(NULL));
+    // Инициализируем переменные
     struct timespec start, end;
     size_t entered = 0, left = 0, work_time = 0;
     float current_time = 0.0f, total_idle_time = 0.0f; // Текущее время и время простоя
@@ -151,15 +157,15 @@ void run_simulation_arr_queue(float *exp_time)
     arr_queue_t queue = { 0 };
     arr_queue_init(&queue);
 
-    // Запуск замера времени
     printf("%sСимуляция обслуживания %zu заявок обслуживающего аппарата%s\n", GREEN, MAX_REQUEST_COUNT, RESET);
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
 
+    // Запуск времени
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     while (left < (size_t)MAX_REQUEST_COUNT)
     {
-        // Вычисление нужного времени
         while (current_time > next_arrival_time)
         {
+            // Расчитываем время
             next_arrival_time += random_float(T1_LOWER, T1_UPPER);
             if (arr_queue_is_empty(queue) && next_arrival_time > current_time)
             {
@@ -170,20 +176,17 @@ void run_simulation_arr_queue(float *exp_time)
             data_t request = { .request_data = { .arrival_time = next_arrival_time, .processing_count = 0 } };
             arr_queue_push(&queue, &request);
         }
-
-        // Флаг - нужен ли вывод
+        // Флаг - нужен ли в текущей иттерации вывод на экран
         int is_report = 0;
-
-        // Обновление переменых
         state += queue.count;
         work_time++;
         current_time += random_float(T2_LOWER, T2_UPPER);
 
-        // Берем последний элемент из очереди
+        // Берем элемент из очереди
         data_t request = { 0 };
         arr_queue_pop(&queue, &request);
 
-        // Обновляем данные и пушим обратно
+        // Обновляем данные запроса и возвращаем обратно в очередь
         if (request.request_data.processing_count < MAX_CYCLES)
         {
             request.request_data.processing_count++;
@@ -193,12 +196,12 @@ void run_simulation_arr_queue(float *exp_time)
         }
         else
         {
-            // Выходит из очереди
+            // Если элемент прошел больше 5 циклов, то он выходит из очереди
             left++;
             is_report = 1;
         }
 
-        // Вывод репорта
+        // Вывод данных, когда нужно
         if (is_report && left % STEP_REPORT == 0)
         {
             printf("Количество заявок: %zu\n", left);
@@ -208,11 +211,11 @@ void run_simulation_arr_queue(float *exp_time)
         }
     }
 
-    // Замер времени
+    // Вычисление замера времени
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
     *exp_time = (float)((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3);
 
-    // Вывод общей информации
+    // Вывод информации о замерах
     printf("\nОбщее время моделирования: %.2f\n"
            "Время простоя ОА: %.2f\n"
            "Кол-во вошедших заявок: %zu\n"
@@ -220,7 +223,7 @@ void run_simulation_arr_queue(float *exp_time)
            "Кол-во срабатываний ОА: %zu\n",
            current_time, total_idle_time, entered, left, work_time);
 
-    // Считаем значения времени
+    // Подсчет времени
     float average_enter_wait = (float)(T1_UPPER + T1_LOWER) / 2;
     float average_enter_out = (float)(T2_UPPER + T2_LOWER) / 2;
     float calc_request_count = current_time / average_enter_wait;
@@ -229,9 +232,8 @@ void run_simulation_arr_queue(float *exp_time)
         calculated_time = average_enter_wait * MAX_REQUEST_COUNT;
     else
         calculated_time = average_enter_out * MAX_REQUEST_COUNT + average_enter_wait * MAX_REQUEST_COUNT;
-    
 
-    // Выводим на экран время и погрешности
+    // Вывод времени и погрешности
     printf("\nВычисление погрешностей.\n"
            "Вычисленное кол-во заявок: %.2f, имеем: %zu, погрешность: %.2f%%\n"
            "Аппарат работал: %zu е.в., простаивал: %.2f е.в.\n"
