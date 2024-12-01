@@ -50,7 +50,7 @@ void run_simulation_list_queue(float *exp_time)
     float state = 0.0f;
 
     // Создание очереди
-    list_queue_t queue = {0};
+    list_queue_t queue = { 0 };
     list_queue_init(&queue);
 
     printf("%sСимуляция обслуживания %zu заявок обслуживающего аппарата%s\n", GREEN, MAX_REQUEST_COUNT, RESET);
@@ -69,7 +69,7 @@ void run_simulation_list_queue(float *exp_time)
                 current_time = next_arrival_time;
             }
             entered++;
-            data_t request = {.request_data = {.arrival_time = next_arrival_time, .processing_count = 0}};
+            data_t request = { .request_data = { .arrival_time = next_arrival_time, .processing_count = 0 } };
             list_queue_push(&queue, &request, sizeof(data_t));
         }
         // Флаг - нужен ли в текущей иттерации вывод на экран
@@ -79,7 +79,7 @@ void run_simulation_list_queue(float *exp_time)
         current_time += random_float(T2_LOWER, T2_UPPER);
 
         // Берем элемент из очереди
-        data_t request = {0};
+        data_t request = { 0 };
         list_queue_pop(&queue, &request, sizeof(data_t));
 
         // Обновляем данные запроса и возвращаем обратно в очередь
@@ -123,6 +123,7 @@ void run_simulation_list_queue(float *exp_time)
     float average_enter_wait = (float)(T1_UPPER + T1_LOWER) / 2;
     float calc_request_count = current_time / average_enter_wait;
     float calculated_time = average_enter_wait * MAX_REQUEST_COUNT;
+
     // Вывод времени и погрешности
     printf("\nВычисление погрешностей.\n"
            "Вычисленное кол-во заявок: %.2f, имеем: %zu, погрешность: %.2f%%\n"
@@ -147,7 +148,7 @@ void run_simulation_arr_queue(float *exp_time)
     float state = 0.0f;
 
     // Создание очереди
-    arr_queue_t queue = {0};
+    arr_queue_t queue = { 0 };
     arr_queue_init(&queue);
 
     // Запуск замера времени
@@ -166,7 +167,7 @@ void run_simulation_arr_queue(float *exp_time)
                 current_time = next_arrival_time;
             }
             entered++;
-            data_t request = {.request_data = {.arrival_time = next_arrival_time, .processing_count = 0}};
+            data_t request = { .request_data = { .arrival_time = next_arrival_time, .processing_count = 0 } };
             arr_queue_push(&queue, &request);
         }
 
@@ -179,7 +180,7 @@ void run_simulation_arr_queue(float *exp_time)
         current_time += random_float(T2_LOWER, T2_UPPER);
 
         // Берем последний элемент из очереди
-        data_t request = {0};
+        data_t request = { 0 };
         arr_queue_pop(&queue, &request);
 
         // Обновляем данные и пушим обратно
@@ -206,7 +207,6 @@ void run_simulation_arr_queue(float *exp_time)
             is_report = 0;
         }
     }
-
 
     // Замер времени
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);

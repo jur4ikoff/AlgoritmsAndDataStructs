@@ -86,13 +86,14 @@ int main(void)
         else if (menu_operaton == OP_SIMULATION)
         {
             float list_time = 0.0, arr_time = 0.0;
-
+            printf("%d %d %d %d\n", T1_LOWER, T1_UPPER, T2_LOWER, T2_UPPER);
             // Запуск симуляции для очереди на листе
+            
             run_simulation_list_queue(&list_time);
             printf("\n\n");
-
-            // Запуск симуляции для очереди на массиве
             run_simulation_arr_queue(&arr_time);
+            // Запуск симуляции для очереди на массиве
+            
 
             // Вывод результатов
             printf("\n____________________\n");
@@ -103,6 +104,13 @@ int main(void)
                    arr_time, list_time);
             printf("Использование очереди на основе массива эффективнее в %.2f раза\n", list_time / arr_time);
         }
+        else if (menu_operaton == OP_EDIT)
+        {
+            
+            // Изменение параметров
+            if ((rc = edit_params()) != ERR_OK)
+                goto exit;
+        }
         else
         {
             printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
@@ -110,7 +118,7 @@ int main(void)
         itteration_count++;
     }
     // Метка для общего выхода из программы
-exit:
+    exit:
     if (rc)
         print_error_message(rc);
     return rc;

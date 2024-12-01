@@ -8,5 +8,6 @@
 #define ERR_MEMORY_ALLOCATION 4
 #define ERR_DATA 5
 #define ERR_SYMBOL_INPUT 6
+#define ERR_SIMULATION_PARAM 7
 
 #endif

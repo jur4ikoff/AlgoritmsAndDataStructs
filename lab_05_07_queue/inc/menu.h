@@ -8,6 +8,7 @@ typedef enum
     OP_TEST_STATIC,
     OP_TEST_LIST,
     OP_SIMULATION,
+    OP_EDIT,
     OP_COUNT,
     OP_INIT
 
@@ -31,4 +32,6 @@ void print_error_message(int arg);
 
 int input_menu_operation(operations_t *operation);
 int input_test_operation(test_operations_t *operation);
+
+int edit_params(void);
 #endif
