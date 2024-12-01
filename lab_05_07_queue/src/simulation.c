@@ -57,7 +57,7 @@ void run_simulation_list_queue(float *exp_time)
 
     // Запуск времени
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-    while (left < (size_t)MAX_REQUEST_COUNT)
+    while (left < (size_t)MAX_REQUEST_COUNT || entered < MAX_REQUEST_COUNT)
     {
         while (current_time > next_arrival_time)
         {
@@ -161,7 +161,7 @@ void run_simulation_arr_queue(float *exp_time)
 
     // Запуск времени
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-    while (left < (size_t)MAX_REQUEST_COUNT)
+    while (left < (size_t)MAX_REQUEST_COUNT || entered < MAX_REQUEST_COUNT)
     {
         while (current_time > next_arrival_time)
         {
@@ -241,4 +241,86 @@ void run_simulation_arr_queue(float *exp_time)
            calc_request_count, entered, ABS((entered - calc_request_count) / calc_request_count * 100),
            work_time, total_idle_time,
            calculated_time, current_time, ABS((current_time - calculated_time) / calculated_time * 100));
+}
+
+void calc_memory_usage(void)
+{
+    printf("\n\n");
+    printf("Память из data_t %ld\n", sizeof(data_t));
+    printf("Память, занимаемая очередью на статическом массиве: %ld\n\n", sizeof(arr_queue_t));
+    for (size_t i = 100; i <= 2000; i += 500)
+    {
+        printf("Память, занимаемая очередью на списке размером %zu элементов: %ld\n", i, sizeof(list_queue_t) + i * sizeof(node_t));
+        if (i == 100)
+            i = 0;
+    }
+}
+
+// Функция запускает симуляцию работы ОА без вывода
+// Реализация очереди на списке
+void run_simulation_list_queue_test(void)
+{
+    // Инициализируем функцию srand от unix времени
+    srand(time(NULL));
+    // Инициализируем переменные
+    struct timespec start, end;
+    size_t entered = 0, left = 0, work_time = 0;
+    float current_time = 0.0f, total_idle_time = 0.0f; // Текущее время и время простоя
+    float next_arrival_time = 0.0f;                    // Время прибытия следующей заявки
+    float state = 0.0f;
+
+    // Создание очереди
+    list_queue_t queue = { 0 };
+    list_queue_init(&queue);
+
+    // Запуск времени
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    while (left < (size_t)MAX_REQUEST_COUNT || entered < MAX_REQUEST_COUNT)
+    {
+        while (current_time > next_arrival_time)
+        {
+            // Расчитываем время
+            next_arrival_time += random_float(T1_LOWER, T1_UPPER);
+            if (list_queue_is_empty(queue) && next_arrival_time > current_time)
+            {
+                total_idle_time += next_arrival_time - current_time;
+                current_time = next_arrival_time;
+            }
+            entered++;
+            data_t request = { .request_data = { .arrival_time = next_arrival_time, .processing_count = 0 } };
+            list_queue_push(&queue, &request, sizeof(data_t));
+        }
+
+        state += queue.count;
+        work_time++;
+        current_time += random_float(T2_LOWER, T2_UPPER);
+
+        // Берем элемент из очереди
+        data_t request = { 0 };
+        list_queue_pop(&queue, &request, sizeof(data_t));
+
+        // Обновляем данные запроса и возвращаем обратно в очередь
+        if (request.request_data.processing_count < MAX_CYCLES)
+        {
+            request.request_data.processing_count++;
+            request.request_data.arrival_time = current_time;
+            // Возвращается в конец очереди
+            list_queue_push(&queue, &request, sizeof(data_t));
+        }
+        else
+        {
+            // Если элемент прошел больше 5 циклов, то он выходит из очереди
+            left++;
+        }
+    }
+
+    // Вычисление замера времени
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+    float exp_time = (float)((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3);
+
+    // Вывод времени и погрешности
+    printf("\nВошло %zu Время моделирования УЕ: %.2f Время моделирования МКС %.2f\n",
+           entered, exp_time, current_time);
+
+    list_queue_free(&queue);
 }

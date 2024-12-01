@@ -12,4 +12,6 @@ extern size_t MAX_REQUEST_COUNT;
 
 void run_simulation_list_queue(float *exp_time);
 void run_simulation_arr_queue(float *exp_time);
+void run_simulation_list_queue_test(void);
+void calc_memory_usage(void);
 #endif
