@@ -222,8 +222,14 @@ void run_simulation_arr_queue(float *exp_time)
 
     // Считаем значения времени
     float average_enter_wait = (float)(T1_UPPER + T1_LOWER) / 2;
+    float average_enter_out = (float)(T2_UPPER + T2_LOWER) / 2;
     float calc_request_count = current_time / average_enter_wait;
-    float calculated_time = average_enter_wait * MAX_REQUEST_COUNT;
+    float calculated_time;
+    if (average_enter_wait > average_enter_out)
+        calculated_time = average_enter_wait * MAX_REQUEST_COUNT;
+    else
+        calculated_time = average_enter_out * MAX_REQUEST_COUNT + average_enter_wait * MAX_REQUEST_COUNT;
+    
 
     // Выводим на экран время и погрешности
     printf("\nВычисление погрешностей.\n"
