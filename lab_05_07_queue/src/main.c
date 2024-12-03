@@ -36,7 +36,7 @@ ________________________________________________________________________________
 #include "simulation.h"
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
+#include <time.h>
 
 int main(void)
 {
@@ -85,16 +85,13 @@ int main(void)
         }
         else if (menu_operaton == OP_SIMULATION)
         {
-            // Проверяем память
-            calc_memory_usage();
-            //run_simulation_list_queue_test();
             float list_time = 0.0, arr_time = 0.0;
             // Запуск симуляции для очереди на листе
+            calc_memory_usage();
             run_simulation_list_queue(&list_time);
             printf("\n\n");
-            sleep(1);
-            // Запуск симуляции для очереди на массиве
             run_simulation_arr_queue(&arr_time);
+            // Запуск симуляции для очереди на массиве
 
             // Вывод результатов
             printf("\n____________________\n");
@@ -118,8 +115,8 @@ int main(void)
         }
         itteration_count++;
     }
-    // Метка для общего выхода из программы
-    exit:
+// Метка для общего выхода из программы
+exit:
     if (rc)
         print_error_message(rc);
     return rc;
