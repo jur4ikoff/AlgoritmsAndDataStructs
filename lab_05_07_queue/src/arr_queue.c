@@ -1,7 +1,7 @@
 #include "arr_queue.h"
 #include "errors.h"
 #include <stdio.h>
-
+#include "time.h"
 
 /**
  * @brief Функция перемещает элементы с конца массива в начало
@@ -102,5 +102,5 @@ int arr_queue_pop(arr_queue_t *queue, data_t *data)
  */
 int arr_queue_is_empty(const arr_queue_t queue)
 {
-    return queue.count == 0;
+    return (queue.count == 0);
 }

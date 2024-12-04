@@ -86,13 +86,15 @@ int main(void)
         else if (menu_operaton == OP_SIMULATION)
         {
             float list_time = 0.0, arr_time = 0.0;
-            // Запуск симуляции для очереди на листе
-            calc_memory_usage();
-            run_simulation_list_queue(&list_time);
-            printf("\n\n");
-            run_simulation_arr_queue(&arr_time);
-            // Запуск симуляции для очереди на массиве
 
+            // calc_memory_usage();
+
+            printf("\n\n");
+            // Запуск симуляции для очереди на листе
+            // run_simulation_list_queue(&list_time);
+
+            // Запуск симуляции для очереди на массиве
+            run_simulation_arr_queue(&arr_time);
             // Вывод результатов
             printf("\n____________________\n");
             printf("Результаты симуляции\n");
