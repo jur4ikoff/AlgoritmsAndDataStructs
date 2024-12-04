@@ -154,7 +154,6 @@ void run_simulation_arr_queue(float *exp_time)
 
     // Инициализация переменных
     struct timespec start, end;
-    //struct timespec test_start, test_end;
     size_t entered = 0, left = 0;
     size_t act = 0;
     float current_time = 0.0f, total_idle_time = 0.0f;
@@ -167,29 +166,24 @@ void run_simulation_arr_queue(float *exp_time)
     arr_queue_t queue = {0};
     arr_queue_init(&queue);
 
-    //float test_time = 0.0;
 
     // Запуск времени
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
     while (left < MAX_REQUEST_COUNT)
     {
 
-        while (arr_queue_is_empty(queue) || current_time > next_arrival_time)
+        // while (arr_queue_is_empty(queue) || current_time > next_arrival_time)
+        while (!queue.count || current_time > next_arrival_time)
         {
-            //clock_gettime(CLOCK_MONOTONIC_RAW, &test_start);
-
             next_arrival_time += random_float(T1_LOWER, T1_UPPER);
-
-            if (arr_queue_is_empty(queue) && next_arrival_time > current_time)
+            if (!queue.count && next_arrival_time > current_time)
             {
                 total_idle_time += next_arrival_time - current_time;
                 current_time = next_arrival_time;
             }
             entered++;
-            //clock_gettime(CLOCK_MONOTONIC_RAW, &test_end);
             data_t req = {.request_data = {.arrival_time = next_arrival_time}};
             arr_queue_push(&queue, &req);
-            //test_time = (test_end.tv_sec - test_start.tv_sec) * (float)1e6 + (test_end.tv_nsec - test_start.tv_nsec) / (float)1e3;
         }
 
         int is_left = 0;
@@ -199,8 +193,7 @@ void run_simulation_arr_queue(float *exp_time)
 
         data_t req = {0};
         arr_queue_pop(&queue, &req);
-
-        // printf("%sВремя новых %.2f%s\n", YELLOW, test_time, RESET);
+        
         if (req.request_data.processing_count < MAX_CYCLES)
         {
             req.request_data.arrival_time = current_time;

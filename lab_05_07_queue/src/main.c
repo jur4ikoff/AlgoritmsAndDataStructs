@@ -91,7 +91,7 @@ int main(void)
 
             printf("\n\n");
             // Запуск симуляции для очереди на листе
-            // run_simulation_list_queue(&list_time);
+            run_simulation_list_queue(&list_time);
 
             // Запуск симуляции для очереди на массиве
             run_simulation_arr_queue(&arr_time);

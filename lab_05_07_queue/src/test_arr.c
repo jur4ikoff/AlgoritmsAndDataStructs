@@ -55,14 +55,9 @@ int arr_test(void)
         }
         else if (test_operation == TEST_PRINT)
         {
-            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            // printf("%zu", queue.count);
-            arr_queue_is_empty(queue);
-            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            time = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3;
-            printf("Время работы %.2f\n", time);
+
             // Вывод очереди на экран
-            //arr_queue_print_char(queue);
+            arr_queue_print_char(queue);
         }
         else if (test_operation == TEST_ADD)
         {
