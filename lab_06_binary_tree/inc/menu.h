@@ -4,6 +4,7 @@
 typedef enum
 {
     OP_EXIT,
+    OP_TREE_TEST,
     OP_INPUT_STRING,
     OP_BUILD_TREE,
     OP_CLEAN_TREE,
