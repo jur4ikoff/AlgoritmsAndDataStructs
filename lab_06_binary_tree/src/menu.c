@@ -14,6 +14,9 @@ void print_error_message(int arg)
     case ERR_OPERATION:
         printf("Выбрана неверная операция\n");
         break;
+    case ERR_MEMORY_ALLOCATION:
+        printf("Ошибка выделения памяти\n");
+        break;
     }
     printf("%s", RESET);
 }

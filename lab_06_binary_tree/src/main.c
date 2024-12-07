@@ -18,6 +18,7 @@
 #include <string.h>
 #include "menu.h"
 #include <stdlib.h>
+#include "binary_tree.h"
 
 /**
  * @brief Функция для записи строки в переменную. Функция автоматически выделяет память под строку
@@ -52,6 +53,8 @@ int main(void)
     operations_t operation = OP_COUNT;
     int itteration_count = 0;
     int is_string = 0;
+    int is_tree = 0;
+    tree_t *tree = NULL;
     while (operation != OP_EXIT && rc == ERR_OK)
     {
         // Раз в 3 запроса выводим меню
@@ -83,13 +86,24 @@ int main(void)
             }
             is_string = 1;
         }
-        if (is_string)
-        printf("%s\n", string);
+        else if (operation == OP_BUILD_TREE)
+        {
+            tree = tree_create();
+            if (!tree)
+            {
+                rc = ERR_MEMORY_ALLOCATION;
+                goto exit;
+            }
+        }
     }
+
+    (void)is_string;
+    (void)is_tree;
 
 exit:
     if (rc)
         print_error_message(rc);
     free(string);
+    tree_free(tree);
     return rc;
 }
