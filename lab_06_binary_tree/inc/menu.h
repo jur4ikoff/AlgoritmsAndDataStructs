@@ -15,6 +15,18 @@ typedef enum
     OP_UNKNOWN
 } operations_t;
 
+typedef enum __test_menu_op_t
+{
+    TEST_EXIT,
+    TEST_ADD,
+    TEST_REMOVE,
+    TEST_SEARCH,
+    TEST_SHOW,
+    TEST_PRINT,
+    TEST_MENU_COUNT,
+    TEST_MENU_UNKNOWN,
+} test_menu_t;
+
 void print_error_message(int arg);
 void print_info(void);
 void print_menu(void);
