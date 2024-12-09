@@ -1,12 +1,12 @@
 #include "binary_tree.h"
 #include "constants.h"
 #include "errors.h"
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include <fcntl.h>
 
 tree_t *tree_create_node(data_t data)
 {
@@ -261,7 +261,7 @@ static void to_dot(tree_t *tree, void *file)
     }
 }
 
-void tree_apply_pre(tree_t *tree, tree_apply_fn_t apply_fn, void *arg)
+static void tree_apply_pre(tree_t *tree, tree_apply_fn_t apply_fn, void *arg)
 {
     if (!tree)
         return;
@@ -270,7 +270,6 @@ void tree_apply_pre(tree_t *tree, tree_apply_fn_t apply_fn, void *arg)
     tree_apply_pre(tree->left, apply_fn, arg);
     tree_apply_pre(tree->right, apply_fn, arg);
 }
-
 
 void tree_to_graphviz(FILE *file, const char *tree_name, tree_t *tree)
 {

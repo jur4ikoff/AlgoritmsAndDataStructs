@@ -4,13 +4,16 @@
 typedef enum __oper_t_
 {
     OP_EXIT,
-    OP_TREE_TEST,
+    OP_TEST_TREE,
     OP_INPUT_STRING,
     OP_BUILD_TREE,
+    OP_SHOW_TREE,
     OP_CLEAN_TREE,
     OP_CLEAN_STRING,
-    OP_PRINT_TREE,
-    OP_TEST,
+    OP_PREORDER_TREE,
+    OP_INORDER_TREE,
+    OP_POSTORDER_TREE,
+    OP_EFFICIENCY,
     OP_COUNT,
     OP_UNKNOWN
 } operations_t;

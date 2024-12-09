@@ -9,13 +9,6 @@
 
 #define MAX_INPUT_DATA_STRING_SIZE 5
 
-/*int char_comparator(void *a, void *b)
-{
-    data_t *first = (data_t *)a;
-    data_t *second = (data_t *)b;
-    return *first - *second;
-}*/
-
 static int input_data(data_t *data, char *message)
 {
     int rc = ERR_OK;
@@ -74,7 +67,7 @@ void test_binary_tree(void)
         }
         else if (test_operation == TEST_ADD)
         {
-            data_t data = {0};
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для добавления в дерево:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -110,7 +103,7 @@ void test_binary_tree(void)
         else if (test_operation == TEST_REMOVE)
         {
             // Удаление из дерева
-            data_t data = {0};
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для удаления из дерева:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -132,7 +125,7 @@ void test_binary_tree(void)
         }
         else if (test_operation == TEST_SEARCH)
         {
-            data_t data = {0};
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -174,6 +167,6 @@ void test_binary_tree(void)
         }
     }
 
-exit:
+    exit:
     tree_free(tree);
 }

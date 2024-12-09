@@ -12,14 +12,15 @@
 удаления повторяющихся букв из дерева и из строки.
 */
 
-#include <stdio.h>
-#include "errors.h"
-#include "constants.h"
-#include <string.h>
-#include "menu.h"
-#include <stdlib.h>
 #include "binary_tree.h"
+#include "constants.h"
+#include "errors.h"
+#include "menu.h"
+#include "task.h"
 #include "test.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * @brief Функция для записи строки в переменную. Функция автоматически выделяет память под строку
@@ -54,8 +55,9 @@ int main(void)
     operations_t operation = OP_COUNT;
     int itteration_count = 0;
     int is_string = 0;
-    // int is_tree = 0;
-    //  tree_t *tree = NULL;
+    int is_tree = 0;
+    tree_t *tree = NULL;
+
     while (operation != OP_EXIT && rc == ERR_OK)
     {
         // Раз в 3 запроса выводим меню
@@ -73,46 +75,98 @@ int main(void)
             printf("%sВыход из программы%s\n", GREEN, RESET);
             goto exit;
         }
-        else if (operation == OP_TREE_TEST)
+        else if (operation == OP_TEST_TREE)
         {
             // тестирование дерева
             // Запуск подпрограммы для тестирования дерева
             test_binary_tree();
             itteration_count = 0;
         }
-        /*else if (operation == OP_INPUT_STRING)
-         {
-             if ((rc = input_line(&string, stdin)) != ERR_OK)
-             {
-                 print_error_message(rc);
-                 return rc;
-             }
-             is_string = 1;
-         }
-         else if (operation == OP_BUILD_TREE)
-         {
-             tree = tree_create();
-             if (!tree)
-             {
-                 rc = ERR_MEMORY_ALLOCATION;
-                 goto exit;
-             }
-             ;
-         }*/
-        if (operation == OP_UNKNOWN)
+        else if (operation == OP_INPUT_STRING)
+        {
+            if (is_tree)
+            {
+                printf("%sОчистка предыдущего дерева\n%s", YELLOW, RESET);
+                tree_free(tree);
+                tree = NULL;
+            }
+            printf("Введите строку для обработки: ");
+            if ((rc = input_line(&string, stdin)) != ERR_OK)
+            {
+                goto exit;
+            }
+            is_string = 1;
+        }
+        else if (operation == OP_BUILD_TREE)
+        {
+            if (!is_string)
+            {
+                printf("%sОшибка, сначала нужно ввести строку%s\n", YELLOW, RESET);
+                continue;
+            }
+
+            convert_string_to_tree(&tree, string);
+            if (!tree)
+            {
+                rc = ERR_MEMORY_ALLOCATION;
+                goto exit;
+            }
+            is_tree = 1;
+            tree_in_picture(tree);
+        }
+        else if (operation == OP_SHOW_TREE)
+        {
+            if (!is_tree)
+            {
+                printf("%sОшибка, сначала нужно построить дерево%s\n", YELLOW, RESET);
+                continue;
+            }
+            tree_in_picture(tree);
+        }
+        else if (operation == OP_CLEAN_TREE)
+        {
+            if (!is_tree)
+            {
+                printf("%sОшибка, сначала нужно построить дерево%s\n", YELLOW, RESET);
+                continue;
+            }
+            tree_delete_repeat(&tree);
+            tree_in_picture(tree);
+        }
+        else if (operation == OP_CLEAN_STRING)
+        {
+            ;
+        }
+        else if (operation == OP_PREORDER_TREE)
+        {
+        }
+        else if (operation == OP_INORDER_TREE)
+        {
+            if (!is_tree)
+            {
+                printf("%sДерево пустое%s\n", YELLOW, RESET);
+                continue;
+            }
+            inorder_traversal(tree, 1, 0);
+        }
+        else if (operation == OP_POSTORDER_TREE)
+        {
+
+        }
+        else if (operation == OP_EFFICIENCY)
+        {
+
+        }
+        else if (operation == OP_UNKNOWN)
         {
             printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
         }
     }
 
-    (void)is_string;
-    //(void)is_tree;
-    goto exit;
-
-exit:
+    exit:
     if (rc)
         print_error_message(rc);
     free(string);
-    // tree_free(tree);
+    tree_free(tree);
     return rc;
 }
