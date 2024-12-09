@@ -6,6 +6,8 @@
 #define ERR_OPERATION 2
 #define ERR_MEMORY_ALLOCATION 3
 #define ERR_DATA_INPUT 4
+#define ERR_FILE 5
+#define ERR_FORK 6
 
 
 #define WARNING_REPEAT -1
