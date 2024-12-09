@@ -19,6 +19,7 @@
 #include "menu.h"
 #include <stdlib.h>
 #include "binary_tree.h"
+#include "test.h"
 
 /**
  * @brief Функция для записи строки в переменную. Функция автоматически выделяет память под строку
@@ -53,8 +54,8 @@ int main(void)
     operations_t operation = OP_COUNT;
     int itteration_count = 0;
     int is_string = 0;
-    int is_tree = 0;
-    tree_t *tree = NULL;
+    // int is_tree = 0;
+    //  tree_t *tree = NULL;
     while (operation != OP_EXIT && rc == ERR_OK)
     {
         // Раз в 3 запроса выводим меню
@@ -63,13 +64,8 @@ int main(void)
         itteration_count++;
 
         // Принимаем операцию
-        printf(">>Введите тестовую операцию: ");
+        printf(">>Введите операцию: ");
         operation = input_operation();
-        if (operation == OP_UNKNOWN)
-        {
-            rc = ERR_OPERATION;
-            goto exit;
-        }
 
         if (operation == OP_EXIT)
         {
@@ -77,33 +73,46 @@ int main(void)
             printf("%sВыход из программы%s\n", GREEN, RESET);
             goto exit;
         }
-        else if (operation == OP_INPUT_STRING)
+        else if (operation == OP_TREE_TEST)
         {
-            if ((rc = input_line(&string, stdin)) != ERR_OK)
-            {
-                print_error_message(rc);
-                return rc;
-            }
-            is_string = 1;
+            // тестирование дерева
+            // Запуск подпрограммы для тестирования дерева
+            test_binaty_tree();
+            itteration_count = 0;
         }
-        else if (operation == OP_BUILD_TREE)
+        /*else if (operation == OP_INPUT_STRING)
+         {
+             if ((rc = input_line(&string, stdin)) != ERR_OK)
+             {
+                 print_error_message(rc);
+                 return rc;
+             }
+             is_string = 1;
+         }
+         else if (operation == OP_BUILD_TREE)
+         {
+             tree = tree_create();
+             if (!tree)
+             {
+                 rc = ERR_MEMORY_ALLOCATION;
+                 goto exit;
+             }
+             ;
+         }*/
+        if (operation == OP_UNKNOWN)
         {
-            tree = tree_create();
-            if (!tree)
-            {
-                rc = ERR_MEMORY_ALLOCATION;
-                goto exit;
-            }
+            printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
         }
     }
 
     (void)is_string;
-    (void)is_tree;
+    //(void)is_tree;
+    goto exit;
 
 exit:
     if (rc)
         print_error_message(rc);
     free(string);
-    tree_free(tree);
+    // tree_free(tree);
     return rc;
 }

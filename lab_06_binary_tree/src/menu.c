@@ -29,13 +29,23 @@ void print_info(void)
 void print_menu(void)
 {
     printf("0 - Выход\n"
-           "1 - Тестирование дерева",
+           "1 - Тестирование дерева\n"
            "2 - Ввести строку для работы с ней\n"
            "3 - Построить дерево\n"
            "4 - Очистить дерево от повторяющихся символов\n"
            "5 - Очистить строку от повторяющихся символов\n"
            "6 - Вывести оставшиеся элементы дерева при постфиксном его обходе\n"
            "7 - Сравнение эффективности\n");
+}
+
+void test_menu(void)
+{
+    printf("0 - Выход\n"
+           "1 - Вывод дерева на экран (картинкой)\n"
+           "2 - Добавить элемент в дерево\n"
+           "3 - Удалить элемент дерева\n"
+           "4 - Поиск элемента в дереве\n"
+           "5 - Постфикный обход дерева\n");
 }
 
 /**
@@ -46,7 +56,13 @@ operations_t input_operation(void)
 {
     int buffer;
     if (scanf("%d", &buffer) != 1)
+    {
+        while (fgetc(stdin) != '\n')
+        {
+            continue; // Возврат к началу цикла}
+        }
         return OP_UNKNOWN;
+    }
 
     fgetc(stdin);
 
@@ -54,4 +70,28 @@ operations_t input_operation(void)
         return OP_UNKNOWN;
 
     return (operations_t)buffer;
+}
+
+/**
+ * @brief Функция принимает у пользователя операцию
+ * @return Структурную переменную, обозначающую операцию
+ */
+test_menu_t input_test_operation(void)
+{
+    int buffer;
+    if (scanf("%d", &buffer) != 1)
+    {
+        while (fgetc(stdin) != '\n')
+        {
+            continue; // Возврат к началу цикла}
+        }
+        return TEST_UNKNOWN;
+    }
+
+    fgetc(stdin);
+
+    if (buffer < 0 || buffer >= TEST_COUNT)
+        return TEST_UNKNOWN;
+
+    return (test_menu_t)buffer;
 }

@@ -1,19 +1,17 @@
 #ifndef BIN_TREE_H__
 #define BIN_TREE_H__
-typedef struct _node_t_
-{
-    char value;
-    struct _node_t_ *left;
-    struct _node_t_ *right;
-} node_t;
+
+typedef char data_t;
 
 typedef struct _tree_t_
 {
-    node_t *head;
+    data_t data;
+    int is_repeated;
+    struct _tree_t_ *left;
+    struct _tree_t_ *right;
 } tree_t;
 
-
-tree_t *tree_create(void);
+// tree_t *tree_create(void);
 
 void tree_free(tree_t *tree);
 #endif
