@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 /**
  * @brief Функция для записи строки в переменную. Функция автоматически выделяет память под строку
@@ -57,6 +58,7 @@ int main(void)
     int is_string = 0;
     int is_tree = 0;
     tree_t *tree = NULL;
+    struct timespec start, end;
 
     while (operation != OP_EXIT && rc == ERR_OK)
     {
@@ -130,15 +132,37 @@ int main(void)
                 printf("%sОшибка, сначала нужно построить дерево%s\n", YELLOW, RESET);
                 continue;
             }
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             tree_delete_repeat(&tree);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            remove_duplicates(&tree); // Это
             tree_in_picture(tree);
+
+            float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            printf("%sДубликаты удалены из дерева за %.2f мкс%s\n", GREEN, time, RESET);
         }
         else if (operation == OP_CLEAN_STRING)
         {
-            ;
+            if (!is_string)
+            {
+                printf("%sОшибка, сначала нужно ввести строку%s\n", YELLOW, RESET);
+                continue;
+            }
+
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            string_remove_duplicates(string);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            printf("%sСтрока после очистки: %s. Скорость удаления: %.2f мкс%s\n", GREEN, string, time, RESET);
         }
         else if (operation == OP_PREORDER_TREE)
         {
+            if (!is_tree)
+            {
+                printf("%sДерево пустое%s\n", YELLOW, RESET);
+                continue;
+            }
+            preorder_traversal(tree, 1, 0);
         }
         else if (operation == OP_INORDER_TREE)
         {
@@ -151,11 +175,10 @@ int main(void)
         }
         else if (operation == OP_POSTORDER_TREE)
         {
-
+            postorder_traversal(tree, 1, 0);
         }
         else if (operation == OP_EFFICIENCY)
         {
-
         }
         else if (operation == OP_UNKNOWN)
         {
