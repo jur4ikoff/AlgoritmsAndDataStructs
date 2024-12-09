@@ -1,15 +1,16 @@
 #include "binary_tree.h"
+#include "errors.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-tree_t *tree_create_node(data_t *data)
+tree_t *tree_create_node(data_t data)
 {
     tree_t *node = malloc(sizeof(tree_t));
     if (!node)
         return NULL;
 
-    node->data = strdup(data);
+    node->data = data;
     node->is_repeated = 0;
     node->left = NULL;
     node->right = NULL;
@@ -22,25 +23,29 @@ tree_t *tree_create_node(data_t *data)
  * @param data Структура данных, которую нужно вставить
  * @param compare Компаратор
  */
-tree_t *tree_insert(tree_t *root, data_t *data, int (*compare)(void *, void *))
+int tree_insert(tree_t **root, data_t data)
 {
     if (!data)
-        return NULL;
+        return ERR_DATA_INPUT;
 
-    if (!root)
-        return tree_create_node(data);
+    if (!(*root))
+    {
+        *root = tree_create_node(data);
+        return ERR_OK;
+    }
 
-    int cmp = compare(data, root->data);
+    int cmp = data - (*root)->data;
     if (cmp == 0)
     {
-        root->is_repeated = 1;
+        (*root)->is_repeated = 1;
+        return WARNING_REPEAT;
     }
     else if (cmp > 0)
-        root->right = tree_insert(root->right, data, compare);
+        tree_insert(&(*root)->right, data);
     else
-        root->left = tree_insert(root->left, data, compare);
+        tree_insert(&(*root)->left, data);
 
-    return root;
+    return ERR_OK;
 }
 
 void tree_free(tree_t *tree)
@@ -48,7 +53,6 @@ void tree_free(tree_t *tree)
     if (!tree)
         return;
 
-    free(tree->data);
     tree_free(tree->left);
     tree_free(tree->right);
     free(tree);
@@ -65,7 +69,7 @@ void inorder_traversal(const tree_t *root, int is_head)
     if (root != NULL)
     {
         inorder_traversal(root->left, 0);
-        printf("%s ", root->data);
+        printf("%c ", root->data);
         inorder_traversal(root->right, 0);
     }
 

@@ -7,4 +7,6 @@
 #define ERR_MEMORY_ALLOCATION 3
 #define ERR_DATA_INPUT 4
 
+
+#define WARNING_REPEAT -1
 #endif

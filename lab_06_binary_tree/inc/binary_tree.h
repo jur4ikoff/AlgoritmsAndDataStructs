@@ -5,15 +5,15 @@ typedef char data_t;
 
 typedef struct _tree_t_
 {
-    data_t *data;
+    data_t data;
     int is_repeated; // 0 - not repeat; 1 - repeat
     struct _tree_t_ *left;
     struct _tree_t_ *right;
 } tree_t;
 
-tree_t *tree_create_node(data_t *data);
+tree_t *tree_create_node(data_t data);
 void tree_free(tree_t *tree);
 
 void inorder_traversal(const tree_t *root, int is_head);
-tree_t *tree_insert(tree_t *root, data_t *data, int (*compare)(void *, void *));
+int tree_insert(tree_t **root, data_t data);
 #endif

@@ -8,12 +8,12 @@
 
 #define MAX_INPUT_DATA_STRING_SIZE 5
 
-int char_comparator(void *a, void *b)
+/*int char_comparator(void *a, void *b)
 {
     data_t *first = (data_t *)a;
     data_t *second = (data_t *)b;
     return *first - *second;
-}
+}*/
 
 static int input_data(data_t *data, char *message)
 {
@@ -76,12 +76,15 @@ void test_binaty_tree(void)
             // Если первый, то создаем дерево, иначе вставляем в нужное место
             if (is_first)
             {
-                tree = tree_create_node(&data);
+                tree = tree_create_node(data);
                 is_first = 0;
             }
             else
             {
-                tree = tree_insert(tree, &data, char_comparator);
+                if (tree_insert(&tree, data) != ERR_OK)
+                {
+                    printf("%sОшибка при добавлении элемента%s\n", YELLOW, RESET);
+                }
             }
 
             inorder_traversal(tree, 1);
@@ -89,13 +92,12 @@ void test_binaty_tree(void)
         else if (test_operation == TEST_REMOVE)
         {
             // Удаление из дерева
-            data_t data = {0};
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для удаления из дерева:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
                 continue;
             }
-
         }
         else if (test_operation == TEST_UNKNOWN)
         {
