@@ -1,6 +1,6 @@
 #include "menu.h"
-#include "errors.h"
 #include "constants.h"
+#include "errors.h"
 #include <stdio.h>
 
 void print_error_message(int arg)
@@ -8,15 +8,18 @@ void print_error_message(int arg)
     printf("%s", RED);
     switch (arg)
     {
-    case ERR_STRING:
-        printf("Ошибка в введенной строке\n");
-        break;
-    case ERR_OPERATION:
-        printf("Выбрана неверная операция\n");
-        break;
-    case ERR_MEMORY_ALLOCATION:
-        printf("Ошибка выделения памяти\n");
-        break;
+        case ERR_STRING:
+            printf("Ошибка в введенной строке\n");
+            break;
+        case ERR_OPERATION:
+            printf("Выбрана неверная операция\n");
+            break;
+        case ERR_MEMORY_ALLOCATION:
+            printf("Ошибка выделения памяти\n");
+            break;
+        case ERR_DATA_INPUT:
+            printf("Ошибка при вводе данных\n");
+            break;
     }
     printf("%s", RESET);
 }
