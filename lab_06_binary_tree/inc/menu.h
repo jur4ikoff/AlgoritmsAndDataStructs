@@ -22,12 +22,15 @@ typedef enum __test_oper_t_
     TEST_ADD,
     TEST_REMOVE,
     TEST_SEARCH,
-    TEST_PRINT,
+    TEST_PREORDER,
+    TEST_INORDER,
+    TEST_POSTRDER,
     TEST_COUNT,
     TEST_UNKNOWN,
 } test_menu_t;
 
 void print_error_message(int arg);
+void print_warning_message(int arg);
 void print_info(void);
 void print_menu(void);
 void test_menu(void);

@@ -21,7 +21,6 @@ tree_t *tree_create_node(data_t data)
  * @brief Функция вставляет элемент в дерево поиска
  * @param root Корень дерева
  * @param data Структура данных, которую нужно вставить
- * @param compare Компаратор
  */
 int tree_insert(tree_t **root, data_t data)
 {
@@ -45,6 +44,56 @@ int tree_insert(tree_t **root, data_t data)
     else
         tree_insert(&(*root)->left, data);
 
+    return ERR_OK;
+}
+
+// Удалить ноду
+int tree_remove(tree_t **root, data_t data)
+{
+    if (!(*root))
+        return WARNING_TREE;
+
+    int cmp = data - (*root)->data;
+    if (cmp > 0)
+    {
+        tree_remove(&(*root)->right, data);
+    }
+    else if (cmp < 0)
+    {
+        tree_remove(&(*root)->left, data);
+    }
+    if (cmp == 0)
+    {
+        tree_t *temp = *root;
+        if (!(*root)->left && !(*root)->right)
+        {
+            free(*root);
+            *root = NULL;
+        }
+        else if ((*root)->left == NULL)
+        {
+            *root = (*root)->right;
+            free(temp);
+        }
+        else if ((*root)->right == NULL)
+        {
+            *root = (*root)->left;
+            free(temp);
+        }
+        else
+        {
+            tree_t *min_node = (*root)->right;
+            while (min_node && min_node->left)
+            {
+                min_node = min_node->left;
+            }
+
+            (*root)->data = min_node->data;
+            return tree_remove(&(*root)->right, min_node->data);
+        }
+    }
+    else
+        return WARNING_NO_EL;
     return ERR_OK;
 }
 

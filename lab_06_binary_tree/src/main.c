@@ -77,7 +77,7 @@ int main(void)
         {
             // тестирование дерева
             // Запуск подпрограммы для тестирования дерева
-            test_binaty_tree();
+            test_binary_tree();
             itteration_count = 0;
         }
         /*else if (operation == OP_INPUT_STRING)

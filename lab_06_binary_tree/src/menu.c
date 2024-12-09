@@ -24,6 +24,21 @@ void print_error_message(int arg)
     printf("%s", RESET);
 }
 
+void print_warning_message(int arg)
+{
+    printf("%s", YELLOW);
+    switch (arg)
+    {
+        case WARNING_TREE:
+            printf("Пустое дерево\n");
+            break;
+        case WARNING_NO_EL:
+            printf("Нет такого элемента в дереве\n");
+            break;
+    }
+    printf("%s", RESET);
+}
+
 void print_info(void)
 {
     printf("Программа строит бинарное дерево из символов введенной строки, а после этого удаляет повторяющиеся символы\n");

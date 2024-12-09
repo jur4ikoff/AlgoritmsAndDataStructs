@@ -9,4 +9,6 @@
 
 
 #define WARNING_REPEAT -1
+#define WARNING_TREE -2
+#define WARNING_NO_EL -3
 #endif

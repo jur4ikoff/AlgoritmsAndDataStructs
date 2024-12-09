@@ -16,4 +16,6 @@ void tree_free(tree_t *tree);
 
 void inorder_traversal(const tree_t *root, int is_head);
 int tree_insert(tree_t **root, data_t data);
+
+int tree_remove(tree_t **root, data_t data);
 #endif
