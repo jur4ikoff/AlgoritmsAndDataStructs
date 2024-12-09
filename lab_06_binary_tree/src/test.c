@@ -74,7 +74,7 @@ void test_binary_tree(void)
         }
         else if (test_operation == TEST_ADD)
         {
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, "Введите один символ для добавления в дерево:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -88,6 +88,8 @@ void test_binary_tree(void)
                 tree = tree_create_node(data);
                 is_first = 0;
                 clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+                float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+                printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data, time, RESET);
             }
             else
             {
@@ -95,17 +97,20 @@ void test_binary_tree(void)
                 if (tree_insert(&tree, data) != ERR_OK)
                 {
                     printf("%sОшибка при добавлении элемента%s\n", YELLOW, RESET);
+                    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
                 }
-                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+                else
+                {
+                    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+                    float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+                    printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data, time, RESET);
+                }
             }
-
-            float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-            printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data, time, RESET);
         }
         else if (test_operation == TEST_REMOVE)
         {
             // Удаление из дерева
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, "Введите один символ для удаления из дерева:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -127,7 +132,7 @@ void test_binary_tree(void)
         }
         else if (test_operation == TEST_SEARCH)
         {
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -169,6 +174,6 @@ void test_binary_tree(void)
         }
     }
 
-    exit:
+exit:
     tree_free(tree);
 }

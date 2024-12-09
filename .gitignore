@@ -12,3 +12,4 @@ test*.txt
 *bin
 .idea
 *.dSYM
+*.gp
