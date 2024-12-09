@@ -90,6 +90,8 @@ int main(void)
             {
                 printf("%sОчистка предыдущего дерева\n%s", YELLOW, RESET);
                 tree_free(tree);
+                free(string);
+                string = NULL;
                 tree = NULL;
             }
             printf("Введите строку для обработки: ");

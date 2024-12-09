@@ -1,21 +1,15 @@
 digraph tree {
-  u -> d;
-  u -> null_32;
-  null_32 [shape="point", color="red"];
-  d -> 3;
-  d -> f;
-  3 -> 1;
-  3 -> c;
-  1 -> null_33;
-  null_33 [shape="point", color="red"];
-  1 -> null_34;
-  null_34 [shape="point", color="red"];
-  c -> null_35;
-  null_35 [shape="point", color="red"];
-  c -> null_36;
-  null_36 [shape="point", color="red"];
-  f -> null_37;
-  null_37 [shape="point", color="red"];
-  f -> null_38;
-  null_38 [shape="point", color="red"];
+  s [color="red"];
+  s -> d;
+  s -> null_0;
+  null_0 [shape="point", color="red"];
+  d [color="red"];
+  d -> a;
+  d -> null_1;
+  null_1 [shape="point", color="red"];
+  a [color="red"];
+  a -> null_2;
+  null_2 [shape="point", color="red"];
+  a -> null_3;
+  null_3 [shape="point", color="red"];
 }
