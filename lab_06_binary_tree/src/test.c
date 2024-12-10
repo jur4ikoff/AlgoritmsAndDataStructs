@@ -171,10 +171,9 @@ void test_binary_tree(void)
     tree_free(tree);
 }
 
-size_t calculate_tree_size(tree_t *root)
-{
-    if (root == NULL)
-    {
+
+size_t calculate_tree_size(tree_t *root) {
+    if (root == NULL) {
         return 0; // Если узел пустой, память не занимает
     }
 
