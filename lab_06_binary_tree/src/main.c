@@ -116,7 +116,9 @@ int main(void)
                 goto exit;
             }
             is_tree = 1;
+            printf("Дерево занимает: %zu байт\n", calculate_tree_size(tree));
             tree_in_picture(tree);
+            
         }
         else if (operation == OP_SHOW_TREE)
         {
@@ -178,9 +180,6 @@ int main(void)
         else if (operation == OP_POSTORDER_TREE)
         {
             postorder_traversal(tree, 1, 0);
-        }
-        else if (operation == OP_EFFICIENCY)
-        {
         }
         else if (operation == OP_UNKNOWN)
         {
