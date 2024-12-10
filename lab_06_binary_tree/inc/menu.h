@@ -13,6 +13,7 @@ typedef enum __oper_t_
     OP_PREORDER_TREE,
     OP_INORDER_TREE,
     OP_POSTORDER_TREE,
+    OP_EFFICIENCY,
     OP_COUNT,
     OP_UNKNOWN
 } operations_t;

@@ -118,7 +118,6 @@ int main(void)
             is_tree = 1;
             printf("Дерево занимает: %zu байт\n", calculate_tree_size(tree));
             tree_in_picture(tree);
-            
         }
         else if (operation == OP_SHOW_TREE)
         {
@@ -181,13 +180,54 @@ int main(void)
         {
             postorder_traversal(tree, 1, 0);
         }
+        else if (operation == OP_EFFICIENCY)
+        {
+            char *filename = NULL;
+            printf("Введите путь к файлу: ");
+            input_line(&filename, stdin);
+            // char *result = read_file_to_single_string(filename);
+            char *result = malloc(MAX_STRING_LEN * sizeof(char));
+            FILE *file = fopen(filename, "r");
+            if (file == NULL)
+            {
+                rc = ERR_FILE;
+                goto exit;
+            }
+            fgets(result, MAX_STRING_LEN - 1, file);
+            fclose(file);
+
+            char *newline = strchr(result, '\n');
+            if (newline)
+                *newline = 0;
+            free(filename);
+
+            convert_string_to_tree(&tree, result);
+            if (!tree)
+            {
+                rc = ERR_MEMORY_ALLOCATION;
+                goto exit;
+            }
+
+            // tree_in_picture(tree);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            tree_delete_repeat(&tree);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time_tree = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            string_remove_duplicates(result);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time_string = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            printf("%sДубликаты удалены из дерева за %.2f мкс. Из строки за %.2f%s\n", GREEN, time_tree, time_string, RESET);
+            free(result);
+        }
         else if (operation == OP_UNKNOWN)
         {
             printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
         }
     }
 
-    exit:
+exit:
     if (rc)
         print_error_message(rc);
     free(string);

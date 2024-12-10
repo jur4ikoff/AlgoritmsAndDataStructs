@@ -7,6 +7,6 @@
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
-#define MAX_STRING_LEN 128
+#define MAX_STRING_LEN 2000
 
 #endif

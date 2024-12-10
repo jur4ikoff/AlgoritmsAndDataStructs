@@ -8,21 +8,21 @@ void print_error_message(int arg)
     printf("%s", RED);
     switch (arg)
     {
-        case ERR_STRING:
-            printf("Ошибка в введенной строке\n");
-            break;
-        case ERR_OPERATION:
-            printf("Выбрана неверная операция\n");
-            break;
-        case ERR_MEMORY_ALLOCATION:
-            printf("Ошибка выделения памяти\n");
-            break;
-        case ERR_DATA_INPUT:
-            printf("Ошибка при вводе данных\n");
-            break;
-        case ERR_FILE:
-            printf("Ошибка при чтении или создании файла\n");
-            break;
+    case ERR_STRING:
+        printf("Ошибка в введенной строке\n");
+        break;
+    case ERR_OPERATION:
+        printf("Выбрана неверная операция\n");
+        break;
+    case ERR_MEMORY_ALLOCATION:
+        printf("Ошибка выделения памяти\n");
+        break;
+    case ERR_DATA_INPUT:
+        printf("Ошибка при вводе данных\n");
+        break;
+    case ERR_FILE:
+        printf("Ошибка при чтении или создании файла\n");
+        break;
     }
     printf("%s", RESET);
 }
@@ -32,12 +32,12 @@ void print_warning_message(int arg)
     printf("%s", YELLOW);
     switch (arg)
     {
-        case WARNING_TREE:
-            printf("Пустое дерево\n");
-            break;
-        case WARNING_NO_EL:
-            printf("Нет такого элемента в дереве\n");
-            break;
+    case WARNING_TREE:
+        printf("Пустое дерево\n");
+        break;
+    case WARNING_NO_EL:
+        printf("Нет такого элемента в дереве\n");
+        break;
     }
     printf("%s", RESET);
 }
@@ -58,7 +58,8 @@ void print_menu(void)
            "6 - Очистить строку от повторяющихся символов\n"
            "7 - Префиксный обход\n"
            "8 - Инфиксный обход\n"
-           "9 - Постфиксный обход\n");
+           "9 - Постфиксный обход\n"
+           "10 - Тест эффективности\n");
 }
 
 void test_menu(void)

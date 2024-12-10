@@ -4,12 +4,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "constants.h"
 
-void convert_string_to_tree(tree_t **tree, const char *string)
+void convert_string_to_tree(tree_t **tree, char *string)
 {
     char *ptr = (char *)string;
 
-    while (*ptr)
+    while (*ptr != 0)
     {
         if (*tree == NULL)
         {
@@ -112,23 +113,27 @@ void tree_delete_repeat(tree_t **tree)
     }
 }
 
-void string_remove_duplicates(char *string) {
+void string_remove_duplicates(char *string)
+{
     int hash[256] = {0}; // Массив для подсчета вхождений символов
     int len = strlen(string);
-    
+
     // Первый проход: подсчет количества вхождений каждого символа
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++)
+    {
         unsigned char current_char = string[i];
         hash[current_char]++;
     }
 
     // Второй проход: создание новой строки с символами, встречающимися 1 раз
     int index = 0;
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++)
+    {
         unsigned char current_char = string[i];
-        
+
         // Если символ встречается 1 раз, добавляем его в результат
-        if (hash[current_char] == 1) {
+        if (hash[current_char] == 1)
+        {
             string[index++] = current_char;
         }
     }
