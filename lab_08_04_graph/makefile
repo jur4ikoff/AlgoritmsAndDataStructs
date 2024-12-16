@@ -8,7 +8,7 @@ INC_DIR := ./inc
 
 # Настройки компиляции
 CC := gcc
-CFLAGS := -std=gnu99 -O0 -I $(INC_DIR) -Werror -Wall -pedantic -Wfloat-conversion -Wfloat-equal -Wvla -Wextra # Флаги компиляции по умоланию
+CFLAGS := -std=gnu99 -O0 -I $(INC_DIR) -Werror -Wall -pedantic -Wfloat-conversion -Wfloat-equal -Wextra # Флаги компиляции по умоланию
 LINK_FLAGS := -lm
 
 # Определение исходных файлов

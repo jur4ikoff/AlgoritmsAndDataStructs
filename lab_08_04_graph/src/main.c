@@ -97,9 +97,9 @@ int main(void)
         return ERR_EMPTY;
     }
 
-    int a = 0, start = 0;
+    int a = 0, start_vertex = 0;
     printf(">>Введите вершину старта: ");
-    if (scanf("%d", &start) != 1)
+    if (scanf("%d", &start_vertex) != 1)
     {
         free_graph(graph);
         print_error_message(ERR_INT);
@@ -114,7 +114,11 @@ int main(void)
         return ERR_INT;
     }
 
-    find_reachable_vertices(graph, start, a);
+    dfs_print_graph(graph);
+    bfs_print_graph(graph);
+    
+    bellman_ford_alg(graph, start_vertex, NULL);
+    // find_reachable_vertices(graph, start, a);
 
     fgetc(stdin);
     generate_graphviz(graph, "graph.gp");

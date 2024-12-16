@@ -214,6 +214,16 @@ int graph_count(graph_t *graph)
 }
 
 /**
+ * @brief Алгоритм Беллмана-форда
+ * @param[in] graph Указатель на граф
+ * @param[in] start_vertex Вершнина начала
+ * @param[in] output Массив для записи результата
+ */
+void bellman_ford_alg(graph_t *graph, int start_vertex, int *output)
+{
+}
+
+/**
  * @brief Функция определяет в какие вершины можно попасть по пути не длиннее max_distance
  *
 Сделать Алгоритм Беллмана-Форда предназначен для решения задачи поиска кратчайшего пути на граф
@@ -257,4 +267,83 @@ void find_reachable_vertices(graph_t *graph, int start, int max_distance)
         }
     }
     printf("\n");
+}
+
+/**
+ * @brief Функция обход в глубину
+ * @param[in] vertex Текущая вершина
+ * @param[in] visited Массив, посещенных вершин
+ * @param[in] graph Указатель на граф
+ */
+static void dfs(int vertex, int *visited, graph_t *graph)
+{
+    visited[vertex] = 1;
+    printf("%d ", vertex);
+
+    for (size_t i = 0; i < graph->count_vertices; i++)
+    {
+        if (graph->matrix[vertex][i] != 0 && !visited[i])
+            dfs(i, visited, graph);
+    }
+}
+
+/**
+ * @brief Функция вывода на экран графа, используя поиск в глубину
+ * @param[in] graph Указатель на граф
+ */
+void dfs_print_graph(graph_t *graph)
+{
+    if (graph == NULL)
+        return;
+
+    int *visited = calloc(graph->count_vertices + 1, sizeof(int));
+    if (!visited)
+        return;
+
+    printf("Обход графа в глубину:\n");
+    // 0 - Начальная вершина
+    dfs(0, visited, graph);
+    printf("\n");
+
+    free(visited);
+}
+
+/**
+ * @brief Функция вывода на экран графа, используя поиск в ширину
+ * @param[in] graph Указатель на граф
+ */
+void bfs_print_graph(graph_t *graph)
+{
+    if (graph == NULL)
+        return;
+
+    int *visited = calloc(graph->count_vertices + 1, sizeof(int));
+    if (!visited)
+        return;
+
+    int queue[graph->count_vertices];
+    int front = 0, rear = 0;
+
+    int start_vertex = 0;
+    visited[start_vertex] = 1;
+    queue[rear++] = start_vertex;
+
+    printf("Обход графа в ширину:\n");
+    while (front < rear)
+    {
+        int current = queue[front++];
+        printf("%d ", current);
+
+        for (size_t i = 0; i < graph->count_vertices; i++)
+        {
+            if (graph->matrix[current][i] && !visited[i])
+            {
+                visited[i] = 1;
+                queue[rear++] = i;
+            }
+        }
+    }
+
+    printf("\n");
+    free(visited);
 }
