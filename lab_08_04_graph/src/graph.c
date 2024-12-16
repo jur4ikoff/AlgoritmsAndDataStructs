@@ -31,13 +31,15 @@ graph_t *create_graph(size_t vert_count)
         return NULL;
 
     graph->count_vertices = vert_count;
-    graph->matrix = malloc(sizeof(int) * graph->count_vertices);
+    graph->matrix = malloc(sizeof(int *) * graph->count_vertices);
     if (graph->matrix == NULL)
         return NULL;
 
     for (size_t i = 0; i < vert_count; i++)
     {
         graph->matrix[i] = calloc(graph->count_vertices, sizeof(int));
+        if (graph->matrix[i] == NULL)
+            return NULL;
     }
 
     return graph;
@@ -121,7 +123,6 @@ int load_graph(graph_t **graph, char *filname)
             if (fscanf(file, "%d", &weight) != 1)
             {
                 fclose(file);
-                free_graph(*graph);
                 return ERR_EDGE;
             }
             add_edge(*graph, j, i, weight);
@@ -132,7 +133,7 @@ int load_graph(graph_t **graph, char *filname)
     return ERR_OK;
 }
 
-int graph_render_open(const char *gp_fname, const char *png_fname)
+static int render_graphviz(const char *gp_fname, const char *png_fname)
 {
     pid_t pid = fork();
     if (pid == -1)
@@ -183,7 +184,7 @@ int graph_render_open(const char *gp_fname, const char *png_fname)
 }
 
 // Функция для генерации исходного текста для Graphviz
-void generate_graphviz(graph_t *graph, const char *filename)
+static void convert_to_graphviz(graph_t *graph, const char *filename, int const *distance)
 {
     FILE *file = fopen(filename, "w");
     if (!file)
@@ -200,10 +201,30 @@ void generate_graphviz(graph_t *graph, const char *filename)
                 fprintf(file, "    %zu -> %zu [label=\"%d\"];\n", i, j, graph->matrix[i][j]);
 
     // Выделяем лучший город
+    for (size_t i = 0; i < graph->count_vertices; i++)
+    {
+        if (distance[i] == 0)
+            fprintf(file, "    %zu [style=filled, fillcolor=white];\n", i);
+        else if (distance[i] != INT_MAX)
+            fprintf(file, "    %zu [style=filled, fillcolor=green];\n", i);
+        else
+            fprintf(file, "    %zu [style=filled, fillcolor=red];\n", i);
+    }
     // fprintf(file, "    %zu [style=filled, fillcolor=yellow];\n", best_city);
     fprintf(file, "}\n");
 
     fclose(file);
+}
+
+/**
+ * @brief Функция для вывода графа на экран
+ * @param[in] graph Указатель на граф
+ * @param[in] distance Указатель на массив дистранций
+ */
+void show_graph(graph_t *graph, int const *distance)
+{
+    convert_to_graphviz(graph, "graph.gp", distance);
+    render_graphviz("graph.gp", "graph.png");
 }
 
 int graph_count(graph_t *graph)
@@ -219,54 +240,78 @@ int graph_count(graph_t *graph)
  * @param[in] start_vertex Вершнина начала
  * @param[in] output Массив для записи результата
  */
-void bellman_ford_alg(graph_t *graph, int start_vertex, int *output)
+int bellman_ford_alg(graph_t *graph, int start_vertex, int **output)
 {
-}
+    if (start_vertex >= (int)graph->count_vertices)
+        return ERR_INT;
 
-/**
- * @brief Функция определяет в какие вершины можно попасть по пути не длиннее max_distance
- *
-Сделать Алгоритм Беллмана-Форда предназначен для решения задачи поиска кратчайшего пути на граф
- */
-void find_reachable_vertices(graph_t *graph, int start, int max_distance)
-{
-    bool visited[MAX_GRAPH_SIZE] = { false };
-    int distance[MAX_GRAPH_SIZE] = { 0 };
+    size_t V = graph->count_vertices;
+    int *distance = (int *)malloc(V * sizeof(int));
 
-    // Инициализируем очередь для BFS
-    int queue[MAX_GRAPH_SIZE];
-    int front = 0, rear = 0;
-
-    visited[start] = true;
-    queue[rear++] = start;
-
-    printf("Вершины, доступные от %d с расстоянием не более %d:\n", start, max_distance);
-
-    while (front < rear)
+    // Шаг 1: Инициализируем расстояния до всех вершин как бесконечность
+    for (size_t i = 0; i < V; i++)
     {
-        int current = queue[front++];
+        distance[i] = INT_MAX;
+    }
 
-        // Если текущая вершина находится на допустимом расстоянии, выводим её
-        printf("%d %d\n", current, distance[current]);
-        if (distance[current] <= max_distance)
-        {
-            ;
-            // printf("%d ", current);
-        }
+    // Расстояние до стартовой вершины равно 0
+    distance[start_vertex] = 0;
 
-        // Исследуем соседние вершины
-        for (size_t i = 0; i < graph->count_vertices; i++)
+    // Шаг 2: Обновляем расстояния V-1 раз
+    for (size_t i = 1; i < V; i++)
+    {
+        for (size_t u = 0; u < V; u++)
         {
-            if (graph->matrix[current][i] && !visited[i])
+            for (size_t v = 0; v < V; v++)
             {
-                visited[i] = true;
-                queue[rear++] = i;
-                // distance[i] = distance[current] + 1;
-                distance[i] = distance[current] + graph->matrix[current][i];
+                if (graph->matrix[u][v] != 0)
+                { // Если есть ребро между u и v
+                    if (distance[u] != INT_MAX && distance[u] + graph->matrix[u][v] < distance[v])
+                    {
+                        distance[v] = distance[u] + graph->matrix[u][v];
+                    }
+                }
             }
         }
     }
-    printf("\n");
+
+    // Шаг 3: Проверка на наличие отрицательных циклов
+    for (size_t u = 0; u < V; u++)
+    {
+        for (size_t v = 0; v < V; v++)
+        {
+            if (graph->matrix[u][v] != 0)
+            {
+                if (distance[u] != INT_MAX && distance[u] + graph->matrix[u][v] < distance[v])
+                {
+                    printf("%sГраф содержит отрицательный цикл%s\n", RED, RESET);
+                    return ERR_INT;
+                }
+            }
+        }
+    }
+
+    // Выводим результаты
+    *output = distance;
+
+    return ERR_OK;
+}
+
+/**
+ * @brief Функция ставит INT_MAX, если до вершины нельзя дойти по пути меньше max_distance
+ * @param[in] distance массив дистанций от вершины start_vertex до остальных
+ * @param[in] max_distance Максимальная дистанция до вершины
+ * @param[in] vertex_count - количество вершин
+ */
+void find_reachable_vertices(int *distance, int max_distance, size_t vertex_count)
+{
+    for (size_t i = 0; i < vertex_count; i++)
+    {
+        if (distance[i] > max_distance)
+        {
+            distance[i] = INF;
+        }
+    }
 }
 
 /**
@@ -321,7 +366,7 @@ void bfs_print_graph(graph_t *graph)
     if (!visited)
         return;
 
-    int queue[graph->count_vertices];
+    int *queue = malloc(graph->count_vertices * sizeof(int));
     int front = 0, rear = 0;
 
     int start_vertex = 0;
@@ -345,5 +390,6 @@ void bfs_print_graph(graph_t *graph)
     }
 
     printf("\n");
+    free(queue);
     free(visited);
 }

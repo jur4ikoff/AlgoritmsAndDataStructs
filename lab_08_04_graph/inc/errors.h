@@ -8,6 +8,7 @@
 #define ERR_EDGE 4
 #define ERR_EMPTY 5
 #define ERR_INT 6
+#define ERR_FIND 7
 #define ERR_FORK 10
 
 #endif

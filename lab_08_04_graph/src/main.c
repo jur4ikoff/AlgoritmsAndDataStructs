@@ -9,6 +9,7 @@
 #include "constants.h"
 #include "errors.h"
 #include "graph.h"
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -59,6 +60,9 @@ void print_error_message(int arg)
         case ERR_INT:
             printf("Ошибка ввода числа\n");
             break;
+        case ERR_FIND:
+            printf("Ошибка во время определения кратчайшего пути\n");
+            break;
     }
     printf("%s", RESET);
 }
@@ -97,7 +101,7 @@ int main(void)
         return ERR_EMPTY;
     }
 
-    int a = 0, start_vertex = 0;
+    int max_dist = 0, start_vertex = 0;
     printf(">>Введите вершину старта: ");
     if (scanf("%d", &start_vertex) != 1)
     {
@@ -107,21 +111,54 @@ int main(void)
     }
 
     printf(">>Введите расстояние A: ");
-    if (scanf("%d", &a) != 1)
+    if (scanf("%d", &max_dist) != 1)
     {
         free_graph(graph);
         print_error_message(ERR_INT);
         return ERR_INT;
     }
+    fgetc(stdin);
 
     dfs_print_graph(graph);
     bfs_print_graph(graph);
-    
-    bellman_ford_alg(graph, start_vertex, NULL);
-    // find_reachable_vertices(graph, start, a);
 
-    fgetc(stdin);
-    generate_graphviz(graph, "graph.gp");
-    rc = graph_render_open("graph.gp", "graph2.png");
+    // Получаем список вершин с расстоянием до них
+    int *dist = NULL;
+    if ((rc = bellman_ford_alg(graph, start_vertex, &dist)) != ERR_OK)
+    {
+        free(dist);
+        free_graph(graph);
+        print_error_message(rc);
+        return rc;
+    }
+
+    printf("\nРасстояние от вершины %d до\n", start_vertex);
+    for (size_t i = 0; (int)i < graph_count(graph); i++)
+    {
+        if ((int)i == start_vertex)
+            continue;
+        if (dist[i] != INT_MAX)
+            printf("-вершины %zu - %d\n", i, dist[i]);
+        else
+            printf("-вершины %zu не существует\n", i);
+    }
+
+    // Оставляем в массиве только те вершины, то которых можно добраться
+    find_reachable_vertices(dist, max_dist, (int)graph_count(graph));
+    printf("%sВершины, до которых расстояние от вершины %d меньше %d: ", GREEN, start_vertex, max_dist);
+    for (size_t i = 0; (int)i < graph_count(graph); i++)
+    {
+        if (dist[i] < INT_MAX)
+        {
+            printf("%zu ", i);
+        }
+
+    }
+    printf("%s\n", RESET);
+    
+    show_graph(graph, dist);
+
+    free(dist);
+    free_graph(graph);
     return rc;
 }
