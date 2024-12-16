@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 int input_string(char **string, FILE *file, ssize_t max)
 {
@@ -75,6 +76,8 @@ void print_guide(void)
 int main(void)
 {
     int rc = ERR_OK;
+    struct timespec start, end;
+
     print_guide();
     printf(">>Введите путь к файлу: ");
     char *filepath = NULL;
@@ -119,7 +122,6 @@ int main(void)
         return ERR_INT;
     }
     fgetc(stdin);
-
     if (max_dist < 0 || start_vertex < 0)
     {
         free_graph(graph);
@@ -130,6 +132,7 @@ int main(void)
     dfs_print_graph(graph);
     bfs_print_graph(graph);
 
+    clock_gettime(CLOCK_MONOTONIC, &start);
     // Получаем список вершин с расстоянием до них
     int *dist = NULL;
     if ((rc = bellman_ford_alg(graph, start_vertex, &dist)) != ERR_OK)
@@ -139,6 +142,9 @@ int main(void)
         print_error_message(rc);
         return rc;
     }
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    double time = (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3;
+    printf("%sВремя выполнения алгоритма Беллмана-Форда %.3f мкс%s\n", GREEN, time, RESET);
 
     printf("\nРасстояние от вершины %d до\n", start_vertex);
     for (size_t i = 0; (int)i < graph_count(graph); i++)
