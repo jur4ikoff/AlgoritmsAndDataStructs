@@ -120,6 +120,13 @@ int main(void)
     }
     fgetc(stdin);
 
+    if (max_dist < 0 || start_vertex < 0)
+    {
+        free_graph(graph);
+        print_error_message(ERR_INT);
+        return ERR_INT;
+    }
+
     dfs_print_graph(graph);
     bfs_print_graph(graph);
 
@@ -153,10 +160,9 @@ int main(void)
         {
             printf("%zu ", i);
         }
-
     }
     printf("%s\n", RESET);
-    
+
     show_graph(graph, dist);
 
     free(dist);
