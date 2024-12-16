@@ -393,3 +393,12 @@ void bfs_print_graph(graph_t *graph)
     free(queue);
     free(visited);
 }
+
+void calc_memory_usage(graph_t *graph)
+{
+    if (!graph)
+        return;
+
+    size_t memory = sizeof(graph) + sizeof(graph->matrix) + sizeof(graph->matrix[0]) * graph->count_vertices * graph->count_vertices;
+    printf("Граф занимает в памяти %zu байт\n", memory);
+}

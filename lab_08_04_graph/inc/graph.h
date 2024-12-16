@@ -8,6 +8,7 @@ typedef struct _graph_type_ graph_t;
 // Функции выделения и освобождения памяти
 graph_t *create_graph(size_t vert_count);
 void free_graph(graph_t *graph);
+void calc_memory_usage(graph_t *graph);
 
 // Загрузка графа из памяти
 int load_graph(graph_t **graph, char *filname);

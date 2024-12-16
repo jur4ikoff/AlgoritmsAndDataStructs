@@ -100,6 +100,7 @@ int main(void)
         print_error_message(ERR_EMPTY);
         return ERR_EMPTY;
     }
+    calc_memory_usage(graph);
 
     int max_dist = 0, start_vertex = 0;
     printf(">>Введите вершину старта: ");
