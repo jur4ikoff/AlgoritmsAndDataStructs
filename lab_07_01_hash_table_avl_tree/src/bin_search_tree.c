@@ -13,7 +13,6 @@
 struct _binary_search_tree_t_
 {
     data_t data;
-    int repeated;                         // 0 - not repeat; 1 - repeat
     int is_search;                        // 1 - флаг активируется, после поиска
     struct _binary_search_tree_t_ *left;  // Левый потомок
     struct _binary_search_tree_t_ *right; // Правый потомок
@@ -60,7 +59,7 @@ static void to_dot(tree_t *tree, void *file)
     if (tree->is_search)
         fprintf(file, "  %c [color=\"green\"];\n", tree->data);
 
-    if (tree->repeated)
+    if (tree->data.repeat)
         fprintf(file, "  %c [color=\"red\"];\n", tree->data);
 
     if (tree->left)
@@ -134,7 +133,7 @@ int bin_tree_insert(tree_t **root, data_t data)
 
     if (cmp == 0)
     {
-        (*root)->repeated = 1;
+        (*root)->repeated += 1;
         return WARNING_REPEAT;
     }
     else if (cmp > 0)
