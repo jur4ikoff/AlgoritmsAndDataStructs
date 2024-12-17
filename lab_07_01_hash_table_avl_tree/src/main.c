@@ -53,19 +53,17 @@ int main(void)
     main_operations_t operation = OP_COUNT;
     while (operation != OP_EXIT && rc == ERR_OK)
     {
+        void print_menu(void);
         operation = input_operation();
-        // Раз в 3 запроса выводим меню
-        
+
+        if (operation == OP_EXIT)
+        {
+            printf("%sУспешный выход из программы\n%s");
+        }
         else if (operation == OP_UNKNOWN)
         {
             printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
         }
     }
-
-exit:
-    if (rc)
-        print_error_message(rc);
-    free(string);
-    tree_free(tree);
     return rc;
 }

@@ -7,6 +7,8 @@
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
+typedef char data_t;
+
 #define MAX_STRING_LEN 2000
 
 #endif

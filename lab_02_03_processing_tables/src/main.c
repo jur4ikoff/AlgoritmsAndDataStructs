@@ -1,5 +1,3 @@
-// Вариант 3
-
 #include <string.h>
 #include <stdio.h>
 #include "errors.h"

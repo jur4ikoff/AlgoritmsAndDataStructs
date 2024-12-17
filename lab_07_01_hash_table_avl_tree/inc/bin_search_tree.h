@@ -1,7 +1,7 @@
 #ifndef BIN_SEARCH_TREE_H__
 #define BIN_SEARCH_TREE_H__
 
-typedef int data_t;
+#include "constants.h"
 
 typedef struct _tree_t_
 {
