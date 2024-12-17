@@ -57,6 +57,7 @@ void print_menu(void)
            "2 - Тестирование AVL дерева\n"
            "3 - Тестирование хэш таблицы с открытой адресацией\n"
            "4 - Тестирование хэш таблицы с открытой адресацией\n"
+           "5 - Решение задачи\n",
            "5 - Тестирование эффективности\n");
     printf("Введите операцию: ");
 }
@@ -64,13 +65,13 @@ void print_menu(void)
 void print_test_tree_menu(void)
 {
     printf("0 - Выход\n"
-    "1 - Заполнить дерево из строчки\n"
-    "2 - Добавить элемент в дерево\n"
-    "3 - Удалить элемент из дерева\n"
-    "4 - Поиск элемента в дереве\n"
-    "5 - Вывод дерева на экран (картинкой)\n"
-    "6 - Инфиксный обход дерева\n"
-    "7 - Измеренее эффективности\n");
+           "1 - Заполнить дерево из строчки\n"
+           "2 - Добавить элемент в дерево\n"
+           "3 - Удалить элемент из дерева\n"
+           "4 - Поиск элемента в дереве\n"
+           "5 - Вывод дерева на экран (картинкой)\n"
+           "6 - Инфиксный обход дерева\n"
+           "7 - Замер памяти и среднего количество сравнений\n");
 }
 
 /**
@@ -86,7 +87,7 @@ main_operations_t input_operation(void)
         {
             continue;
         }
-        return OP_UNKNOWN;
+        return OP_ERROR;
     }
 
     if (buffer < 0 || buffer >= OP_COUNT)
@@ -142,4 +143,29 @@ int input_line(char **string, FILE *file)
 
     *newline = 0;
     return ERR_OK;
+}
+
+/**
+ * @brief Ввод символа и его запись в переменную data_t
+ */
+int input_data(data_t *data, char *message)
+{
+    int rc = ERR_OK;
+    printf("%s ", message);
+    char buffer[MAX_INPUT_DATA_SIZE];
+
+    if ((!fgets(buffer, MAX_INPUT_DATA_SIZE, stdin)))
+        return ERR_DATA_INPUT;
+
+    char *newline = strchr(buffer, '\n');
+    if (!newline)
+        return ERR_DATA_INPUT;
+
+    *newline = 0;
+
+    if (strlen(buffer) != 1)
+        return ERR_DATA_INPUT;
+
+    *data = buffer[0];
+    return rc;
 }

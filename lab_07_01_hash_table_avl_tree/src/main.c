@@ -30,7 +30,6 @@ int main(void)
     {
         print_menu();
         operation = input_operation();
-
         if (operation == OP_EXIT)
         {
             printf("%sУспешный выход из программы\n%s", GREEN, RESET);
@@ -43,6 +42,12 @@ int main(void)
         else if (operation == OP_UNKNOWN)
         {
             printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
+        }
+        else if (operation == OP_ERROR)
+        {
+            rc = ERR_OPERATION;
+            print_error_message(rc);
+            return rc;
         }
     }
     return rc;

@@ -1,6 +1,7 @@
 #ifndef MENU_H__
 #define MENU_H__
 
+#include "constants.h"
 #include <stdio.h>
 
 typedef enum
@@ -10,9 +11,10 @@ typedef enum
     OP_TEST_AVL_TREE,
     OP_TEST_OPEN_HASH,
     OP_TEST_CLOSE_HASH,
+    OP_TASK,
     OP_EFFICIENCY,
     OP_COUNT,
-    OP_UNKNOWN
+    OP_UNKNOWN, OP_ERROR
 } main_operations_t;
 
 typedef enum
@@ -55,5 +57,7 @@ void print_test_tree_menu(void);
 main_operations_t input_operation(void);
 tree_test_menu_t input_test_tree_operation(void);
 
+// Инпуты
 int input_line(char **string, FILE *file);
+int input_data(data_t *data, char *message);
 #endif
