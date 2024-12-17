@@ -53,7 +53,7 @@ int main(void)
     print_info();
     int rc = ERR_OK;
     char *string = NULL;
-    operations_t operation = OP_COUNT;
+    main_operations_t operation = OP_COUNT;
     int itteration_count = 0;
     int is_string = 0;
     int is_tree = 0;

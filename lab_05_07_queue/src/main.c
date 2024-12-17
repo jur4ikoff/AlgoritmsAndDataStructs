@@ -43,7 +43,7 @@ int main(void)
     // Инициализация переменных
     int rc = ERR_OK;
     size_t itteration_count = 0;
-    operations_t menu_operaton = OP_INIT;
+    main_operations_t menu_operaton = OP_INIT;
 
     // Вывод информации о программе
     print_guide();

@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     int rc = ERR_OK;
     char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"data/db_16.txt"};
     FILE *file;
-    operations_t operation_number;
+    main_operations_t operation_number;
     size_t count = 0;
 
     /*

@@ -34,7 +34,7 @@ typedef enum
     OP_EFFICIENCY,
     OP_COUNT
 
-} operations_t;
+} main_operations_t;
 
 typedef enum
 {
@@ -46,7 +46,7 @@ typedef enum
     TEST_UNKNOWN
 } test_operations_t;
 
-int input_menu_operation(operations_t *operation)
+int input_menu_operation(main_operations_t *operation)
 {
     printf(">Выберите операцию: ");
     int buffer;
@@ -56,7 +56,7 @@ int input_menu_operation(operations_t *operation)
     if (buffer < 0 || buffer >= OP_COUNT)
         return ERR_OPERATION;
 
-    *operation = (operations_t)buffer;
+    *operation = (main_operations_t)buffer;
     return ERR_OK;
 }
 
@@ -130,7 +130,7 @@ void print_menu(void)
 int main(void)
 {
     int rc = 0;
-    operations_t operation = (operations_t)1;
+    main_operations_t operation = (main_operations_t)1;
     list_stack_t list_stack = {0};
     static_stack_t static_stack;
     char el_to_add, element;

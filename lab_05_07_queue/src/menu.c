@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 // Ввод операции для меню
-int input_menu_operation(operations_t *operation)
+int input_menu_operation(main_operations_t *operation)
 {
     printf(">Выберите операцию: ");
     int buffer;
@@ -15,7 +15,7 @@ int input_menu_operation(operations_t *operation)
     if (buffer < 0 || buffer >= OP_COUNT)
         return ERR_OPERATION;
 
-    *operation = (operations_t)buffer;
+    *operation = (main_operations_t)buffer;
     return ERR_OK;
 }
 
