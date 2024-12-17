@@ -13,3 +13,4 @@ test*.txt
 .idea
 *.dSYM
 *.gp
+temp.png
