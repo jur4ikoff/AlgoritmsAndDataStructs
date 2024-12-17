@@ -21,31 +21,6 @@
 #include <string.h>
 #include <time.h>
 
-/**
- * @brief Функция для записи строки в переменную. Функция автоматически выделяет память под строку
- * @param string Указатель на строку
- * @param file Указатель на файловую переменную
- * @return Код возврата
- */
-int input_line(char **string, FILE *file)
-{
-    ssize_t read = 0;
-    size_t len = 0;
-
-    if ((read = getline(string, &len, file)) == -1)
-        return ERR_STRING;
-
-    if (read > MAX_STRING_LEN)
-        return ERR_STRING;
-
-    char *newline = strchr(*string, '\n');
-    if (!newline)
-        return ERR_STRING;
-
-    *newline = 0;
-    return ERR_OK;
-}
-
 int main(void)
 {
     print_info();
@@ -53,12 +28,17 @@ int main(void)
     main_operations_t operation = OP_COUNT;
     while (operation != OP_EXIT && rc == ERR_OK)
     {
-        void print_menu(void);
+        print_menu();
         operation = input_operation();
 
         if (operation == OP_EXIT)
         {
-            printf("%sУспешный выход из программы\n%s");
+            printf("%sУспешный выход из программы\n%s", GREEN, RESET);
+        }
+        else if (operation == OP_TEST_BIN_TREE)
+        {
+            // Тестирование дерева
+            test_binary_tree();
         }
         else if (operation == OP_UNKNOWN)
         {

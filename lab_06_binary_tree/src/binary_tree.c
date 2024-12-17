@@ -146,11 +146,11 @@ void tree_free(tree_t *tree)
  * @param is_head Специальный флаг, нужен для того, чтобы вовремя вывести \n
  * @return
  */
-void inorder_traversal(const tree_t *root, int is_head, int is_color)
+void tree_inorder_traversal(const tree_t *root, int is_head, int is_color)
 {
     if (root != NULL)
     {
-        inorder_traversal(root->left, 0, is_color);
+        tree_inorder_traversal(root->left, 0, is_color);
         if (is_color)
         {
             if (root->is_search)
@@ -162,7 +162,7 @@ void inorder_traversal(const tree_t *root, int is_head, int is_color)
         }
         else
             printf("%c ", root->data);
-        inorder_traversal(root->right, 0, is_color);
+        tree_inorder_traversal(root->right, 0, is_color);
     }
 
     if (is_head > 0)

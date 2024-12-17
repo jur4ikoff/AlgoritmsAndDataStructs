@@ -1,6 +1,8 @@
 #ifndef MENU_H__
 #define MENU_H__
 
+#include <stdio.h>
+
 typedef enum
 {
     OP_EXIT,
@@ -21,10 +23,11 @@ typedef enum
     TEST_TREE_REMOVE,
     TEST_TREE_SEARCH,
     TEST_TREE_SHOW,
-    TEST_TREE_NORDER,
+    TEST_TREE_INORDER,
     TEST_TREE_STATS,
     TEST_TREE_COUNT,
     TEST_TREE_UNKNOWN,
+    TEST_TREE_ERROR
 } tree_test_menu_t;
 
 typedef enum
@@ -46,8 +49,11 @@ void print_warning_message(int arg);
 // Вывод меню
 void print_info(void);
 void print_menu(void);
+void print_test_tree_menu(void);
 
 // Ввод операций
 main_operations_t input_operation(void);
+tree_test_menu_t input_test_tree_operation(void);
 
+int input_line(char **string, FILE *file);
 #endif

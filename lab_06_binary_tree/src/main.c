@@ -174,7 +174,7 @@ int main(void)
                 printf("%sДерево пустое%s\n", YELLOW, RESET);
                 continue;
             }
-            inorder_traversal(tree, 1, 0);
+            tree_inorder_traversal(tree, 1, 0);
         }
         else if (operation == OP_POSTORDER_TREE)
         {

@@ -140,7 +140,7 @@ void test_binary_tree(void)
             if (node)
             {
                 printf("%sЭлемент найден. Время поиска: %.2f%s\n", GREEN, time, RESET);
-                inorder_traversal(tree, 1, 1);
+                tree_inorder_traversal(tree, 1, 1);
                 tree_in_picture(tree);
                 tree_search_reset(tree);
             }
@@ -155,7 +155,7 @@ void test_binary_tree(void)
         }
         else if (test_operation == TEST_INORDER)
         {
-            inorder_traversal(tree, 1, 0);
+            tree_inorder_traversal(tree, 1, 0);
         }
         else if (test_operation == TEST_POSTRDER)
         {

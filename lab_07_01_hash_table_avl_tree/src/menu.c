@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "errors.h"
 #include <stdio.h>
+#include <string.h>
 
 void print_error_message(int arg)
 {
@@ -60,6 +61,18 @@ void print_menu(void)
     printf("Введите операцию: ");
 }
 
+void print_test_tree_menu(void)
+{
+    printf("0 - Выход\n"
+    "1 - Заполнить дерево из строчки\n"
+    "2 - Добавить элемент в дерево\n"
+    "3 - Удалить элемент из дерева\n"
+    "4 - Поиск элемента в дереве\n"
+    "5 - Вывод дерева на экран (картинкой)\n"
+    "6 - Инфиксный обход дерева\n"
+    "7 - Измеренее эффективности\n");
+}
+
 /**
  * @brief Функция принимает у пользователя операцию
  * @return Структурную переменную, обозначающую операцию
@@ -86,7 +99,7 @@ main_operations_t input_operation(void)
  * @brief Функция принимает у пользователя операцию
  * @return Структурную переменную, обозначающую операцию
  */
-/*test_menu_t input_test_operation(void)
+tree_test_menu_t input_test_tree_operation(void)
 {
     int buffer;
     if (scanf("%d", &buffer) != 1)
@@ -95,14 +108,38 @@ main_operations_t input_operation(void)
         {
             continue; // Возврат к началу цикла}
         }
-        return TEST_UNKNOWN;
+        return TEST_TREE_ERROR;
     }
 
     fgetc(stdin);
 
-    if (buffer < 0 || buffer >= TEST_COUNT)
-        return TEST_UNKNOWN;
+    if (buffer < 0 || buffer >= TEST_TREE_COUNT)
+        return TEST_TREE_UNKNOWN;
 
-    return (test_menu_t)buffer;
+    return (tree_test_menu_t)buffer;
 }
-*/
+
+/**
+ * @brief Функция для записи строки в переменную. Функция автоматически выделяет память под строку
+ * @param string Указатель на строку
+ * @param file Указатель на файловую переменную
+ * @return Код возврата
+ */
+int input_line(char **string, FILE *file)
+{
+    ssize_t read = 0;
+    size_t len = 0;
+
+    if ((read = getline(string, &len, file)) == -1)
+        return ERR_STRING;
+
+    if (read > MAX_STRING_LEN)
+        return ERR_STRING;
+
+    char *newline = strchr(*string, '\n');
+    if (!newline)
+        return ERR_STRING;
+
+    *newline = 0;
+    return ERR_OK;
+}

@@ -17,7 +17,7 @@ typedef void (*tree_apply_fn_t)(tree_t *subtree, void *arg);
 tree_t *tree_create_node(data_t data);
 void tree_free(tree_t *tree);
 
-void inorder_traversal(const tree_t *root, int is_head, int is_color);
+void tree_inorder_traversal(const tree_t *root, int is_head, int is_color);
 void preorder_traversal(tree_t *root, int is_head, int is_color);
 void postorder_traversal(tree_t *root, int is_head, int is_color);
 int tree_insert(tree_t **root, data_t data);
