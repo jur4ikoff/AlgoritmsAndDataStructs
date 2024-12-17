@@ -12,3 +12,5 @@ test*.txt
 *bin
 .idea
 *.dSYM
+*.gp
+temp.png

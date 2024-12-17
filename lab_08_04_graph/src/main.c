@@ -43,27 +43,27 @@ void print_error_message(int arg)
     printf("%s", RED);
     switch (arg)
     {
-        case ERR_FILE:
-            printf("Ошибка чтения файла\n");
-            break;
-        case ERR_STRING:
-            printf("Ошибка при вводе строки\n");
-            break;
-        case ERR_MEMORY:
-            printf("Ошибка при работе с памятью\n");
-            break;
-        case ERR_EDGE:
-            printf("Ошибка при считывании матрицы смежности из файла\n");
-            break;
-        case ERR_EMPTY:
-            printf("Ошибка. Граф пустой\n");
-            break;
-        case ERR_INT:
-            printf("Ошибка ввода числа\n");
-            break;
-        case ERR_FIND:
-            printf("Ошибка во время определения кратчайшего пути\n");
-            break;
+    case ERR_FILE:
+        printf("Ошибка чтения файла\n");
+        break;
+    case ERR_STRING:
+        printf("Ошибка при вводе строки\n");
+        break;
+    case ERR_MEMORY:
+        printf("Ошибка при работе с памятью\n");
+        break;
+    case ERR_EDGE:
+        printf("Ошибка при считывании матрицы смежности из файла\n");
+        break;
+    case ERR_EMPTY:
+        printf("Ошибка. Граф пустой\n");
+        break;
+    case ERR_INT:
+        printf("Ошибка ввода числа\n");
+        break;
+    case ERR_FIND:
+        printf("Ошибка во время определения кратчайшего пути\n");
+        break;
     }
     printf("%s", RESET);
 }
@@ -122,7 +122,7 @@ int main(void)
         return ERR_INT;
     }
     fgetc(stdin);
-    if (max_dist < 0 || start_vertex < 0)
+    if (max_dist < 0 || start_vertex < 0 || start_vertex >= (int)graph_count(graph))
     {
         free_graph(graph);
         print_error_message(ERR_INT);
