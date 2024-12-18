@@ -57,25 +57,25 @@ static void to_dot(tree_t *tree, void *file)
     static int null_cnt = 0;
 
     if (tree->is_search)
-        fprintf(file, "  %c [color=\"green\"];\n", tree->data);
+        fprintf(file, "  %c [color=\"green\"];\n", tree->data.value);
 
     if (tree->data.repeat)
-        fprintf(file, "  %c [color=\"red\"];\n", tree->data);
+        fprintf(file, "  %c [color=\"red\"];\n", tree->data.value);
 
     if (tree->left)
-        fprintf(file, "  %c -> %c;\n", tree->data, tree->left->data);
+        fprintf(file, "  %c -> %c;\n", tree->data.value, tree->left->data.value);
     else
     {
-        fprintf(file, "  %c -> null_%d;\n", tree->data, null_cnt);
+        fprintf(file, "  %c -> null_%d;\n", tree->data.value, null_cnt);
         fprintf(file, "  null_%d [shape=\"point\", color=\"red\"];\n", null_cnt);
         null_cnt++;
     }
 
     if (tree->right)
-        fprintf(file, "  %c -> %c;\n", tree->data, tree->right->data);
+        fprintf(file, "  %c -> %c;\n", tree->data.value, tree->right->data.value);
     else
     {
-        fprintf(file, "  %c -> null_%d;\n", tree->data, null_cnt);
+        fprintf(file, "  %c -> null_%d;\n", tree->data.value, null_cnt);
         fprintf(file, "  null_%d [shape=\"point\", color=\"red\"];\n", null_cnt);
         null_cnt++;
     }
@@ -87,12 +87,15 @@ void convert_string_to_bin_tree(tree_t **tree, char *string)
 
     while (*ptr != 0)
     {
+        data_t data = {0};
+        data.value = *ptr;
         if (*tree == NULL)
         {
-            *tree = bin_tree_create_node(*ptr);
+            *tree = bin_tree_create_node(data);
             ptr++;
         }
-        bin_tree_insert(tree, *ptr);
+
+        bin_tree_insert(tree, data);
         ptr++;
     }
 }
@@ -105,7 +108,7 @@ tree_t *bin_tree_create_node(data_t data)
         return NULL;
 
     node->data = data;
-    node->repeated = 0;
+    node->data.repeat = 0;
     node->is_search = 0;
     node->left = NULL;
     node->right = NULL;
@@ -120,8 +123,8 @@ tree_t *bin_tree_create_node(data_t data)
 int bin_tree_insert(tree_t **root, data_t data)
 {
     int rc = ERR_OK;
-    if (!data)
-        return ERR_DATA_INPUT;
+    /*if (data == NULL)
+        return ERR_DATA_INPUT;*/
 
     if (!(*root))
     {
@@ -129,11 +132,11 @@ int bin_tree_insert(tree_t **root, data_t data)
         return ERR_OK;
     }
 
-    int cmp = data - (*root)->data;
+    int cmp = data.value - (*root)->data.value;
 
     if (cmp == 0)
     {
-        (*root)->repeated += 1;
+        (*root)->data.repeat += 1;
         return WARNING_REPEAT;
     }
     else if (cmp > 0)
@@ -150,7 +153,7 @@ int bin_tree_remove(tree_t **root, data_t data)
     if (!(*root))
         return WARNING_TREE;
 
-    int cmp = data - (*root)->data;
+    int cmp = data.value - (*root)->data.value;
     if (cmp > 0)
     {
         return bin_tree_remove(&(*root)->right, data);
@@ -201,13 +204,13 @@ tree_t *bin_tree_search(tree_t *root, data_t data)
         return root;
     }
 
-    if (data == root->data)
+    if (data.value == root->data.value)
     {
         root->is_search = 1;
         return root;
     }
 
-    if (data > root->data)
+    if (data.value > root->data.value)
     {
         return bin_tree_search(root->right, data);
     }
@@ -243,14 +246,14 @@ void bin_tree_inorder_traversal(const tree_t *root, int is_head, int is_color)
         if (is_color)
         {
             if (root->is_search)
-                printf("%s%c%s ", GREEN, root->data, RESET);
-            else if (root->repeated)
-                printf("%s%c%s ", RED, root->data, RESET);
+                printf("%s%c%s ", GREEN, root->data.value, RESET);
+            else if (root->data.repeat)
+                printf("%s%c%s ", RED, root->data.value, RESET);
             else
-                printf("%c ", root->data);
+                printf("%c ", root->data.value);
         }
         else
-            printf("%c ", root->data);
+            printf("%c ", root->data.value);
         bin_tree_inorder_traversal(root->right, 0, is_color);
     }
 
@@ -442,7 +445,7 @@ void test_binary_tree(void)
                 is_first = 0;
                 clock_gettime(CLOCK_MONOTONIC_RAW, &end);
                 float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-                printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data, time, RESET);
+                printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data.value, time, RESET);
             }
             else
             {
@@ -456,7 +459,7 @@ void test_binary_tree(void)
                 {
                     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
                     float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-                    printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data, time, RESET);
+                    printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data.value, time, RESET);
                 }
             }
         }
@@ -480,7 +483,7 @@ void test_binary_tree(void)
             {
                 clock_gettime(CLOCK_MONOTONIC_RAW, &end);
                 float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-                printf("%sУдален элемент %c из дерева. Время удаления: %.2f%s\n", GREEN, data, time, RESET);
+                printf("%sУдален элемент %c из дерева. Время удаления: %.2f%s\n", GREEN, data.value, time, RESET);
             }
         }
         else if (test_operation == TEST_TREE_SEARCH)
