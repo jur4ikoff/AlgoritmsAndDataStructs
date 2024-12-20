@@ -20,6 +20,7 @@
 #include "test.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "time_calc.h"
 #include <string.h>
 #include <time.h>
 
@@ -139,7 +140,8 @@ int main(void)
             // tree_delete_repeat(&tree);
             tree_repeat_test(&tree);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            //remove_duplicates(&tree); // Это
+            tree_repeat_reset(tree);
+            // remove_duplicates(&tree); // Это
             tree_in_picture(tree);
 
             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
@@ -183,10 +185,10 @@ int main(void)
         }
         else if (operation == OP_EFFICIENCY)
         {
-            char *filename = NULL;
+            /*char *filename = NULL;
             printf("Введите путь к файлу: ");
             input_line(&filename, stdin);
-            // char *result = read_file_to_single_string(filename);
+
             char *result = malloc(MAX_STRING_LEN * sizeof(char));
             FILE *file = fopen(filename, "r");
             if (file == NULL)
@@ -209,6 +211,20 @@ int main(void)
                 goto exit;
             }
 
+            tree_in_picture(tree);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            inorder_traversal(tree, 1, 0);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time_inf = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            printf("Время инфиксного обхода %.2f мкс\n", time_inf);
+
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            data_t data_cur = 'm';
+            tree_search(tree, data_cur);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time_search = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            printf("Время поиска элеметна %.2f мкс\n", time_search);
+
             // tree_in_picture(tree);
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             tree_delete_repeat(&tree);
@@ -220,7 +236,8 @@ int main(void)
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             float time_string = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
             printf("%sДубликаты удалены из дерева за %.2f мкс. Из строки за %.2f%s\n", GREEN, time_tree, time_string, RESET);
-            free(result);
+            free(result);*/
+            calc_inorder();
         }
         else if (operation == OP_UNKNOWN)
         {

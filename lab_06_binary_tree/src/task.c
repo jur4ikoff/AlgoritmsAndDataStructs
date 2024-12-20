@@ -158,5 +158,4 @@ void tree_repeat_test(tree_t **tree)
     {
         tree_remove(tree, (*tree)->data);
     }
-    tree_repeat_reset(*tree);
 }
