@@ -1,19 +1,19 @@
 #include "time_calc.h"
-#include <time.h>
-#include <stdio.h>
 #include "binary_tree.h"
 #include "constants.h"
-#include <string.h>
-#include <stdlib.h>
 #include "errors.h"
 #include "task.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
-int calc_inorder(void)
+int calc_inorder(char *filename, float *time)
 {
 
     struct timespec start, end;
     char *result = malloc(MAX_STRING_LEN * sizeof(char));
-    FILE *file = fopen("./data/linear_15.txt", "r");
+    FILE *file = fopen(filename, "r");
     if (file == NULL)
     {
         free(result);
@@ -34,9 +34,10 @@ int calc_inorder(void)
         free(result);
         return ERR_STRING;
     }
+    tree_in_picture(tree);
 
     float sum = 0.0;
-    int count = 20;
+    int count = 30;
     for (int i = 0; i < count; i++)
     {
         clock_gettime(CLOCK_MONOTONIC_RAW, &start);
@@ -45,6 +46,8 @@ int calc_inorder(void)
         float time_inf = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
         sum += time_inf;
     }
-    printf("%sВремя инфиксного обхода: %.2f мкс\n%s", GREEN, (float)(sum / (float)count), RESET);
+
+    *time = sum / (float)count;
+    // printf("%sВремя инфиксного обхода: %.2f мкс\n%s", GREEN, (float)(sum / (float)count), RESET);
     return ERR_OK;
 }
