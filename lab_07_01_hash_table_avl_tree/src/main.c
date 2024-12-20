@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "avl_tree.h"
 
 int main(void)
 {
