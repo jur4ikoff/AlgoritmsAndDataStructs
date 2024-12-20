@@ -232,6 +232,16 @@ void tree_search_reset(tree_t *root)
     }
 }
 
+void tree_repeat_reset(tree_t *root)
+{
+    if (root != NULL)
+    {
+        tree_search_reset(root->left);
+        root->is_repeated = 0;
+        tree_search_reset(root->right);
+    }
+}
+
 static void to_dot(tree_t *tree, void *file)
 {
     static int null_cnt = 0;
@@ -294,7 +304,7 @@ static int open_img(const char *img)
         //     |       |> argv      |> it's necessary
         execlp("open", "open", img, NULL);
 
-        err:
+    err:
         close(stdout_file);
 
         perror("execlp");

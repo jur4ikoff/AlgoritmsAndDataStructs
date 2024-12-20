@@ -136,9 +136,10 @@ int main(void)
                 continue;
             }
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            tree_delete_repeat(&tree);
+            // tree_delete_repeat(&tree);
+            tree_repeat_test(&tree);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            remove_duplicates(&tree); // Это
+            //remove_duplicates(&tree); // Это
             tree_in_picture(tree);
 
             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;

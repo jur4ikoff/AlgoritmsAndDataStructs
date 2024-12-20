@@ -140,3 +140,23 @@ void string_remove_duplicates(char *string)
 
     string[index] = '\0'; // Завершаем строку нулевым символом
 }
+
+// Удаление узлов с is_repeated != 0
+void tree_repeat_test(tree_t **tree)
+{
+    if (*tree == NULL)
+    {
+        return;
+    }
+
+    // Рекурсивно обходим левое и правое поддерево
+    tree_repeat_test(&(*tree)->left);
+    tree_repeat_test(&(*tree)->right);
+
+    // Проверяем текущий узел
+    if ((*tree)->is_repeated != 0)
+    {
+        tree_remove(tree, (*tree)->data);
+    }
+    tree_repeat_reset(*tree);
+}

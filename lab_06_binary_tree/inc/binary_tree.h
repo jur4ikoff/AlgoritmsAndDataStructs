@@ -25,4 +25,5 @@ tree_t *tree_search(tree_t *root, data_t data);
 int tree_remove(tree_t **root, data_t data);
 int tree_in_picture(tree_t *tree);
 void tree_search_reset(tree_t *root);
+void tree_repeat_reset(tree_t *root);
 #endif
