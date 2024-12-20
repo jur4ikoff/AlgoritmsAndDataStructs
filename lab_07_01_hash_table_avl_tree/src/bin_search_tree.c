@@ -18,7 +18,7 @@ struct _binary_search_tree_t_
     struct _binary_search_tree_t_ *right; // Правый потомок
 };
 
-static void calc_depth_sum(tree_t *root, int current_depth, int *total_depth, int *total_nodes)
+static void calc_depth_sum(bst_tree_t *root, int current_depth, int *total_depth, int *total_nodes)
 {
     if (root == NULL)
         return;
@@ -30,7 +30,7 @@ static void calc_depth_sum(tree_t *root, int current_depth, int *total_depth, in
     calc_depth_sum(root->right, current_depth + 1, total_depth, total_nodes);
 }
 
-static float bin_tree_calc_avg_compare(tree_t *root)
+static float bin_tree_calc_avg_compare(bst_tree_t *root)
 {
     if (root == NULL)
         return 0.0f;
@@ -42,17 +42,17 @@ static float bin_tree_calc_avg_compare(tree_t *root)
     return (float)total_depth / total_nodes;
 }
 
-static size_t bin_tree_calc_memory(tree_t *root)
+static size_t bin_tree_calc_memory(bst_tree_t *root)
 {
     if (root == NULL)
     {
         return 0;
     }
     // Суммируем размер текущего узла и размеры левого и правого поддеревьев
-    return sizeof(tree_t) + bin_tree_calc_memory(root->left) + bin_tree_calc_memory(root->right);
+    return sizeof(bst_tree_t) + bin_tree_calc_memory(root->left) + bin_tree_calc_memory(root->right);
 }
 
-static void to_dot(tree_t *tree, void *file)
+static void to_dot(bst_tree_t *tree, void *file)
 {
     static int null_cnt = 0;
 
@@ -81,7 +81,7 @@ static void to_dot(tree_t *tree, void *file)
     }
 }
 
-void convert_string_to_bin_tree(tree_t **tree, char *string)
+void convert_string_to_bin_tree(bst_tree_t **tree, char *string)
 {
     char *ptr = (char *)string;
 
@@ -94,15 +94,17 @@ void convert_string_to_bin_tree(tree_t **tree, char *string)
             *tree = bin_tree_create_node(data);
             ptr++;
         }
-
-        bin_tree_insert(tree, data);
-        ptr++;
+        else
+        {
+            bin_tree_insert(tree, data);
+            ptr++;
+        }
     }
 }
 
-tree_t *bin_tree_create_node(data_t data)
+bst_tree_t *bin_tree_create_node(data_t data)
 {
-    tree_t *node = malloc(sizeof(tree_t));
+    bst_tree_t *node = malloc(sizeof(bst_tree_t));
 
     if (!node)
         return NULL;
@@ -120,7 +122,7 @@ tree_t *bin_tree_create_node(data_t data)
  * @param root Корень дерева
  * @param data Структура данных, которую нужно вставить
  */
-int bin_tree_insert(tree_t **root, data_t data)
+int bin_tree_insert(bst_tree_t **root, data_t data)
 {
     int rc = ERR_OK;
     /*if (data == NULL)
@@ -148,7 +150,7 @@ int bin_tree_insert(tree_t **root, data_t data)
 }
 
 // Удалить ноду
-int bin_tree_remove(tree_t **root, data_t data)
+int bin_tree_remove(bst_tree_t **root, data_t data)
 {
     if (!(*root))
         return WARNING_TREE;
@@ -164,7 +166,7 @@ int bin_tree_remove(tree_t **root, data_t data)
     }
     if (cmp == 0)
     {
-        tree_t *temp = *root;
+        bst_tree_t *temp = *root;
         if (!(*root)->left && !(*root)->right)
         {
             free(*root);
@@ -182,7 +184,7 @@ int bin_tree_remove(tree_t **root, data_t data)
         }
         else
         {
-            tree_t *min_node = (*root)->right;
+            bst_tree_t *min_node = (*root)->right;
             while (min_node && min_node->left)
             {
                 min_node = min_node->left;
@@ -197,7 +199,7 @@ int bin_tree_remove(tree_t **root, data_t data)
     return ERR_OK;
 }
 
-tree_t *bin_tree_search(tree_t *root, data_t data)
+bst_tree_t *bin_tree_search(bst_tree_t *root, data_t data)
 {
     if (root == NULL)
     {
@@ -222,7 +224,7 @@ tree_t *bin_tree_search(tree_t *root, data_t data)
     return root;
 }
 
-void tree_free(tree_t *tree)
+void tree_free(bst_tree_t *tree)
 {
     if (!tree)
         return;
@@ -238,7 +240,7 @@ void tree_free(tree_t *tree)
  * @param is_head Специальный флаг, нужен для того, чтобы вовремя вывести \n
  * @return
  */
-void bin_tree_inorder_traversal(const tree_t *root, int is_head, int is_color)
+void bin_tree_inorder_traversal(const bst_tree_t *root, int is_head, int is_color)
 {
     if (root != NULL)
     {
@@ -262,7 +264,7 @@ void bin_tree_inorder_traversal(const tree_t *root, int is_head, int is_color)
 }
 
 // Функция очищает найденную ноду
-void bin_tree_search_reset(tree_t *root)
+void bin_tree_search_reset(bst_tree_t *root)
 {
     if (root != NULL)
     {
@@ -272,7 +274,7 @@ void bin_tree_search_reset(tree_t *root)
     }
 }
 
-static void tree_apply_pre(tree_t *tree, tree_apply_fn_t apply_fn, void *arg)
+static void tree_apply_pre(bst_tree_t *tree, tree_apply_fn_t apply_fn, void *arg)
 {
     if (!tree)
         return;
@@ -282,7 +284,7 @@ static void tree_apply_pre(tree_t *tree, tree_apply_fn_t apply_fn, void *arg)
     tree_apply_pre(tree->right, apply_fn, arg);
 }
 
-void bin_tree_to_graphviz(FILE *file, const char *tree_name, tree_t *tree)
+void bin_tree_to_graphviz(FILE *file, const char *tree_name, bst_tree_t *tree)
 {
     fprintf(file, "digraph %s {\n", tree_name);
     tree_apply_pre(tree, to_dot, file);
@@ -318,7 +320,7 @@ static int open_img(const char *img)
     return ERR_OK;
 }
 
-int bin_tree_in_picture(tree_t *tree)
+int bin_tree_in_picture(bst_tree_t *tree)
 {
     const char *gp = "temp.gp";
     const char *img = "tmp.png";
@@ -359,7 +361,7 @@ void test_binary_tree(void)
     tree_test_menu_t test_operation = TEST_TREE_COUNT;
     struct timespec start, end;
 
-    tree_t *tree = NULL;
+    bst_tree_t *tree = NULL;
     int is_first = 1;
 
     // Запуск главного цикла
@@ -496,7 +498,7 @@ void test_binary_tree(void)
             }
 
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            tree_t *node = bin_tree_search(tree, data);
+            bst_tree_t *node = bin_tree_search(tree, data);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
 
