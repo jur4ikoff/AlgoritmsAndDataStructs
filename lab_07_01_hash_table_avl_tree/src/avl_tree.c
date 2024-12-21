@@ -7,6 +7,9 @@
 #include "menu.h"
 #include <stdlib.h>
 
+/*
+Моя реализация типа данных AVL tree. В дереве хранится структурная переменная data_t
+*/
 struct _avl_tree_type_
 {
     struct _avl_tree_type_ *left;  // Левый потомок
@@ -21,7 +24,7 @@ struct _avl_tree_type_
  * @param[in] data Данные в начальном узле
  * @return Проницилизированное дерево
  **/
-avl_tree_t *avl_tree_create(data_t data)
+avl_tree_t *avl_tree_create_node(data_t data)
 {
     avl_tree_t *tree = NULL;
     tree = malloc(sizeof(*tree));
@@ -36,31 +39,51 @@ avl_tree_t *avl_tree_create(data_t data)
     return tree;
 }
 
+/*
+Функция для очистки памяти из-под одного элемента
+Сделана для возможного расширения data_t
+*/
+static void avl_tree_free_node(avl_tree_t *node)
+{
+    free(node);
+}
+
 /**
  * @brief Очистка памяти из-под всего дерева
  *@param[in] tree Указатель на дерево
  **/
-void avl_tree_free(avl_tree_t *tree)
+void avl_tree_free(avl_tree_t *root)
 {
-    if (tree == NULL)
+    if (root == NULL)
         return;
 
     // Рекурсивая очистка
-    avl_tree_free(tree->left);
-    avl_tree_free(tree->right);
-    free(tree);
+    avl_tree_free(root->left);
+    avl_tree_free(root->right);
+
+    avl_tree_free_node(root);
+}
+
+/**
+ * @brief Функция для вставки элемента data_t в AVL дерево
+ * @param[in] tree Указатель на AVL дерево
+ * @param[in] data Структурная переменная data_t data
+ * @return Код ошибки
+ */
+error_t avl_tree_insert(avl_tree_t *tree, data_t data)
+{
 }
 
 void avl_tree_test(void)
 {
     // Инициализация переменных
     printf("Подпрограмма для тестирования бинарного дерева\n");
-    int test_itteration_count = 0; // rc = ERR_OK;
+    int test_itteration_count = 0;
     tree_test_menu_t test_operation = TEST_TREE_COUNT;
     // struct timespec start, end;
     avl_tree_t *tree = NULL;
     data_t data = {0};
-    avl_tree_create(data);
+    avl_tree_create_node(data);
     avl_tree_free(tree);
     // bool is_first = 1;
 

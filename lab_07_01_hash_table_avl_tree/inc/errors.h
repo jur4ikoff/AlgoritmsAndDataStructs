@@ -13,4 +13,6 @@
 #define WARNING_REPEAT -1
 #define WARNING_TREE -2
 #define WARNING_NO_EL -3
+
+typedef short error_t;
 #endif
