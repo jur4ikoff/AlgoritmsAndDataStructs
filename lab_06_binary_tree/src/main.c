@@ -185,75 +185,32 @@ int main(void)
         }
         else if (operation == OP_EFFICIENCY)
         {
-            /*char *filename = NULL;
-            printf("Введите путь к файлу: ");
-            input_line(&filename, stdin);
-
-            char *result = malloc(MAX_STRING_LEN * sizeof(char));
-            FILE *file = fopen(filename, "r");
-            if (file == NULL)
-            {
-                rc = ERR_FILE;
-                goto exit;
-            }
-            fgets(result, MAX_STRING_LEN - 1, file);
-            fclose(file);
-
-            char *newline = strchr(result, '\n');
-            if (newline)
-                *newline = 0;
-            free(filename);
-
-            convert_string_to_tree(&tree, result);
-            if (!tree)
-            {
-                rc = ERR_MEMORY_ALLOCATION;
-                goto exit;
-            }
-
-            tree_in_picture(tree);
-            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            inorder_traversal(tree, 1, 0);
-            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            float time_inf = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-            printf("Время инфиксного обхода %.2f мкс\n", time_inf);
-
-            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            data_t data_cur = 'm';
-            tree_search(tree, data_cur);
-            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            float time_search = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-            printf("Время поиска элеметна %.2f мкс\n", time_search);
-
-            // tree_in_picture(tree);
-            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            tree_delete_repeat(&tree);
-            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            float time_tree = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-
-            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            string_remove_duplicates(result);
-            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            float time_string = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-            printf("%sДубликаты удалены из дерева за %.2f мкс. Из строки за %.2f%s\n", GREEN, time_tree, time_string, RESET);
-            free(result);*/
-            
-            
-            // float time_rand_07, time_lin_07, time_rand_07, time_lin_15, time_rand_15, time_lin_40, time_rand_40;
-            float time_rand_40, time_lin_40 = 0;
-            /*calc_inorder("./data/random_07.txt", &time_rand_07);
+            float time_rand_07, time_lin_07, time_lin_15, time_rand_15, time_lin_40, time_rand_40;
+            calc_inorder("./data/random_07.txt", &time_rand_07);
             calc_inorder("./data/linear_07.txt", &time_lin_07);
 
             calc_inorder("./data/random_15.txt", &time_rand_15);
-            calc_inorder("./data/linear_15.txt", &time_lin_15);*/
+            calc_inorder("./data/linear_15.txt", &time_lin_15);
 
             calc_inorder("./data/random_40.txt", &time_rand_40);
-            // calc_inorder("./data/linear_40.txt", &time_lin_40);
+            calc_inorder("./data/linear_40.txt", &time_lin_40);
+
+            float search_time_rand_07, search_time_lin_07, search_time_rand_15, search_time_lin_15, search_time_rand_40, search_time_lin_40;
+            calculte_search_time("./data/random_07.txt", &search_time_rand_07, 20);
+            calculte_search_time("./data/linear_07.txt", &search_time_lin_07, 20);
+            calculte_search_time("./data/random_15.txt", &search_time_rand_15, 20);
+            calculte_search_time("./data/linear_15.txt", &search_time_lin_15, 20);
+            calculte_search_time("./data/random_40.txt", &search_time_rand_40, 20);
+            calculte_search_time("./data/linear_40.txt", &search_time_lin_40, 20);
 
             printf(GREEN);
-           // printf("Время на сбалансированном дереве из 7 элементов %.2f на вырожденном дереве %.2f\n", time_rand_07, time_lin_07);
-           // printf("Время на сбалансированном дереве из 15 элементов %.2f на вырожденном дереве %.2f\n", time_rand_15, time_lin_15);
-            printf("Время на сбалансированном дереве из 40 элементов %.2f на вырожденном дереве %.2f\n", time_rand_40, time_lin_40);
+            printf("Время обхода сбалансированного дереве из 7 элементов %.2f на вырожденном дереве %.2f\n", time_rand_07, time_lin_07);
+            printf("Время обхода сбалансированного дереве из 15 элементов %.2f на вырожденном дереве %.2f\n", time_rand_15, time_lin_15);
+            printf("Время обхода сбалансированного дереве из 40 элементов %.2f на вырожденном дереве %.2f\n", time_rand_40, time_lin_40);
+            printf("\n");
+            printf("Время поиска в сбалансировванном дереве из 7 элементов %.2f на вырожденном дереве %.2f\n", search_time_rand_07, search_time_lin_07);
+            printf("Время поиска в сбалансировванном дереве из 15 элементов %.2f на вырожденном дереве %.2f\n", search_time_rand_15, search_time_lin_15);
+            printf("Время поиска в сбалансировванном дереве из 40 элементов %.2f на вырожденном дереве %.2f\n", search_time_rand_40, search_time_lin_40);
             printf(RESET);
         }
         else if (operation == OP_UNKNOWN)
