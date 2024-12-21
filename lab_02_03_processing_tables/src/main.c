@@ -1,3 +1,5 @@
+// Вариант 3
+
 #include <string.h>
 #include <stdio.h>
 #include "errors.h"
@@ -16,7 +18,7 @@ int main(int argc, char **argv)
     int rc = ERR_OK;
     char db_path[MAX_PATH_LEN], default_db_path[MAX_STRING_LEN] = {"data/db_16.txt"};
     FILE *file;
-    main_operations_t operation_number;
+    operations_t operation_number;
     size_t count = 0;
 
     /*

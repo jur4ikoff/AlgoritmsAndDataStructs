@@ -21,7 +21,7 @@ void print_menu(void)
            " 11 - Вывести иформацию о программе\n");
 }
 
-int input_operation(main_operations_t *operation)
+int input_operation(operations_t *operation)
 {
     int operation_number;
     printf(">>Выберите действие: ");
@@ -32,7 +32,7 @@ int input_operation(main_operations_t *operation)
     if (operation_number < 0 || operation_number > OPERATIONS_COUNT)
         return ERR_OPERATION_COUNT;
 
-    *operation = (main_operations_t)operation_number;
+    *operation = (operations_t)operation_number;
     return ERR_OK;
 }
 

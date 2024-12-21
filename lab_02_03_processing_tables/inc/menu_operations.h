@@ -17,10 +17,10 @@ typedef enum
     SAVE,
     PRINT_INFO
 
-} main_operations_t;
+} operations_t;
 
 void print_menu(void);
-int input_operation(main_operations_t *operation);
+int input_operation(operations_t *operation);
 void help(void);
 
 #endif
