@@ -7,10 +7,41 @@
 #include "menu.h"
 #include <stdlib.h>
 
-struct _avl_tree_type
+struct _avl_tree_type_
 {
-    int a;
+    struct _avl_tree_type_ *left;  // Левый потомок
+    struct _avl_tree_type_ *right; // Правый потомок
+
+    int height;  // Высота
+    data_t data; // Данные
 };
+
+/**
+ * @brief Функция для инициализации avl дерева
+ * @param[in] data Данные в начальном узле
+ * @return Проницилизированное дерево
+ **/
+avl_tree_t *avl_tree_create(data_t data)
+{
+    avl_tree_t *tree = NULL;
+    tree = malloc(sizeof(*tree));
+    if (tree == NULL)
+        return NULL;
+
+    // Определение полей
+    tree->left = NULL;
+    tree->right = NULL;
+    tree->height = 1;
+    tree->data = data;
+    return tree;
+}
+
+void avl_tree_free(avl_tree_t *tree)
+{
+
+}
+
+
 
 void test_binary_tree(void)
 {
