@@ -353,7 +353,7 @@ int bin_tree_in_picture(bst_tree_t *tree)
     return open_img(img);
 }
 
-void test_binary_tree(void)
+void binary_tree_test(void)
 {
     // Инициализация переменных
     printf("Подпрограмма для тестирования бинарного дерева\n");

@@ -45,11 +45,13 @@ void avl_tree_free(avl_tree_t *tree)
     if (tree == NULL)
         return;
 
-    
-    
+    // Рекурсивая очистка
+    avl_tree_free(tree->left);
+    avl_tree_free(tree->right);
+    free(tree);
 }
 
-void test_binary_tree(void)
+void avl_tree_test(void)
 {
     // Инициализация переменных
     printf("Подпрограмма для тестирования бинарного дерева\n");
@@ -57,6 +59,9 @@ void test_binary_tree(void)
     tree_test_menu_t test_operation = TEST_TREE_COUNT;
     // struct timespec start, end;
     avl_tree_t *tree = NULL;
+    data_t data = {0};
+    avl_tree_create(data);
+    avl_tree_free(tree);
     // bool is_first = 1;
 
     // Запуск главного цикла

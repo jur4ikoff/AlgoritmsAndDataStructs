@@ -19,5 +19,5 @@ int bin_tree_remove(bst_tree_t **root, data_t data);
 int bin_tree_in_picture(bst_tree_t *tree);
 void bin_tree_search_reset(bst_tree_t *root);
 
-void test_binary_tree(void);
+void binary_tree_test(void);
 #endif

@@ -37,8 +37,13 @@ int main(void)
         }
         else if (operation == OP_TEST_BIN_TREE)
         {
-            // Тестирование дерева
-            test_binary_tree();
+            // Тестирование двоичного дерева поиска
+            binary_tree_test();
+        }
+        else if (operation == OP_TEST_AVL_TREE)
+        {
+            // Тестирование авл дерева
+            avl_tree_test();
         }
         else if (operation == OP_UNKNOWN)
         {
