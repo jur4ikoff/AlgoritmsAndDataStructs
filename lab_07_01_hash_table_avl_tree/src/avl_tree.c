@@ -43,23 +43,23 @@ avl_tree_t *avl_tree_create_node(data_t data)
 Функция для очистки памяти из-под одного элемента
 Сделана для возможного расширения data_t
 */
-static void avl_tree_free_node(avl_tree_t **node)
+static void avl_tree_free_node(avl_tree_t *node)
 {
-    free(*node);
+    free(node);
 }
 
 /**
  * @brief Очистка памяти из-под всего дерева
  *@param[in] tree Указатель на дерево
  **/
-void avl_tree_free(avl_tree_t **root)
+void avl_tree_free(avl_tree_t *root)
 {
-    if (root == NULL || *root == NULL)
+    if (root == NULL)
         return;
 
     // Рекурсивая очистка
-    avl_tree_free(&((*root)->left));
-    avl_tree_free(&((*root)->right));
+    avl_tree_free(root->left);
+    avl_tree_free(root->right);
 
     avl_tree_free_node(root);
 }
@@ -236,5 +236,5 @@ void avl_tree_test(void)
         }
     }
     exit:
-    avl_tree_free(&tree);
+    avl_tree_free(tree);
 }
