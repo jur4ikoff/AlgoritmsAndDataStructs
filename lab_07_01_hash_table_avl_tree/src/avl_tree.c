@@ -1,11 +1,11 @@
 #include "avl_tree.h"
 #include "constants.h"
 #include "errors.h"
-#include <time.h>
-#include <stdio.h>
-#include <stdbool.h>
 #include "menu.h"
+#include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /*
 Моя реализация типа данных AVL tree. В дереве хранится структурная переменная data_t
@@ -43,23 +43,23 @@ avl_tree_t *avl_tree_create_node(data_t data)
 Функция для очистки памяти из-под одного элемента
 Сделана для возможного расширения data_t
 */
-static void avl_tree_free_node(avl_tree_t *node)
+static void avl_tree_free_node(avl_tree_t **node)
 {
-    free(node);
+    free(*node);
 }
 
 /**
  * @brief Очистка памяти из-под всего дерева
  *@param[in] tree Указатель на дерево
  **/
-void avl_tree_free(avl_tree_t *root)
+void avl_tree_free(avl_tree_t **root)
 {
-    if (root == NULL)
+    if (root == NULL || *root == NULL)
         return;
 
     // Рекурсивая очистка
-    avl_tree_free(root->left);
-    avl_tree_free(root->right);
+    avl_tree_free(&((*root)->left));
+    avl_tree_free(&((*root)->right));
 
     avl_tree_free_node(root);
 }
@@ -72,19 +72,21 @@ void avl_tree_free(avl_tree_t *root)
  */
 error_t avl_tree_insert(avl_tree_t *tree, data_t data)
 {
+    (void)tree;
+    (void)data;
+    return ERR_OK;
 }
 
 void avl_tree_test(void)
 {
     // Инициализация переменных
-    printf("Подпрограмма для тестирования бинарного дерева\n");
+    printf("\nПодпрограмма для тестирования бинарного дерева\n");
     int test_itteration_count = 0;
     tree_test_menu_t test_operation = TEST_TREE_COUNT;
     // struct timespec start, end;
     avl_tree_t *tree = NULL;
-    data_t data = {0};
-    avl_tree_create_node(data);
-    avl_tree_free(tree);
+    data_t data = { 0 };
+    tree = avl_tree_create_node(data);
     // bool is_first = 1;
 
     // Запуск главного цикла
@@ -233,7 +235,6 @@ void avl_tree_test(void)
             goto exit;
         }
     }
-exit:
-    printf("1\n");
-    // tree_free(tree);
+    exit:
+    avl_tree_free(&tree);
 }

@@ -7,7 +7,7 @@
 #define GREEN "\033[0;32m"
 #define RESET "\033[0m"
 
-#define MAX_INPUT_DATA_SIZE
+#define MAX_INPUT_DATA_SIZE 3
 
 typedef struct _data_type_
 {
