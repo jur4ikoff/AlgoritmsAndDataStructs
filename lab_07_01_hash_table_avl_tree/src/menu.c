@@ -103,6 +103,7 @@ main_operations_t input_operation(void)
 tree_test_menu_t input_test_tree_operation(void)
 {
     int buffer;
+    printf(">>Введите тестовую операцию: ");
     if (scanf("%d", &buffer) != 1)
     {
         while (fgetc(stdin) != '\n')

@@ -374,7 +374,6 @@ void test_binary_tree(void)
         }
         test_itteration_count++;
         // Ввод операции
-        printf(">>Введите тестовую операцию: ");
         test_operation = input_test_tree_operation();
         if (test_operation == TEST_TREE_EXIT)
         {
@@ -384,35 +383,6 @@ void test_binary_tree(void)
         }
         else if (test_operation == TEST_TREE_LOAD)
         {
-            /*
-            ЭТО ВВОД ФАЙЛА
-            char *filename = NULL;
-            printf("Введите путь к файлу: ");
-            if ((rc = input_line(&filename, stdin)) != ERR_OK)
-            {
-                printf("%sОшибка при получении строки%s\n", YELLOW, RESET);
-                free(filename);
-                continue;
-            }
-            FILE *file = fopen(filename, "r");
-            if (!file)
-            {
-                printf("%sОшибка при открытии файла%s\n", YELLOW, RESET);
-                free(filename);
-                continue;
-            }
-
-            char *result = malloc(MAX_STRING_LEN * sizeof(char));
-            fgets(result, MAX_STRING_LEN - 1, file);
-            fclose(file);
-            free(filename);
-
-            char *newline = strchr(result, '\n');
-            if (newline)
-                *newline = 0;
-
-            convert_string_to_tree(&tree, result);
-            free(result);*/
             char *string_to_convert = malloc(MAX_STRING_LEN * sizeof(char));
             printf("Введите строку для записи в дерево: ");
             fgets(string_to_convert, MAX_STRING_LEN - 1, stdin);
