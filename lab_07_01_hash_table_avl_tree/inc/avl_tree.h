@@ -24,5 +24,5 @@ avl_tree_t *avl_tree_create_node(data_t data);
  **/
 void avl_tree_free(avl_tree_t *root);
 
-error_t avl_tree_insert(avl_tree_t *tree, data_t data);
+error_t avl_tree_insert(avl_tree_t **tree, data_t data);
 #endif

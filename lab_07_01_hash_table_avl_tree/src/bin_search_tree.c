@@ -1,13 +1,14 @@
 #include "bin_search_tree.h"
 #include "constants.h"
 #include "errors.h"
+#include "menu.h"
+#include "render.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "menu.h"
-#include <time.h>
 #include <sys/wait.h>
+#include <time.h>
 #include <unistd.h>
 
 struct _binary_search_tree_t_
@@ -87,7 +88,7 @@ void convert_string_to_bin_tree(bst_tree_t **tree, char *string)
 
     while (*ptr != 0)
     {
-        data_t data = {0};
+        data_t data = { 0 };
         data.value = *ptr;
         if (*tree == NULL)
         {
@@ -291,68 +292,6 @@ void bin_tree_to_graphviz(FILE *file, const char *tree_name, bst_tree_t *tree)
     fprintf(file, "}\n");
 }
 
-static int open_img(const char *img)
-{
-    pid_t pid = fork();
-    if (pid == -1)
-        return ERR_FORK;
-
-    if (pid == 0)
-    {
-        int stdout_file = open("/dev/null", O_RDWR);
-        if (dup2(stdout_file, STDERR_FILENO) == -1) // redirect fork'ed process stderr to /dev/null
-            goto err;
-        execlp("open", "open", img, NULL);
-
-    err:
-        close(stdout_file);
-
-        perror("execlp");
-        _exit(EXIT_FAILURE);
-    }
-    else
-    {
-        int ret_code;
-        waitpid(pid, &ret_code, 0);
-        if (WEXITSTATUS(ret_code) != 0)
-            return ERR_FORK;
-    }
-    return ERR_OK;
-}
-
-int bin_tree_in_picture(bst_tree_t *tree)
-{
-    const char *gp = "temp.gp";
-    const char *img = "tmp.png";
-
-    FILE *file = fopen(gp, "w");
-    if (!file)
-        return ERR_FILE;
-
-    bin_tree_to_graphviz(file, "tree", tree);
-
-    fclose(file);
-
-    pid_t pid = fork();
-    if (pid == -1)
-        return ERR_FORK;
-
-    if (pid == 0)
-    {
-        execlp("dot", "dot", "-Tpng", gp, "-o", img, NULL);
-        perror("execlp");
-        _exit(EXIT_FAILURE);
-    }
-    else
-    {
-        int ret_code;
-        waitpid(pid, &ret_code, 0);
-        if (WEXITSTATUS(ret_code) != 0)
-            return ERR_FORK;
-    }
-    return open_img(img);
-}
-
 void binary_tree_test(void)
 {
     // Инициализация переменных
@@ -397,12 +336,12 @@ void binary_tree_test(void)
         }
         else if (test_operation == TEST_TREE_SHOW)
         {
-            if (bin_tree_in_picture(tree) != ERR_OK)
+            if (bin_tree_show(tree) != ERR_OK)
                 printf("%sОшибка при открытии файла\n%s", YELLOW, RESET);
         }
         else if (test_operation == TEST_TREE_ADD)
         {
-            data_t data = {0};
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для добавления в дерево:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -438,7 +377,7 @@ void binary_tree_test(void)
         else if (test_operation == TEST_TREE_REMOVE)
         {
             // Удаление из дерева
-            data_t data = {0};
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для удаления из дерева:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -460,7 +399,7 @@ void binary_tree_test(void)
         }
         else if (test_operation == TEST_TREE_SEARCH)
         {
-            data_t data = {0};
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -476,7 +415,7 @@ void binary_tree_test(void)
             {
                 printf("%sЭлемент найден. Время поиска: %.2f%s\n", GREEN, time, RESET);
                 bin_tree_inorder_traversal(tree, 1, 1);
-                bin_tree_in_picture(tree);
+                bin_tree_show(tree);
                 bin_tree_search_reset(tree);
             }
             else
@@ -487,7 +426,7 @@ void binary_tree_test(void)
         else if (test_operation == TEST_TREE_SHOW)
         {
             // Вывод дерева на экран
-            bin_tree_in_picture(tree);
+            bin_tree_show(tree);
         }
         else if (test_operation == TEST_TREE_INORDER)
         {
@@ -511,6 +450,20 @@ void binary_tree_test(void)
             goto exit;
         }
     }
-exit:
+    exit:
     tree_free(tree);
+}
+
+int bin_tree_show(bst_tree_t *tree)
+{
+    const char *gp_file = "./temp.gp", *img_file = "./tree.png";
+
+    FILE *file = fopen(gp_file, "w");
+    if (!file)
+        return ERR_FILE;
+
+    bin_tree_to_graphviz(file, "bin_tree", tree);
+    fclose(file);
+    render_graphviz(gp_file, img_file);
+    return ERR_OK;
 }

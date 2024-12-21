@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "errors.h"
 #include "menu.h"
+#include "render.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -70,10 +71,15 @@ void avl_tree_free(avl_tree_t *root)
  * @param[in] data Структурная переменная data_t data
  * @return Код ошибки
  */
-error_t avl_tree_insert(avl_tree_t *tree, data_t data)
+error_t avl_tree_insert(avl_tree_t **root, data_t data)
 {
-    (void)tree;
-    (void)data;
+    if (root == NULL)
+        return ERR_MEMORY_ALLOCATION;
+
+    printf("%c\n", data.value);
+    avl_tree_t *new_node = avl_tree_create_node(data);
+    if (new_node == NULL)
+        return ERR_MEMORY_ALLOCATION;
     return ERR_OK;
 }
 
@@ -82,15 +88,14 @@ void avl_tree_test(void)
     // Инициализация переменных
     printf("\nПодпрограмма для тестирования бинарного дерева\n");
     int test_itteration_count = 0;
+    error_t rc = ERR_OK;
     tree_test_menu_t test_operation = TEST_TREE_COUNT;
-    // struct timespec start, end;
+    struct timespec start, end;
     avl_tree_t *tree = NULL;
-    data_t data = { 0 };
-    tree = avl_tree_create_node(data);
     // bool is_first = 1;
 
     // Запуск главного цикла
-    while (test_operation != TEST_TREE_EXIT)
+    while (test_operation != TEST_TREE_EXIT && rc == ERR_OK)
     {
         // Раз в 4 иттерации выводим меню
         if (test_itteration_count % 4 == 0)
@@ -128,24 +133,20 @@ void avl_tree_test(void)
         }
         else if (test_operation == TEST_TREE_ADD)
         {
-            /*data_t data = {0};
-            if (input_data(&data, "Введите один символ для добавления в дерево:") != ERR_OK)
+            data_t data = { 0 };
+            if (input_data(&data, ">>Введите один символ для добавления в дерево:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
                 continue;
             }
 
-            // Если первый, то создаем дерево, иначе вставляем в нужное место
-            if (is_first)
-            {
-                clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-                tree = bin_tree_create_node(data);
-                is_first = 0;
-                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-                float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-                printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data.value, time, RESET);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            rc = avl_tree_insert(&tree, data);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data.value, time, RESET);
         }
-        else
+        /*else
         {
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             if (bin_tree_insert(&tree, data) != ERR_OK)
@@ -157,8 +158,7 @@ void avl_tree_test(void)
             {
                 clock_gettime(CLOCK_MONOTONIC_RAW, &end);
                 float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-                printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data.value, time, RESET);*/
-        }
+                printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data.value, time, RESET);}s*/
         else if (test_operation == TEST_TREE_REMOVE)
         {
             // Удаление из дерева
@@ -235,6 +235,7 @@ void avl_tree_test(void)
             goto exit;
         }
     }
+
     exit:
     avl_tree_free(tree);
 }

@@ -8,6 +8,7 @@
 #define ERR_DATA_INPUT 4
 #define ERR_FILE 5
 #define ERR_FORK 6
+#define ERR_HEAD 7
 
 
 #define WARNING_REPEAT -1

@@ -24,6 +24,8 @@ void print_error_message(int arg)
     case ERR_FILE:
         printf("Ошибка при чтении или создании файла\n");
         break;
+    case ERR_HEAD:
+        printf("Ошибка при передаче параметров в функцию\n");
     }
     printf("%s", RESET);
 }

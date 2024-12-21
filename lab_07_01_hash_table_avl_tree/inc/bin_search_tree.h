@@ -11,13 +11,10 @@ bst_tree_t *bin_tree_create_node(data_t data);
 void tree_free(bst_tree_t *tree);
 
 void bin_tree_inorder_traversal(const bst_tree_t *root, int is_head, int is_color);
-void preorder_traversal(bst_tree_t *root, int is_head, int is_color);
-void postorder_traversal(bst_tree_t *root, int is_head, int is_color);
 int bin_tree_insert(bst_tree_t **root, data_t data);
 bst_tree_t *bin_tree_search(bst_tree_t *root, data_t data);
 int bin_tree_remove(bst_tree_t **root, data_t data);
-int bin_tree_in_picture(bst_tree_t *tree);
+int bin_tree_show(bst_tree_t *tree);
 void bin_tree_search_reset(bst_tree_t *root);
-
 void binary_tree_test(void);
 #endif
