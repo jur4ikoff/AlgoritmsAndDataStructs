@@ -36,12 +36,18 @@ avl_tree_t *avl_tree_create(data_t data)
     return tree;
 }
 
+/**
+ * @brief Очистка памяти из-под всего дерева
+ *@param[in] tree Указатель на дерево
+ **/
 void avl_tree_free(avl_tree_t *tree)
 {
+    if (tree == NULL)
+        return;
 
+    
+    
 }
-
-
 
 void test_binary_tree(void)
 {
