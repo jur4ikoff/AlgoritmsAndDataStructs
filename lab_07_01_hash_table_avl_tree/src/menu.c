@@ -39,7 +39,7 @@ void print_warning_message(int arg)
         printf("Пустое дерево\n");
         break;
     case WARNING_NO_EL:
-        printf("Нет такого элемента в дереве\n");
+        printf("Такого элемента нет в дереве\n");
         break;
     }
     printf("%s", RESET);

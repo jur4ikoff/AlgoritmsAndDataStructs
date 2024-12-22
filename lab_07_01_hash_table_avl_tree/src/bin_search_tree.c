@@ -56,10 +56,6 @@ static size_t bin_tree_calc_memory(bst_tree_t *root)
 static void to_dot(bst_tree_t *tree, void *file)
 {
     static int null_cnt = 0;
-
-    if (tree->is_search)
-        fprintf(file, "  %c [color=\"green\"];\n", tree->data.value);
-
     if (tree->data.repeat)
         fprintf(file, "  %c [color=\"red\"];\n", tree->data.value);
 
@@ -82,7 +78,7 @@ static void to_dot(bst_tree_t *tree, void *file)
     }
 }
 
-void convert_string_to_bin_tree(bst_tree_t **tree, char *string)
+void bin_tree_convert_from_string(bst_tree_t **tree, char *string)
 {
     char *ptr = (char *)string;
 
@@ -225,13 +221,13 @@ bst_tree_t *bin_tree_search(bst_tree_t *root, data_t data)
     return root;
 }
 
-void tree_free(bst_tree_t *tree)
+void bin_tree_free(bst_tree_t *tree)
 {
     if (!tree)
         return;
 
-    tree_free(tree->left);
-    tree_free(tree->right);
+    bin_tree_free(tree->left);
+    bin_tree_free(tree->right);
     free(tree);
 }
 
@@ -275,20 +271,20 @@ void bin_tree_search_reset(bst_tree_t *root)
     }
 }
 
-static void tree_apply_pre(bst_tree_t *tree, tree_apply_fn_t apply_fn, void *arg)
+static void bin_tree_apply_pre(bst_tree_t *tree, bst_tree_apply_fn_t apply_fn, void *arg)
 {
     if (!tree)
         return;
 
     apply_fn(tree, arg);
-    tree_apply_pre(tree->left, apply_fn, arg);
-    tree_apply_pre(tree->right, apply_fn, arg);
+    bin_tree_apply_pre(tree->left, apply_fn, arg);
+    bin_tree_apply_pre(tree->right, apply_fn, arg);
 }
 
-void bin_tree_to_graphviz(FILE *file, const char *tree_name, bst_tree_t *tree)
+static void bin_tree_to_graphviz(FILE *file, const char *tree_name, bst_tree_t *tree)
 {
     fprintf(file, "digraph %s {\n", tree_name);
-    tree_apply_pre(tree, to_dot, file);
+    bin_tree_apply_pre(tree, to_dot, file);
     fprintf(file, "}\n");
 }
 
@@ -330,7 +326,7 @@ void binary_tree_test(void)
             if (newline)
                 *newline = 0;
 
-            convert_string_to_bin_tree(&tree, string_to_convert);
+            bin_tree_convert_from_string(&tree, string_to_convert);
             is_first = 0;
             free(string_to_convert);
         }
@@ -451,7 +447,7 @@ void binary_tree_test(void)
         }
     }
     exit:
-    tree_free(tree);
+    bin_tree_free(tree);
 }
 
 int bin_tree_show(bst_tree_t *tree)

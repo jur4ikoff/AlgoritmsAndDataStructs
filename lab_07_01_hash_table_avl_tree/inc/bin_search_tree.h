@@ -5,10 +5,10 @@
 
 typedef struct _binary_search_tree_t_ bst_tree_t;
 
-typedef void (*tree_apply_fn_t)(bst_tree_t *subtree, void *arg);
+typedef void (*bst_tree_apply_fn_t)(bst_tree_t *subtree, void *arg);
 
 bst_tree_t *bin_tree_create_node(data_t data);
-void tree_free(bst_tree_t *tree);
+void bin_tree_free(bst_tree_t *tree);
 
 void bin_tree_inorder_traversal(const bst_tree_t *root, int is_head, int is_color);
 int bin_tree_insert(bst_tree_t **root, data_t data);
