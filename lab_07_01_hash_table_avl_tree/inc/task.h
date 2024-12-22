@@ -1,6 +1,7 @@
 #ifndef TASK_H__
 #define TASK_H__
-#include "binary_tree.h"
+#include "bin_search_tree.h"
+#include "avl_tree.h"
 
 void convert_string_to_tree(tree_t **tree, char *string);
 void tree_delete_repeat(tree_t **tree);
