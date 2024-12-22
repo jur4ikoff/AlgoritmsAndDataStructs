@@ -156,10 +156,8 @@ void avl_tree_free(avl_tree_t *root)
  */
 error_t avl_tree_insert(avl_tree_t **root, data_t data)
 {
-    int rc = ERR_OK;
     if (root == NULL)
         return ERR_MEMORY_ALLOCATION;
-
     if (*root == NULL)
     {
         avl_tree_t *new_node = avl_tree_create_node(data);
@@ -167,9 +165,13 @@ error_t avl_tree_insert(avl_tree_t **root, data_t data)
         return ERR_OK;
     }
 
+    int rc = ERR_OK;
     int cmp = (*root)->data.value - data.value;
     if (cmp == 0)
+    {
         (*root)->data.repeat += 1;
+        return WARNING_REPEAT;
+    }
 
     if (cmp > 0)
         rc = avl_tree_insert(&(*root)->left, data);
