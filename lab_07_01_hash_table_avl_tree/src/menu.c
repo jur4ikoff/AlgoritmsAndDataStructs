@@ -38,9 +38,11 @@ void print_warning_message(int arg)
     case WARNING_TREE:
         printf("Пустое дерево\n");
         break;
-    case WARNING_NO_EL:
+    case WARNING_ELEMENT_NOT_FOUND:
         printf("Такого элемента нет в дереве\n");
         break;
+    case WARNING_OPERATION:
+    printf("Неверный выбор операции\n");
     }
     printf("%s", RESET);
 }

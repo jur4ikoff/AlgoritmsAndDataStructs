@@ -26,7 +26,7 @@ void print_data(avl_tree_t *subtree, void *arg)
 {
     (void)arg;
     data_t data = subtree->data;
-    printf("%d ", data.value);
+    printf("%c ", data.value);
 }
 
 /**
@@ -255,9 +255,17 @@ void avl_tree_apply_inorder(avl_tree_t *tree, avl_tree_apply_fn_t apply_func, vo
     if (!tree)
         return;
 
-    avl_tree_apply_inorder(tree->left, apply_func, arg);
+    int *i_arg = NULL;
+    if (arg)
+        i_arg = arg;
+
+    // int *i_null = NULL;
+    //*i_null = 0;
+    avl_tree_apply_inorder(tree->left, apply_func, NULL);
     apply_func(tree, arg);
-    avl_tree_apply_inorder(tree->right, apply_func, arg);
+    avl_tree_apply_inorder(tree->right, apply_func, NULL);
+    if (i_arg && *i_arg == 1)
+        printf("\n");
 }
 
 void avl_tree_apply_postorder(avl_tree_t *tree, avl_tree_apply_fn_t apply_func, void *arg)
@@ -300,6 +308,160 @@ void avl_tree_convert_from_string(avl_tree_t **tree, char *string)
         avl_tree_insert(tree, data);
         ptr++;
     }
+}
+
+avl_tree_t *avl_tree_find_min_node(avl_tree_t *tree)
+{
+    if (tree == NULL)
+        return NULL;
+
+    if (tree->left)
+        return avl_tree_find_min_node(tree->left);
+
+    return tree;
+}
+
+/**
+ * @brief Функция балансирует AVL дерево
+ * @param[in] root корень дерева
+ * @return Новый указатель на корень
+ */
+avl_tree_t *avl_tree_node_balance(avl_tree_t *root)
+{
+    if (root == NULL)
+        return NULL;
+
+    avl_tree_fix_height(root);
+    int balance_factor = avl_tree_calculate_balance_factor(root);
+    if (balance_factor > 1)
+    {
+        if (avl_tree_calculate_balance_factor(root->left) < 0)
+        {
+            root->left = avl_tree_rotate_left(root->left);
+        }
+        return avl_tree_rotate_right(root);
+    }
+    else if (balance_factor < -1)
+    {
+        if (avl_tree_calculate_balance_factor(root->right) > 0)
+        {
+            root->right = avl_tree_rotate_right(root->right);
+        }
+        return avl_tree_rotate_left(root);
+    }
+
+    return root;
+}
+
+/**
+ * @brief Функция удаляет узел с минимальным ключе
+ * @param[in] head Указатель на дерево
+ * @return Указатель на новый корень
+ */
+static avl_tree_t *avl_tree_remove_min_node(avl_tree_t *tree)
+{
+    if (tree == NULL)
+        return NULL;
+
+    if (tree->left == NULL)
+        return tree->right;
+
+    tree->left = avl_tree_remove_min_node(tree->left);
+
+    return avl_tree_node_balance(tree);
+}
+
+/**
+ * @brief Удаление элемента из дерева
+ * @param[in] tree Указатель на дерево
+ * @param[in] element элемент
+ */
+avl_tree_t *avl_tree_remove(avl_tree_t *tree, data_t element)
+{
+    if (tree == NULL)
+        return NULL;
+
+    int cmp = tree->data.value - element.value;
+    if (cmp > 0)
+        tree->left = avl_tree_remove(tree->left, element);
+    else if (cmp < 0)
+        tree->right = avl_tree_remove(tree->right, element);
+    else
+    {
+        avl_tree_t *left = tree->left;
+        avl_tree_t *right = tree->right;
+        avl_tree_free_node(tree);
+
+        if (right == NULL)
+        {
+            return left;
+        }
+
+        avl_tree_t *min_node = avl_tree_find_min_node(right);
+        min_node->right = avl_tree_remove_min_node(right);
+        min_node->left = left;
+
+        tree = min_node;
+    }
+    return avl_tree_node_balance(tree);
+}
+
+/**
+ * @brief Функция ищет ноду по элементу
+ * @param[in] root Указатель на дерево
+ * @param[in] element Элемент поиска
+ * @return Нода, сеарч.
+ */
+avl_tree_t *avl_tree_search(avl_tree_t *root, data_t element)
+{
+    if (root == NULL)
+        return NULL;
+
+    int cmp = root->data.value - element.value;
+    if (cmp == 0)
+    {
+        return root;
+    }
+    else if (cmp > 0)
+    {
+        return avl_tree_search(root->left, element);
+    }
+    else
+    {
+        return avl_tree_search(root->right, element);
+    }
+}
+
+size_t avl_tree_calc_memory(avl_tree_t *root)
+{
+    if (root == NULL)
+        return 0;
+
+    return sizeof(avl_tree_t) + avl_tree_calc_memory(root->left) + avl_tree_calc_memory(root->right);
+}
+
+static void calc_depth_sum(avl_tree_t *root, int current_depth, int *total_depth, int *total_nodes)
+{
+    if (root == NULL)
+        return;
+
+    *total_depth += current_depth;
+    (*total_nodes)++;
+
+    calc_depth_sum(root->left, current_depth + 1, total_depth, total_nodes);
+    calc_depth_sum(root->right, current_depth + 1, total_depth, total_nodes);
+}
+
+float avl_tree_calc_avg_compare(avl_tree_t *root)
+{
+    if (root == NULL)
+        return 0.0f;
+
+    int total_depth = 0;
+    int total_nodes = 0;
+
+    calc_depth_sum(root, 1, &total_depth, &total_nodes);
+    return (float)total_depth / total_nodes;
 }
 
 void avl_tree_test(void)
@@ -364,53 +526,47 @@ void avl_tree_test(void)
         else if (test_operation == TEST_TREE_REMOVE)
         {
             if (is_first)
-                return;
-            // Удаление из дерева
-            /*data_t data = {0};
+            {
+                print_warning_message(WARNING_TREE);
+                continue;
+            }
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для удаления из дерева:") != ERR_OK)
+            {
+                printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
+                continue;
+            }
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            tree = avl_tree_remove(tree, data);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            if (tree)
+                printf("%sУдален элемент %c из дерева. Время удаления: %.2f%s\n", GREEN, tree->data.value, time, RESET);
+            else
+                print_warning_message(WARNING_ELEMENT_NOT_FOUND);
+        }
+        else if (test_operation == TEST_TREE_SEARCH)
+        {
+            data_t data = { 0 };
+            if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
                 continue;
             }
 
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            if ((rc = bin_tree_remove(&tree, data)) != ERR_OK)
+            avl_tree_t *node = avl_tree_search(tree, data);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+
+            if (node)
             {
-                print_warning_message(rc);
-                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+                printf("%sЭлемент найден. Время поиска: %.2f%s\n", GREEN, time, RESET);
             }
             else
             {
-                clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-                float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-                printf("%sУдален элемент %c из дерева. Время удаления: %.2f%s\n", GREEN, data.value, time, RESET);
-            }*/
-        }
-        else if (test_operation == TEST_TREE_SEARCH)
-        {
-            /* data_t data = {0};
-             if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
-             {
-                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
-                 continue;
-             }
-
-             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-             bst_tree_t *node = bin_tree_search(tree, data);
-             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-
-             if (node)
-             {
-                 printf("%sЭлемент найден. Время поиска: %.2f%s\n", GREEN, time, RESET);
-                 bin_tree_inorder_traversal(tree, 1, 1);
-                 bin_tree_in_picture(tree);
-                 bin_tree_search_reset(tree);
-             }
-             else
-             {
-                 printf("%sЭлемент не найден%s\n", YELLOW, RESET);
-             }*/
+                print_warning_message(WARNING_ELEMENT_NOT_FOUND);
+            }
         }
         else if (test_operation == TEST_TREE_SHOW)
         {
@@ -420,22 +576,23 @@ void avl_tree_test(void)
         else if (test_operation == TEST_TREE_INORDER)
         {
             // Инфиксный обход
-            // bin_tree_inorder_traversal(tree, 1, 0);
+            int param = 1;
+            avl_tree_apply_inorder(tree, print_data, &param);
         }
         else if (test_operation == TEST_TREE_STATS)
         {
             // Статистика о дереве
-            // printf("Дерево занимает в памяти %zu байт\n", bin_tree_calc_memory(tree));
-            // printf("Среднее количество сравнений %.3f\n", bin_tree_calc_avg_compare(tree));
+            printf("Дерево занимает в памяти %zu байт\n", avl_tree_calc_memory(tree));
+            printf("Среднее количество сравнений %.3f\n", avl_tree_calc_avg_compare(tree));
         }
         else if (test_operation == TEST_TREE_UNKNOWN)
         {
             // Операция неизвестна
-            // printf("%sНеизвестная операция\n%s", YELLOW, RESET);
+            print_warning_message(WARNING_OPERATION);
         }
         else if (test_operation == TEST_TREE_ERROR)
         {
-            // printf("%sВыбор неверной операции%s\n", RED, RESET);
+            printf("%sВыбор неверной операции%s\n", RED, RESET);
             goto exit;
         }
     }

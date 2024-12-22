@@ -192,7 +192,7 @@ int bin_tree_remove(bst_tree_t **root, data_t data)
         }
     }
     else
-        return WARNING_NO_EL;
+        return WARNING_ELEMENT_NOT_FOUND;
     return ERR_OK;
 }
 
@@ -438,7 +438,7 @@ void binary_tree_test(void)
         else if (test_operation == TEST_TREE_UNKNOWN)
         {
             // Операция неизвестна
-            printf("%sНеизвестная операция\n%s", YELLOW, RESET);
+            print_warning_message(WARNING_OPERATION);
         }
         else if (test_operation == TEST_TREE_ERROR)
         {

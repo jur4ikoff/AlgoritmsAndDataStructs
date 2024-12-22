@@ -3,6 +3,7 @@
 
 #include "constants.h"
 #include "errors.h"
+#include <stdio.h>
 
 typedef struct _avl_tree_type_ avl_tree_t;
 typedef void (*avl_tree_apply_fn_t)(avl_tree_t *subtree, void *arg);
@@ -17,13 +18,20 @@ avl_tree_t *avl_tree_create_node(data_t data);
 void avl_tree_free(avl_tree_t *root);
 
 // Функции для работы с деревом
-
 // Вставка элемента в дерево
 error_t avl_tree_insert(avl_tree_t **tree, data_t data);
-
+// Удаление элемента из AVL дерева
+avl_tree_t *avl_tree_remove(avl_tree_t *tree, data_t element);
+// Поиск элемента в AVL дереве
+avl_tree_t *avl_tree_search(avl_tree_t *root, data_t element);
 
 // обходы дерева
 void avl_tree_apply_preorder(avl_tree_t *tree, avl_tree_apply_fn_t apply_fn, void *arg);
 void avl_tree_apply_inorder(avl_tree_t *tree, avl_tree_apply_fn_t apply_func, void *arg);
 void avl_tree_apply_postorder(avl_tree_t *tree, avl_tree_apply_fn_t apply_func, void *arg);
+
+// Подсчет статистики
+size_t avl_tree_calc_memory(avl_tree_t *root);
+float avl_tree_calc_avg_compare(avl_tree_t *root);
+
 #endif
