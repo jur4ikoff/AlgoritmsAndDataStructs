@@ -17,6 +17,7 @@
 #include "constants.h"
 #include "errors.h"
 #include "hash_t_open.h"
+#include "hash_t_close.h"
 #include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,11 +52,12 @@ int main(void)
         else if (operation == OP_TEST_OPEN_HASH)
         {
             // Реализация хэш таблицы с открытой адрессацией
-            open_ht_tree_test();
+            open_ht_test();
         }
         else if (operation == OP_TEST_CLOSE_HASH)
         {
             // Реализация хэш таблицы с закрытой адрессацией. Метод цепочек
+            close_ht_test();
         }
         else if (operation == OP_UNKNOWN)
         {

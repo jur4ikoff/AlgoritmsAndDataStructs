@@ -16,5 +16,6 @@ typedef struct _data_type_
 } data_t;
 
 #define MAX_STRING_LEN 2000
+#define HT_INIT_SIZE 1
 
 #endif

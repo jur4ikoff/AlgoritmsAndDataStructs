@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define HASH_TABLE_INIT_SIZE 1
 
 // Всякая всячина для хэш табле
 // Статусы элемента
@@ -43,7 +42,7 @@ open_ht_t *open_ht_create(size_t size)
     if (ht == NULL)
         return NULL;
 
-    ht->size = size ? size : HASH_TABLE_INIT_SIZE;
+    ht->size = size ? size : HT_INIT_SIZE;
     ht->table = calloc(ht->size, sizeof(*ht->table));
     if (ht->table == NULL)
     {
@@ -121,7 +120,7 @@ error_t open_ht_insert(open_ht_t **ht, data_t element, bool *is_restructured)
 
     if (*ht == NULL)
     {
-        *ht = open_ht_create(HASH_TABLE_INIT_SIZE);
+        *ht = open_ht_create(HT_INIT_SIZE);
     }
 
     if (is_restructured)
@@ -280,7 +279,7 @@ size_t open_ht_calc_memory(open_ht_t *ht)
     return sizeof(open_ht_t) + sizeof(*ht->table) * ht->size;
 }
 
-void open_ht_tree_test(void)
+void open_ht_test(void)
 {
     // Инициализация переменных
     printf("\nТестирование хэш таблицы с открытой адресацией\n");
