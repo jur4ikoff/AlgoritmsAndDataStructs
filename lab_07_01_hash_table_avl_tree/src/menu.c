@@ -37,10 +37,10 @@ void print_warning_message(int arg)
     switch (arg)
     {
         case WARNING_TREE:
-            printf("Пустое дерево\n");
+            printf("Пустой объект\n");
             break;
         case WARNING_ELEMENT_NOT_FOUND:
-            printf("Такого элемента нет в дереве\n");
+            printf("Такого элемента нет в объекте\n");
             break;
         case WARNING_OPERATION:
             printf("Неверный выбор операции\n");

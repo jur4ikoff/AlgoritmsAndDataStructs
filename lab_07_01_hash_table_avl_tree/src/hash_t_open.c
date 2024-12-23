@@ -228,6 +228,58 @@ int open_ht_remove(open_ht_t *ht, data_t data)
     return ERR_OK;
 }
 
+int open_ht_search(open_ht_t *ht, data_t data, size_t *cmp)
+{
+    if (ht == NULL)
+        return ERR_HEAD;
+
+    if (cmp)
+        (*cmp) = 1;
+    unsigned long long hash = hash_char_first(data.value);
+    size_t index = hash % ht->size;
+    size_t new_index = index;
+
+    while (ht->table[new_index].state == STATE_REMOVED || (ht->table[new_index].state == STATE_BUSY && data.value - ht->table[new_index].data.value != 0))
+    {
+        if (cmp)
+            (*cmp)++;
+        new_index = (new_index + 1) % ht->size;
+        if (*cmp > ht->size)
+        {
+            return WARNING_ELEMENT_NOT_FOUND;
+        }
+    }
+
+    if (ht->table[new_index].state == STATE_EMPTY)
+        return WARNING_ELEMENT_NOT_FOUND;
+
+    return ERR_OK;
+}
+
+
+float open_ht_calc_avg_compare(open_ht_t *ht)
+{
+    float res = 0;
+    size_t count = 0;
+    for (size_t i = 0; i < ht->size; i++)
+    {
+        if (ht->table[i].state == STATE_EMPTY || ht->table[i].state == STATE_REMOVED)
+            continue;
+
+        count++;
+        size_t cmps = 0;
+        open_ht_search(ht, ht->table[i].data, &cmps);
+        res += cmps;
+    }
+
+    return res / count;
+}
+
+size_t open_ht_calc_memory(open_ht_t *ht)
+{
+    return sizeof(open_ht_t) + sizeof(*ht->table) * ht->size;
+}
+
 void open_ht_tree_test(void)
 {
     // Инициализация переменных
@@ -238,7 +290,6 @@ void open_ht_tree_test(void)
     struct timespec start, end;
     open_ht_t *hash_table = NULL;
     bool is_first = 1;
-    (void)is_first;
 
     // Запуск главного цикла
     while (test_operation != TEST_HASH_EXIT && rc == ERR_OK)
@@ -292,6 +343,7 @@ void open_ht_tree_test(void)
             }
             else
             {
+                is_first = 0;
                 if (is_restructed)
                     printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс. Реструктуризация не потребовалась%s\n", GREEN, data.value, time, RESET);
                 else
@@ -315,48 +367,49 @@ void open_ht_tree_test(void)
             rc = open_ht_remove(hash_table, data);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-            if (rc != ERR_OK)
+            if (rc == ERR_OK)
                 printf("%sУдален элемент %c из дерева. Время удаления: %.2f%s\n", GREEN, data.value, time, RESET);
             else
             {
                 print_warning_message(WARNING_ELEMENT_NOT_FOUND);
+                rc = ERR_OK;
             }
         }
         else if (test_operation == TEST_HT_SEARCH)
         {
-            /*data_t data = { 0 };
+            data_t data = { 0 };
             if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
                 continue;
             }
-
+            size_t cmp = 0;
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            avl_tree_t *node = avl_tree_search(tree, data);
+            rc = open_ht_search(hash_table, data, &cmp);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
 
-            if (node)
+            if (rc == ERR_OK)
             {
-                printf("%sЭлемент найден. Время поиска: %.2f%s\n", GREEN, time, RESET);
+                printf("%sЭлемент найден. Время поиска: %.2f Количество сравнение %zu%s\n", GREEN, time, cmp, RESET);
             }
             else
             {
                 print_warning_message(WARNING_ELEMENT_NOT_FOUND);
-            }*/
+                rc = ERR_OK;
+            }
         }
         else if (test_operation == TEST_HT_SHOW)
         {
             // Вывод дерева на экран
             printf("Размер таблицы: %zu\n", hash_table->size);
             open_ht_print(hash_table);
-            // avl_tree_show(tree);
         }
         else if (test_operation == TEST_HT_STATS)
         {
             // Статистика о дереве
-            // printf("Дерево занимает в памяти %zu байт\n", avl_tree_calc_memory(tree));
-            // printf("Среднее количество сравнений %.3f\n", avl_tree_calc_avg_compare(tree));
+            printf("Хэш таблица занимает в памяти %zu байт\n", open_ht_calc_memory(hash_table));
+            printf("Среднее количество сравнений %.3f\n", open_ht_calc_avg_compare(hash_table));
         }
         else if (test_operation == TEST_HT_UNKNOWN)
         {

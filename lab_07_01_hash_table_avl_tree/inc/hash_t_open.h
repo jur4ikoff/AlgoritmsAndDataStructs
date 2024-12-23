@@ -18,6 +18,12 @@ void open_ht_free(open_ht_t **ht);
 
 // Вставка
 error_t open_ht_insert(open_ht_t **ht, data_t element, bool *is_restructured);
+int open_ht_remove(open_ht_t *ht, data_t data);
+int open_ht_search(open_ht_t *ht, data_t data, size_t *cmp);
+
+
+size_t open_ht_calc_memory(open_ht_t *ht);
+float open_ht_calc_avg_compare(open_ht_t *ht);
 
 extern size_t g_max_collisions;
 #endif
