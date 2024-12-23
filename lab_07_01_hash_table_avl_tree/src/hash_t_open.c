@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #define HASH_TABLE_INIT_SIZE 1
 
@@ -71,10 +72,6 @@ error_t open_ht_restruct(open_ht_t **ht, size_t prev_size)
 {
     size_t new_size = calc_next_prime(prev_size);
     open_ht_t *new_ht = open_ht_create(new_size);
-    if (!new_ht)
-    {
-        return ERR_MEMORY_ALLOCATION;
-    }
 
     bool need_restruct = false;
     for (size_t i = 0; !need_restruct && i < (*ht)->size; i++)
@@ -82,34 +79,30 @@ error_t open_ht_restruct(open_ht_t **ht, size_t prev_size)
         if ((*ht)->table[i].state == STATE_EMPTY)
             continue;
 
-        unsigned long long hash = hash_char_first((*ht)->table[i].data.value);
-        size_t index = hash % (*ht)->size;
-        size_t new_index = index;
+        size_t hash = hash_char_first((*ht)->table[i].data.value);
+        size_t index = hash % new_ht->size;
+        size_t new_ind = index;
         size_t collisions = 0;
 
-        while (((new_ht->table[new_index].state == STATE_BUSY && (*ht)->table[i].data.value - new_ht->table[new_index].data.value != 0) || new_ht->table[new_index].state == STATE_REMOVED) && !need_restruct)
+        while ((new_ht->table[new_ind].state == STATE_REMOVED || (new_ht->table[new_ind].state == STATE_BUSY && (*ht)->table[i].data.value - new_ht->table[new_ind].data.value != 0)) && !need_restruct)
         {
-            new_index = (new_index + 1) % (*ht)->size;
-            collisions++;
+            new_ind = (new_ind + 1) % new_ht->size;
             if (collisions > g_max_collisions)
-            {
                 need_restruct = true;
-            }
 
             collisions++;
         }
 
         if (need_restruct)
-        {
-            goto ex;
-        }
+            goto restruct;
 
         data_t data = (*ht)->table[i].data;
-        new_ht->table[new_index].state = STATE_BUSY;
-        new_ht->table[new_index].data = data;
+
+        new_ht->table[new_ind].state = STATE_BUSY;
+        new_ht->table[new_ind].data = data;
     }
 
-    ex:
+    restruct:
     if (need_restruct)
     {
         open_ht_free(&new_ht);
@@ -135,7 +128,6 @@ error_t open_ht_insert(open_ht_t **ht, data_t element, bool *is_restructured)
         *is_restructured = false;
 
     error_t rc = ERR_OK;
-
     unsigned long long hash = hash_char_first(element.value);
 
     while (true)
@@ -153,7 +145,10 @@ error_t open_ht_insert(open_ht_t **ht, data_t element, bool *is_restructured)
         }
 
         if (!need_restruct && (*ht)->table[new_index].state == STATE_BUSY)
+        {
+            (*ht)->table[new_index].data.repeat += 1;
             return WARNING_REPEAT;
+        }
 
         if (need_restruct)
         {
@@ -178,11 +173,11 @@ void open_ht_print(open_ht_t *ht)
 {
     for (size_t i = 0; i < ht->size; i++)
     {
-        printf("%2zu. ", i);
+        printf("%2zu ", i);
         switch (ht->table[i].state)
         {
             case STATE_BUSY:
-                printf("[Занято] \"%c\"", ht->table[i].data.value);
+                printf("[Занято] \'%c\'", ht->table[i].data.value);
                 break;
             case STATE_EMPTY:
                 printf("[Свободно]");
@@ -195,6 +190,44 @@ void open_ht_print(open_ht_t *ht)
     }
 }
 
+int open_ht_convert_from_string(open_ht_t **ht, char *string)
+{
+    if (ht == NULL || string == NULL)
+        return ERR_HEAD;
+
+    char *ptr = string;
+    while (*ptr)
+    {
+        data_t data = { .repeat = 0, .value = *ptr };
+        bool is = false;
+        open_ht_insert(ht, data, &is);
+        (void)is;
+        ptr++;
+    }
+    return ERR_OK;
+}
+
+int open_ht_remove(open_ht_t *ht, data_t data)
+{
+    if (ht == NULL)
+        return ERR_HEAD;
+
+    unsigned long long hash = hash_char_first(data.value);
+    size_t index = hash % ht->size;
+    size_t new_index = index;
+
+    while (ht->table[new_index].state == STATE_REMOVED || (ht->table[new_index].state == STATE_BUSY && data.value - ht->table[new_index].data.value != 0))
+    {
+        new_index = (new_index + 1) % ht->size;
+    }
+
+    if (ht->table[new_index].state == STATE_EMPTY)
+        return WARNING_ELEMENT_NOT_FOUND;
+
+    ht->table[new_index].state = STATE_REMOVED;
+    return ERR_OK;
+}
+
 void open_ht_tree_test(void)
 {
     // Инициализация переменных
@@ -204,7 +237,8 @@ void open_ht_tree_test(void)
     hash_test_menu_t test_operation = TEST_HT_COUNT;
     struct timespec start, end;
     open_ht_t *hash_table = NULL;
-    // bool is_first = 1;
+    bool is_first = 1;
+    (void)is_first;
 
     // Запуск главного цикла
     while (test_operation != TEST_HASH_EXIT && rc == ERR_OK)
@@ -225,18 +259,17 @@ void open_ht_tree_test(void)
         }
         else if (test_operation == TEST_HT_LOAD)
         {
-
-            /*char *string_to_convert = malloc(MAX_STRING_LEN * sizeof(char));
-            printf("Введите строку для записи в дерево: ");
+            char *string_to_convert = malloc(MAX_STRING_LEN * sizeof(char));
+            printf("Введите строку для записи в хэш таблицу: ");
             fgets(string_to_convert, MAX_STRING_LEN - 1, stdin);
 
             char *newline = strchr(string_to_convert, '\n');
             if (newline)
                 *newline = 0;
 
-            avl_tree_convert_from_string(&tree, string_to_convert);
+            open_ht_convert_from_string(&hash_table, string_to_convert);
             is_first = 0;
-            free(string_to_convert);*/
+            free(string_to_convert);
         }
         else if (test_operation == TEST_HT_ADD)
         {
@@ -267,7 +300,7 @@ void open_ht_tree_test(void)
         }
         else if (test_operation == TEST_HT_REMOVE)
         {
-            /*if (is_first)
+            if (is_first)
             {
                 print_warning_message(WARNING_TREE);
                 continue;
@@ -279,13 +312,15 @@ void open_ht_tree_test(void)
                 continue;
             }
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            tree = avl_tree_remove(tree, data);
+            rc = open_ht_remove(hash_table, data);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-            if (tree)
-                printf("%sУдален элемент %c из дерева. Время удаления: %.2f%s\n", GREEN, tree->data.value, time, RESET);
+            if (rc != ERR_OK)
+                printf("%sУдален элемент %c из дерева. Время удаления: %.2f%s\n", GREEN, data.value, time, RESET);
             else
-                print_warning_message(WARNING_ELEMENT_NOT_FOUND);*/
+            {
+                print_warning_message(WARNING_ELEMENT_NOT_FOUND);
+            }
         }
         else if (test_operation == TEST_HT_SEARCH)
         {
