@@ -18,6 +18,7 @@ list_t *list_node_create(void);
 typedef void (*list_func_t)(list_t *node, void *param);
 
 void list_free(list_t **head);
+void list_free_without_data(list_t **head);
 
 int list_push_back(list_t **head, data_t *data);
 

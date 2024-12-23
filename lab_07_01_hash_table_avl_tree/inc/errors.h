@@ -15,6 +15,7 @@
 #define WARNING_TREE -2
 #define WARNING_ELEMENT_NOT_FOUND -3
 #define WARNING_OPERATION -4
+#define WARNING_NO_RESTRUCT -5
 
 typedef short error_t;
 #endif

@@ -73,6 +73,26 @@ void list_free(list_t **head)
 }
 
 /**
+ * @brief Освобождает память из-под списка без очистки данных
+ *
+ * @param head Двойной указатель на голову
+ */
+void list_free_without_data(list_t **head)
+{
+    list_t *temp = *head;
+    while (temp)
+    {
+        list_t *next = temp->next;
+        free(temp);
+        temp = next;
+    }
+
+    *head = NULL;
+}
+
+
+
+/**
  * @brief Применяет функцию к каждому узлу списка
  *
  * @param head Указатель на голову

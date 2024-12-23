@@ -47,7 +47,7 @@ static bool close_ht_check_need_restruct(const close_ht_t *ht)
 int close_ht_restruct(close_ht_t **ht)
 {
     if (!close_ht_check_need_restruct(*ht))
-        return ERR_HEAD;
+        return WARNING_NO_RESTRUCT;
 
     close_ht_t *new_ht = NULL;
     size_t cur_size = (*ht)->size;
@@ -57,7 +57,6 @@ int close_ht_restruct(close_ht_t **ht)
         size_t new_size = calc_next_prime(cur_size);
         close_ht_free(&new_ht);
         new_ht = close_ht_create(new_size);
-
         if (new_ht == NULL)
         {
             rc = ERR_MEMORY_ALLOCATION;
@@ -70,24 +69,27 @@ int close_ht_restruct(close_ht_t **ht)
             while (cur != NULL)
             {
                 size_t hash = hash_char_first(cur->data->value);
-                size_t index = hash % new_ht->size;
-                if ((rc = list_push_back(&new_ht->table[index], cur->data)) != ERR_OK)
+                size_t ind = hash % new_ht->size;
+                if ((rc = list_push_back(&new_ht->table[ind], cur->data)) != ERR_OK)
                     goto err;
                 cur = cur->next;
             }
         }
-
         cur_size = new_size;
     } while (close_ht_check_need_restruct(new_ht));
 
     err:
     if (rc != ERR_OK)
     {
-        close_ht_free(&new_ht);
+        close_ht_clear(new_ht);
+        free(new_ht->table);
+        free(new_ht);
     }
     else
     {
-        close_ht_free(ht);
+        free((*ht)->table);
+        free(*ht);
+
         *ht = new_ht;
     }
     return rc;
@@ -112,6 +114,9 @@ int close_ht_insert(close_ht_t **ht, data_t *data, bool *is_restruct)
     if (ht == NULL || data == NULL)
         return ERR_HEAD;
 
+    if (*ht == NULL)
+        *ht = close_ht_create(HT_INIT_SIZE);
+
     size_t hash = hash_char_first(data->value);
     size_t index = hash % (*ht)->size;
 
@@ -132,7 +137,7 @@ int close_ht_insert(close_ht_t **ht, data_t *data, bool *is_restruct)
     if (is_restruct && rc == ERR_OK)
         *is_restruct = true;
 
-    if (rc == ERR_HEAD)
+    if (rc == WARNING_NO_RESTRUCT)
         rc = ERR_OK;
 
     return rc;
@@ -171,7 +176,7 @@ int close_ht_clear(close_ht_t *ht)
         return ERR_HEAD;
 
     for (size_t i = 0; i < ht->size; i++)
-        list_free(&ht->table[i]);
+        list_free_without_data(&ht->table[i]);
 
     return ERR_OK;
 }
@@ -223,7 +228,6 @@ void close_ht_print(const close_ht_t *ht)
     }
 }
 
-
 int close_ht_convert_from_string(close_ht_t **ht, char *string)
 {
     if (ht == NULL || string == NULL)
@@ -241,7 +245,6 @@ int close_ht_convert_from_string(close_ht_t **ht, char *string)
     }
     return ERR_OK;
 }
-
 
 void close_ht_test(void)
 {
@@ -294,6 +297,7 @@ void close_ht_test(void)
                 continue;
             }
 
+            printf("%c\n", data->value);
             bool is_restructed = false;
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             rc = close_ht_insert(&hash_table, data, &is_restructed);
