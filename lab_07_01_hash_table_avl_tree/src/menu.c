@@ -44,6 +44,10 @@ void print_warning_message(int arg)
             break;
         case WARNING_OPERATION:
             printf("Неверный выбор операции\n");
+            break;
+        case WARNING_REPEAT:
+            printf("Элемент существует\n");
+            break;
     }
     printf("%s", RESET);
 }

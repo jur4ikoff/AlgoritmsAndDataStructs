@@ -43,7 +43,7 @@ open_ht_t *open_ht_create(size_t size)
         return NULL;
 
     ht->size = size ? size : HASH_TABLE_INIT_SIZE;
-    ht->table = calloc(ht->size, sizeof(ht->table));
+    ht->table = calloc(ht->size, sizeof(*ht->table));
     if (ht->table == NULL)
     {
         free(ht);
@@ -69,7 +69,6 @@ void open_ht_free(open_ht_t **ht)
 
 error_t open_ht_restruct(open_ht_t **ht, size_t prev_size)
 {
-    int rc = ERR_OK;
     size_t new_size = calc_next_prime(prev_size);
     open_ht_t *new_ht = open_ht_create(new_size);
     if (!new_ht)
@@ -90,7 +89,7 @@ error_t open_ht_restruct(open_ht_t **ht, size_t prev_size)
 
         while (((new_ht->table[new_index].state == STATE_BUSY && (*ht)->table[i].data.value - new_ht->table[new_index].data.value != 0) || new_ht->table[new_index].state == STATE_REMOVED) && !need_restruct)
         {
-            new_index = (index + (collisions * collisions)) % (*ht)->size;
+            new_index = (new_index + 1) % (*ht)->size;
             collisions++;
             if (collisions > g_max_collisions)
             {
@@ -108,15 +107,9 @@ error_t open_ht_restruct(open_ht_t **ht, size_t prev_size)
         data_t data = (*ht)->table[i].data;
         new_ht->table[new_index].state = STATE_BUSY;
         new_ht->table[new_index].data = data;
-
     }
 
     ex:
-    if (rc != ERR_OK)
-    {
-        open_ht_free(&new_ht);
-        return rc;
-    }
     if (need_restruct)
     {
         open_ht_free(&new_ht);
@@ -128,14 +121,88 @@ error_t open_ht_restruct(open_ht_t **ht, size_t prev_size)
     return ERR_OK;
 }
 
+error_t open_ht_insert(open_ht_t **ht, data_t element, bool *is_restructured)
+{
+    if (ht == NULL)
+        return ERR_HEAD;
+
+    if (*ht == NULL)
+    {
+        *ht = open_ht_create(HASH_TABLE_INIT_SIZE);
+    }
+
+    if (is_restructured)
+        *is_restructured = false;
+
+    error_t rc = ERR_OK;
+
+    unsigned long long hash = hash_char_first(element.value);
+
+    while (true)
+    {
+        bool need_restruct = false;
+        size_t index = hash % (*ht)->size;
+        size_t new_index = index;
+        size_t collisions = 0;
+        while (((*ht)->table[new_index].state == STATE_REMOVED || ((*ht)->table[new_index].state == STATE_BUSY && (*ht)->table[new_index].data.value - element.value != 0)) && !need_restruct)
+        {
+            new_index = (new_index + 1) % (*ht)->size;
+            if (collisions > g_max_collisions)
+                need_restruct = true;
+            collisions++;
+        }
+
+        if (!need_restruct && (*ht)->table[new_index].state == STATE_BUSY)
+            return WARNING_REPEAT;
+
+        if (need_restruct)
+        {
+            if (is_restructured)
+                *is_restructured = true;
+            if ((rc = open_ht_restruct(ht, (*ht)->size)) != ERR_OK)
+                goto err;
+        }
+        else
+        {
+            (*ht)->table[new_index].state = STATE_BUSY;
+            (*ht)->table[new_index].data = element;
+            break;
+        }
+    }
+
+    err:
+    return rc;
+}
+
+void open_ht_print(open_ht_t *ht)
+{
+    for (size_t i = 0; i < ht->size; i++)
+    {
+        printf("%2zu. ", i);
+        switch (ht->table[i].state)
+        {
+            case STATE_BUSY:
+                printf("[Занято] \"%c\"", ht->table[i].data.value);
+                break;
+            case STATE_EMPTY:
+                printf("[Свободно]");
+                break;
+            case STATE_REMOVED:
+                printf("[Удалено]");
+                break;
+        }
+        printf("\n");
+    }
+}
+
 void open_ht_tree_test(void)
 {
     // Инициализация переменных
-    printf("\nПодпрограмма для тестирования бинарного дерева\n");
+    printf("\nТестирование хэш таблицы с открытой адресацией\n");
     int test_itteration_count = 0;
     error_t rc = ERR_OK;
     hash_test_menu_t test_operation = TEST_HT_COUNT;
-    // struct timespec start, end;
+    struct timespec start, end;
     open_ht_t *hash_table = NULL;
     // bool is_first = 1;
 
@@ -173,19 +240,30 @@ void open_ht_tree_test(void)
         }
         else if (test_operation == TEST_HT_ADD)
         {
-            /*data_t data = { 0 };
-            if (input_data(&data, ">>Введите один символ для добавления в дерево:") != ERR_OK)
+            data_t data = { 0 };
+            if (input_data(&data, ">>Введите один символ для добавления в хэш таблицу:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
                 continue;
             }
 
+            bool is_restructed = false;
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-            rc = avl_tree_insert(&tree, data);
+            rc = open_ht_insert(&hash_table, data, &is_restructed);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-            print_warning_message(rc);
             float time = (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
-            printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс%s\n", GREEN, data.value, time, RESET);*/
+            if (rc == WARNING_REPEAT)
+            {
+                print_warning_message(WARNING_REPEAT);
+                rc = ERR_OK;
+            }
+            else
+            {
+                if (is_restructed)
+                    printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс. Реструктуризация не потребовалась%s\n", GREEN, data.value, time, RESET);
+                else
+                    printf("%sДобавлен элемент %c в дерево. Время добавления: %.2f мкс. Реструктуризация потребовалась%s\n", GREEN, data.value, time, RESET);
+            }
         }
         else if (test_operation == TEST_HT_REMOVE)
         {
@@ -235,6 +313,8 @@ void open_ht_tree_test(void)
         else if (test_operation == TEST_HT_SHOW)
         {
             // Вывод дерева на экран
+            printf("Размер таблицы: %zu\n", hash_table->size);
+            open_ht_print(hash_table);
             // avl_tree_show(tree);
         }
         else if (test_operation == TEST_HT_STATS)
