@@ -16,12 +16,14 @@
 #include "bin_search_tree.h"
 #include "constants.h"
 #include "errors.h"
-#include "hash_t_close.h"
+#include "hash_t_open.h"
 #include "menu.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+size_t g_max_collisions = 4;
 
 int main(void)
 {
@@ -46,9 +48,14 @@ int main(void)
             // Тестирование авл дерева
             avl_tree_test();
         }
+        else if (operation == OP_TEST_OPEN_HASH)
+        {
+            // Реализация хэш таблицы с открытой адрессацией
+            open_ht_tree_test();
+        }
         else if (operation == OP_TEST_CLOSE_HASH)
         {
-            // Реализация хэш таблицы с закрытой адрессацией
+            // Реализация хэш таблицы с закрытой адрессацией. Метод цепочек
         }
         else if (operation == OP_UNKNOWN)
         {

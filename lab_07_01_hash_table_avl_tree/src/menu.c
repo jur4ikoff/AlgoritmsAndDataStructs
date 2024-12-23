@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "errors.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 
 void print_error_message(int arg)
@@ -9,23 +10,23 @@ void print_error_message(int arg)
     printf("%s", RED);
     switch (arg)
     {
-    case ERR_STRING:
-        printf("Ошибка в введенной строке\n");
-        break;
-    case ERR_OPERATION:
-        printf("Выбрана неверная операция\n");
-        break;
-    case ERR_MEMORY_ALLOCATION:
-        printf("Ошибка выделения памяти\n");
-        break;
-    case ERR_DATA_INPUT:
-        printf("Ошибка при вводе данных\n");
-        break;
-    case ERR_FILE:
-        printf("Ошибка при чтении или создании файла\n");
-        break;
-    case ERR_HEAD:
-        printf("Ошибка при передаче параметров в функцию\n");
+        case ERR_STRING:
+            printf("Ошибка в введенной строке\n");
+            break;
+        case ERR_OPERATION:
+            printf("Выбрана неверная операция\n");
+            break;
+        case ERR_MEMORY_ALLOCATION:
+            printf("Ошибка выделения памяти\n");
+            break;
+        case ERR_DATA_INPUT:
+            printf("Ошибка при вводе данных\n");
+            break;
+        case ERR_FILE:
+            printf("Ошибка при чтении или создании файла\n");
+            break;
+        case ERR_HEAD:
+            printf("Ошибка при передаче параметров в функцию\n");
     }
     printf("%s", RESET);
 }
@@ -35,14 +36,14 @@ void print_warning_message(int arg)
     printf("%s", YELLOW);
     switch (arg)
     {
-    case WARNING_TREE:
-        printf("Пустое дерево\n");
-        break;
-    case WARNING_ELEMENT_NOT_FOUND:
-        printf("Такого элемента нет в дереве\n");
-        break;
-    case WARNING_OPERATION:
-    printf("Неверный выбор операции\n");
+        case WARNING_TREE:
+            printf("Пустое дерево\n");
+            break;
+        case WARNING_ELEMENT_NOT_FOUND:
+            printf("Такого элемента нет в дереве\n");
+            break;
+        case WARNING_OPERATION:
+            printf("Неверный выбор операции\n");
     }
     printf("%s", RESET);
 }
@@ -60,12 +61,13 @@ void print_menu(void)
            "1 - Тестирование двоичного дерева поиска\n"
            "2 - Тестирование AVL дерева\n"
            "3 - Тестирование хэш таблицы с открытой адресацией\n"
-           "4 - Тестирование хэш таблицы с открытой адресацией\n"
+           "4 - Тестирование хэш таблицы с закрытой (цепочной) адресацией\n"
            "5 - Решение задачи\n"
            "6 - Тестирование эффективности\n");
     printf("Введите операцию: ");
 }
 
+// Вывод меню для дерева
 void print_test_tree_menu(void)
 {
     printf("\n0 - Выход\n"
@@ -76,6 +78,18 @@ void print_test_tree_menu(void)
            "5 - Вывод дерева на экран (картинкой)\n"
            "6 - Инфиксный обход дерева\n"
            "7 - Замер памяти и среднего количество сравнений\n");
+}
+
+// Вывод меню для хэш таблицы
+void print_hash_table_menu(void)
+{
+    printf("\n0 - Выход\n"
+           "1 - Заполнить хэш таблицу из строки\n"
+           "2 - Добавить элемент в хэш таблицу\n"
+           "3 - Удалить элемент из хэш таблицы\n"
+           "4 - Поиск элемента в хэш таблице\n"
+           "5 - Вывод на экран хэш таблицы\n"
+           "6 - Замер памяти и среднего количества сравнений\n");
 }
 
 /**
@@ -126,6 +140,31 @@ tree_test_menu_t input_test_tree_operation(void)
 }
 
 /**
+ * @brief Функция принимает у пользователя операцию
+ * @return Структурную переменную, обозначающую операцию
+ */
+hash_test_menu_t input_test_ht_operation(void)
+{
+    int buffer;
+    printf(">>Введите тестовую операцию: ");
+    if (scanf("%d", &buffer) != 1)
+    {
+        while (fgetc(stdin) != '\n')
+        {
+            continue; // Возврат к началу цикла}
+        }
+        return TEST_HT_ERROR;
+    }
+
+    fgetc(stdin);
+
+    if (buffer < 0 || buffer >= TEST_HT_COUNT)
+        return TEST_HT_UNKNOWN;
+
+    return (hash_test_menu_t)buffer;
+}
+
+/**
  * @brief Функция для записи строки в переменную. Функция автоматически выделяет память под строку
  * @param string Указатель на строку
  * @param file Указатель на файловую переменную
@@ -173,4 +212,23 @@ int input_data(data_t *data, char *message)
 
     data->value = buffer[0];
     return rc;
+}
+
+// Подсчет следующего целого числа
+int calc_next_prime(size_t min)
+{
+    size_t new_num = min + 1;
+    while (true)
+    {
+        bool is_prime = true;
+        for (size_t i = 2; is_prime && i < new_num / 2 + 1; i++)
+        {
+            if (new_num % i == 0)
+                is_prime = false;
+        }
+        if (is_prime)
+            return new_num;
+
+        new_num++;
+    }
 }

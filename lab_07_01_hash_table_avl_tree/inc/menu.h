@@ -14,7 +14,8 @@ typedef enum
     OP_TASK,
     OP_EFFICIENCY,
     OP_COUNT,
-    OP_UNKNOWN, OP_ERROR
+    OP_UNKNOWN,
+    OP_ERROR
 } main_operations_t;
 
 typedef enum
@@ -38,10 +39,12 @@ typedef enum
     TEST_HT_LOAD,
     TEST_HT_ADD,
     TEST_HT_REMOVE,
-    TEST_HT_STATS,
+    TEST_HT_SEARCH,
     TEST_HT_SHOW,
-    TEST_COUNT,
-    TEST_UNKNOWN,
+    TEST_HT_STATS,
+    TEST_HT_COUNT,
+    TEST_HT_UNKNOWN,
+    TEST_HT_ERROR
 } hash_test_menu_t;
 
 // Вывод ошибок
@@ -52,12 +55,17 @@ void print_warning_message(int arg);
 void print_info(void);
 void print_menu(void);
 void print_test_tree_menu(void);
+void print_hash_table_menu(void);
 
 // Ввод операций
 main_operations_t input_operation(void);
 tree_test_menu_t input_test_tree_operation(void);
+hash_test_menu_t input_test_ht_operation(void);
 
 // Инпуты
 int input_line(char **string, FILE *file);
 int input_data(data_t *data, char *message);
+
+// Подсчет следующего простого числа
+int calc_next_prime(size_t prev);
 #endif
