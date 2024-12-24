@@ -68,4 +68,5 @@ int input_data(data_t *data, char *message);
 
 // Подсчет следующего простого числа
 int calc_next_prime(size_t prev);
+int input_string_from_file(char *filename, char *string);
 #endif

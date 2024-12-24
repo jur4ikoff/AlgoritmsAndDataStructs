@@ -31,7 +31,7 @@ static void calc_depth_sum(bst_tree_t *root, int current_depth, int *total_depth
     calc_depth_sum(root->right, current_depth + 1, total_depth, total_nodes);
 }
 
-static float bin_tree_calc_avg_compare(bst_tree_t *root)
+float bin_tree_calc_avg_compare(bst_tree_t *root)
 {
     if (root == NULL)
         return 0.0f;
@@ -43,7 +43,7 @@ static float bin_tree_calc_avg_compare(bst_tree_t *root)
     return (float)total_depth / total_nodes;
 }
 
-static size_t bin_tree_calc_memory(bst_tree_t *root)
+size_t bin_tree_calc_memory(bst_tree_t *root)
 {
     if (root == NULL)
     {
@@ -56,7 +56,7 @@ static size_t bin_tree_calc_memory(bst_tree_t *root)
 static void to_dot(bst_tree_t *tree, void *file)
 {
     static int null_cnt = 0;
-    if (tree->data.repeat)
+    if (tree->data.repeat != 0)
         fprintf(file, "  %c [color=\"red\"];\n", tree->data.value);
 
     if (tree->left)
@@ -286,6 +286,66 @@ static void bin_tree_to_graphviz(FILE *file, const char *tree_name, bst_tree_t *
     fprintf(file, "digraph %s {\n", tree_name);
     bin_tree_apply_pre(tree, to_dot, file);
     fprintf(file, "}\n");
+}
+
+float bst_calculte_search_time(char *filename, size_t exp_count)
+{
+    struct timespec start, end;
+    float time_del = 0.0;
+    char *result = malloc(MAX_STRING_LEN * sizeof(char));
+    int rc = ERR_OK;
+    if ((rc = input_string_from_file(filename, result)) != ERR_OK)
+    {
+        free(result);
+        return rc;
+    }
+
+    bst_tree_t *tree = NULL;
+    bin_tree_convert_from_string(&tree, result);
+    if (!tree)
+    {
+        bin_tree_free(tree);
+        free(result);
+        return ERR_STRING;
+    }
+
+    size_t count = 0;
+    for (size_t i = 0; i < exp_count; i++)
+    {
+        char *ptr = result;
+        while (*ptr)
+        {
+            data_t data = { .repeat = 0, .value = *ptr };
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            bin_tree_search(tree, data);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            time_del += (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            count++;
+            ptr++;
+        }
+    }
+
+    free(result);
+    return time_del / count;
+}
+
+// Удаление узлов с is_repeated != 0
+void tree_remove_repeat(bst_tree_t **tree)
+{
+    if (*tree == NULL)
+    {
+        return;
+    }
+
+    // Рекурсивно обходим левое и правое поддерево
+    tree_remove_repeat(&(*tree)->left);
+    tree_remove_repeat(&(*tree)->right);
+
+    // Проверяем текущий узел
+    if ((*tree)->data.repeat != 0)
+    {
+        bin_tree_remove(tree, (*tree)->data);
+    }
 }
 
 void binary_tree_test(void)

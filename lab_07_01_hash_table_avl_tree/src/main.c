@@ -16,9 +16,10 @@
 #include "bin_search_tree.h"
 #include "constants.h"
 #include "errors.h"
-#include "hash_t_open.h"
 #include "hash_t_close.h"
+#include "hash_t_open.h"
 #include "menu.h"
+#include "task.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -58,6 +59,15 @@ int main(void)
         {
             // Реализация хэш таблицы с закрытой адрессацией. Метод цепочек
             close_ht_test();
+        }
+        else if (operation == OP_TASK)
+        {
+            // Решение задачи
+            if ((rc = solve_task()) != ERR_OK)
+            {
+                print_error_message(rc);
+                return rc;
+            }
         }
         else if (operation == OP_UNKNOWN)
         {

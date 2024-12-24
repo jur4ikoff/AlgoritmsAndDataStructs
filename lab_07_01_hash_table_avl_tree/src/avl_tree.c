@@ -600,3 +600,46 @@ void avl_tree_test(void)
     exit:
     avl_tree_free(tree);
 }
+
+
+
+float avl_calculte_search_time(char *filename, size_t exp_count)
+{
+    struct timespec start, end;
+    float time_del = 0.0;
+    char *result = malloc(MAX_STRING_LEN * sizeof(char));
+    int rc = ERR_OK;
+    if ((rc = input_string_from_file(filename, result)) != ERR_OK)
+    {
+        free(result);
+        return rc;
+    }
+
+    avl_tree_t *tree = NULL;
+    avl_tree_convert_from_string(&tree, result);
+    if (!tree)
+    {
+        avl_tree_free(tree);
+        free(result);
+        return ERR_STRING;
+    }
+
+    size_t count = 0;
+    for (size_t i = 0; i < exp_count; i++)
+    {
+        char *ptr = result;
+        while (*ptr)
+        {
+            data_t data = { .repeat = 0, .value = *ptr };
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            avl_tree_search(tree, data);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            time_del += (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            count++;
+            ptr++;
+        }
+    }
+
+    free(result);
+    return time_del / count;
+}

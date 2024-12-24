@@ -1,8 +1,8 @@
 #include "menu.h"
 #include "constants.h"
 #include "errors.h"
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 
 void print_error_message(int arg)
@@ -235,4 +235,20 @@ int calc_next_prime(size_t min)
 
         new_num++;
     }
+}
+
+int input_string_from_file(char *filename, char *string)
+{
+    FILE *file = fopen(filename, "r");
+    if (file == NULL)
+    {
+        return ERR_FILE;
+    }
+    fgets(string, MAX_STRING_LEN - 1, file);
+
+    char *newline = strchr(string, '\n');
+    if (newline)
+        *newline = 0;
+    fclose(file);
+    return ERR_OK;
 }

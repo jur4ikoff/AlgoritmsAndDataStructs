@@ -2,9 +2,10 @@
 #define TASK_H__
 #include "bin_search_tree.h"
 #include "avl_tree.h"
+#include "hash_t_close.h"
+#include "hash_t_open.h"
 
-void convert_string_to_tree(tree_t **tree, char *string);
-void tree_delete_repeat(tree_t **tree);
-void remove_duplicates(tree_t **node);
-void string_remove_duplicates(char *str);
+int solve_task(void);
+int input_string_from_file(char *filename, char *string);
+
 #endif
