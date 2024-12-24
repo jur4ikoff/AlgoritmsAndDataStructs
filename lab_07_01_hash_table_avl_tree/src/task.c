@@ -145,8 +145,8 @@ int solve_task(void)
     convert_to_close_ht(bst_tree, &close);
     convert_to_open_ht(bst_tree, &open);
 
-    // close_ht_print(close);
-    // open_ht_print(open);
+    close_ht_print(close);
+    open_ht_print(open);
 
     cmp_bst = 0;
     rc = close_ht_search(close, &data, &cmp_bst);
