@@ -100,13 +100,13 @@ int main(void)
             calc_time_experiment("./data/40.txt", 50, 40);
 
             g_max_collisions = 4;
-            printf("%s\nМаксимальное количество коллизий %zu%s\n", GREEN, g_max_collisions, RESET);
+            /*printf("%s\nМаксимальное количество коллизий %zu%s\n", GREEN, g_max_collisions, RESET);
             printf("____________________________\n");
             calc_time_experiment("./data/10.txt", 50, 10);
             printf("____________________________\n");
             calc_time_experiment("./data/20.txt", 50, 20);
             printf("____________________________\n");
-            calc_time_experiment("./data/40.txt", 50, 40);
+            calc_time_experiment("./data/40.txt", 50, 40);*/
         }
         else if (operation == OP_UNKNOWN)
         {

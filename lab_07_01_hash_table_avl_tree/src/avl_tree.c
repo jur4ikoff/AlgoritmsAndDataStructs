@@ -432,6 +432,28 @@ avl_tree_t *avl_tree_search(avl_tree_t *root, data_t element)
     }
 }
 
+avl_tree_t *avl_tree_search_with_cmp(avl_tree_t *root, data_t element, size_t *cmp)
+{
+    if (root == NULL)
+        return NULL;
+
+    int res = root->data.value - element.value;
+    if (res == 0)
+    {
+        return root;
+    }
+
+    (*cmp)++;
+    if (res > 0)
+    {
+        return avl_tree_search_with_cmp(root->left, element, cmp);
+    }
+    else
+    {
+        return avl_tree_search_with_cmp(root->right, element, cmp);
+    }
+}
+
 size_t avl_tree_calc_memory(avl_tree_t *root)
 {
     if (root == NULL)

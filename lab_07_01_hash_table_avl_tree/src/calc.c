@@ -14,7 +14,6 @@
 
 void calc_time_experiment(char *filename, size_t exp_count, size_t size)
 {
-
     size_t ht_close_cmp = 0, ht_open_cmp = 0;
     float bst_cmp = 0, avl_cmp = 0;
     float bst_time = bst_calculte_search_time(filename, exp_count, &bst_cmp);

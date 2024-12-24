@@ -22,6 +22,6 @@ float bin_tree_calc_avg_compare(bst_tree_t *root);
 float bst_calculte_search_time(char *filename, size_t exp_count, float *cmp);
 void binary_tree_test(void);
 void bin_tree_convert_from_string(bst_tree_t **tree, char *string);
-
+bst_tree_t *bst_tree_search_with_cmp(bst_tree_t *root, data_t data, size_t *cmp);
 void tree_remove_repeat(bst_tree_t **tree);
 #endif

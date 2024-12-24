@@ -221,6 +221,32 @@ bst_tree_t *bin_tree_search(bst_tree_t *root, data_t data)
     return root;
 }
 
+bst_tree_t *bst_tree_search_with_cmp(bst_tree_t *root, data_t data, size_t *cmp)
+{
+    if (root == NULL)
+    {
+        return root;
+    }
+
+    if (data.value == root->data.value)
+    {
+        root->is_search = 1;
+        return root;
+    }
+    (*cmp)++;
+
+    if (data.value > root->data.value)
+    {
+        return bst_tree_search_with_cmp(root->right, data, cmp);
+    }
+    else
+    {
+        return bst_tree_search_with_cmp(root->left, data, cmp);
+    }
+
+    return root;
+}
+
 void bin_tree_free(bst_tree_t *tree)
 {
     if (!tree)

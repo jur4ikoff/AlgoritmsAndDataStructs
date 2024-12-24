@@ -67,17 +67,27 @@ int solve_task(void)
         free(string);
     }
 
+    printf(">> Введите символ для поиска в деревьях: ");
+    char to_find = getchar();
+    data_t data = {.repeat = 0, .value = to_find};
     bst_tree_t *bst_tree = NULL;
     bin_tree_convert_from_string(&bst_tree, string);
+    size_t cmp_bst = 0;
     printf("\nИсходное дерево\n");
     bin_tree_show(bst_tree);
 
+    fgetc(stdin);
     printf(">>Нажмите enter");
     char buffer[TEMP];
     fgets(buffer, 2, stdin);
     printf("______________________\nУдаление дубликатов из исходной строки в дереве\n");
     tree_remove_repeat(&bst_tree);
     bin_tree_show(bst_tree);
+    if (bst_tree_search_with_cmp(bst_tree, data, &cmp_bst) != NULL)
+        printf("Элемент %c найден за %zu сравнений\n", data.value, cmp_bst);
+    else
+        printf("Элемент не найден\n");
+    
     printf("Дерево занимает в памяти %zu байт\n", bin_tree_calc_memory(bst_tree));
     float cmp = 0;
     printf("Среднее количество сравнений %.3f Среднее время поиска: %.3f мкс\n", bin_tree_calc_avg_compare(bst_tree), bst_calculte_search_time(filename, 10, &cmp));
@@ -86,7 +96,12 @@ int solve_task(void)
 
     printf("\n______________________\nКонвертация в АВЛ дерево\n");
     avl_tree_t *avl_tree = NULL;
+    cmp_bst = 0;
     convert_bst_to_avl(&avl_tree, bst_tree);
+     if (avl_tree_search_with_cmp(avl_tree, data, &cmp_bst) != NULL)
+        printf("Элемент %c найден за %zu сравнений\n", data.value, cmp_bst);
+    else
+        printf("Элемент не найден\n");
     avl_tree_show(avl_tree);
     printf("Дерево занимает в памяти %zu байт\n", avl_tree_calc_memory(avl_tree));
     printf("Среднее количество сравнений %.3f Среднее время поиска: %.3f мкс\n", avl_tree_calc_avg_compare(avl_tree), avl_calculte_search_time(filename, 10, &cmp));

@@ -36,4 +36,6 @@ float avl_tree_calc_avg_compare(avl_tree_t *root);
 int avl_tree_show(avl_tree_t *tree);
 float avl_calculte_search_time(char *filename, size_t exp_count, float *cmp);
 
+avl_tree_t *avl_tree_search_with_cmp(avl_tree_t *root, data_t element, size_t *cmp);
+
 #endif
