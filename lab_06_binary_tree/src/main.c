@@ -196,6 +196,7 @@ int main(void)
             calc_inorder("./data/linear_40.txt", &time_lin_40);
 
             float search_time_rand_07, search_time_lin_07, search_time_rand_15, search_time_lin_15, search_time_rand_40, search_time_lin_40;
+
             calculte_search_time("./data/random_07.txt", &search_time_rand_07, 20);
             calculte_search_time("./data/linear_07.txt", &search_time_lin_07, 20);
             calculte_search_time("./data/random_15.txt", &search_time_rand_15, 20);

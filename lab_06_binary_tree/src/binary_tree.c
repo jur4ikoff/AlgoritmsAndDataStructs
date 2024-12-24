@@ -101,7 +101,7 @@ int tree_remove(tree_t **root, data_t data)
         }
     }
     else
-        return WARNING_NO_EL;
+        return WARNING_ELEMENT_NOT_FOUND;
     return ERR_OK;
 }
 
