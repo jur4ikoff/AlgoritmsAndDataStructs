@@ -196,12 +196,13 @@ int main(void)
             calc_inorder("./data/linear_40.txt", &time_lin_40);
 
             float search_time_rand_07, search_time_lin_07, search_time_rand_15, search_time_lin_15, search_time_rand_40, search_time_lin_40;
-            bst_calculte_search_time("./data/random_07.txt", &search_time_rand_07, 20);
-            bst_calculte_search_time("./data/linear_07.txt", &search_time_lin_07, 20);
-            bst_calculte_search_time("./data/random_15.txt", &search_time_rand_15, 20);
-            bst_calculte_search_time("./data/linear_15.txt", &search_time_lin_15, 20);
-            bst_calculte_search_time("./data/random_40.txt", &search_time_rand_40, 20);
-            bst_calculte_search_time("./data/linear_40.txt", &search_time_lin_40, 20);
+
+            calculte_search_time("./data/random_07.txt", &search_time_rand_07, 20);
+            calculte_search_time("./data/linear_07.txt", &search_time_lin_07, 20);
+            calculte_search_time("./data/random_15.txt", &search_time_rand_15, 20);
+            calculte_search_time("./data/linear_15.txt", &search_time_lin_15, 20);
+            calculte_search_time("./data/random_40.txt", &search_time_rand_40, 20);
+            calculte_search_time("./data/linear_40.txt", &search_time_lin_40, 20);
 
             printf(GREEN);
             printf("Время обхода сбалансированного дереве из 7 элементов %.2f на вырожденном дереве %.2f\n", time_rand_07, time_lin_07);
