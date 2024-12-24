@@ -15,7 +15,7 @@ void bin_tree_inorder_traversal(const bst_tree_t *root, int is_head, int is_colo
 int bin_tree_insert(bst_tree_t **root, data_t data);
 bst_tree_t *bin_tree_search(bst_tree_t *root, data_t data);
 int bin_tree_remove(bst_tree_t **root, data_t data);
-int bin_tree_show(bst_tree_t *tree);
+int bst_tree_show(bst_tree_t *tree, char *img_file);
 void bin_tree_search_reset(bst_tree_t *root);
 size_t bin_tree_calc_memory(bst_tree_t *root);
 float bin_tree_calc_avg_compare(bst_tree_t *root);

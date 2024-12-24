@@ -285,9 +285,9 @@ static void avl_tree_to_graphviz(FILE *file, const char *tree_name, avl_tree_t *
     fprintf(file, "}\n");
 }
 
-int avl_tree_show(avl_tree_t *tree)
+int avl_tree_show(avl_tree_t *tree, char *img_file)
 {
-    const char *gp_file = "./temp.gp", *img_file = "./tree.png";
+    const char *gp_file = "./temp.gp";
 
     FILE *file = fopen(gp_file, "w");
     if (!file)
@@ -593,7 +593,7 @@ void avl_tree_test(void)
         else if (test_operation == TEST_TREE_SHOW)
         {
             // Вывод дерева на экран
-            avl_tree_show(tree);
+            avl_tree_show(tree, "tree.png");
         }
         else if (test_operation == TEST_TREE_INORDER)
         {

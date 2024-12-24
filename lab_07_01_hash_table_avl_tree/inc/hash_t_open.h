@@ -25,6 +25,6 @@ size_t open_ht_calc_memory(open_ht_t *ht);
 float open_ht_calc_avg_compare(open_ht_t *ht);
 
 float open_ht_calculte_search_time(char *filename, size_t exp_count, size_t *cmp);
-
+void open_ht_print(open_ht_t *ht);
 extern size_t g_max_collisions;
 #endif

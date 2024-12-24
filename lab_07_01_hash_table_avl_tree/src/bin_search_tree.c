@@ -418,7 +418,7 @@ void binary_tree_test(void)
         }
         else if (test_operation == TEST_TREE_SHOW)
         {
-            if (bin_tree_show(tree) != ERR_OK)
+            if (bst_tree_show(tree, "tree.png") != ERR_OK)
                 printf("%sОшибка при открытии файла\n%s", YELLOW, RESET);
         }
         else if (test_operation == TEST_TREE_ADD)
@@ -497,7 +497,7 @@ void binary_tree_test(void)
             {
                 printf("%sЭлемент найден. Время поиска: %.2f%s\n", GREEN, time, RESET);
                 bin_tree_inorder_traversal(tree, 1, 1);
-                bin_tree_show(tree);
+                bst_tree_show(tree, "tree.png");
                 bin_tree_search_reset(tree);
             }
             else
@@ -508,7 +508,7 @@ void binary_tree_test(void)
         else if (test_operation == TEST_TREE_SHOW)
         {
             // Вывод дерева на экран
-            bin_tree_show(tree);
+            bst_tree_show(tree, "tree.png");
         }
         else if (test_operation == TEST_TREE_INORDER)
         {
@@ -536,9 +536,9 @@ exit:
     bin_tree_free(tree);
 }
 
-int bin_tree_show(bst_tree_t *tree)
+int bst_tree_show(bst_tree_t *tree, char *img_file)
 {
-    const char *gp_file = "./temp.gp", *img_file = "./tree.png";
+    const char *gp_file = "./temp.gp";
 
     FILE *file = fopen(gp_file, "w");
     if (!file)
