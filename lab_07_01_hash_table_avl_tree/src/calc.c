@@ -15,10 +15,17 @@
 void calc_time_experiment(char *filename, size_t exp_count, size_t size)
 {
 
-    printf("Среднее время поиска в АВЛ дереве из %zu элементов - %.3f, в ДДП дереве %.3f\n", size, avl_calculte_search_time(filename, exp_count), bst_calculte_search_time(filename, exp_count));
     size_t ht_close_cmp = 0, ht_open_cmp = 0;
+    float bst_cmp = 0, avl_cmp = 0;
+    float bst_time = bst_calculte_search_time(filename, exp_count, &bst_cmp);
+    float avl_time = avl_calculte_search_time(filename, exp_count, &avl_cmp);
     float ht_close_time = close_ht_calculte_search_time(filename, exp_count, &ht_close_cmp);
     float ht_open_time = open_ht_calculte_search_time(filename, exp_count, &ht_open_cmp);
+
+    printf("Среднее время поиска в дереве из %zu элементов"
+           "\nДДП-дерево - %.3f Количество сравнений %.1f"
+           "\nAVL-дерево  - %.3f Количество сравнений %.1f\n",
+           size, bst_time, bst_cmp, avl_time, avl_cmp);
     printf("Среднее время поиска в хэш-таблице из %zu элементов"
            "\nОткрытая адресация - %.3f Количество сравнений %zu"
            "\nЗакрытая адресация  - %.3f Количество сравнений %zu\n",

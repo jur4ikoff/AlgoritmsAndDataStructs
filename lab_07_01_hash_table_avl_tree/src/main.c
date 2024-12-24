@@ -79,11 +79,39 @@ int main(void)
             calc_time_experiment("./data/20.txt", 50, 20);
             printf("____________________________\n");
             calc_time_experiment("./data/40.txt", 50, 40);
+
+            printf("%s\nПРОВЕРКА ЗАВИСИМОСТИ КОЛИЧЕСТВА КОЛЛИЗИЙ%s\n", GREEN, RESET);
+            g_max_collisions = 1;
+            printf("%s\nМаксимальное количество коллизий %zu%s\n", GREEN, g_max_collisions, RESET);
+            printf("____________________________\n");
+            calc_time_experiment("./data/10.txt", 50, 10);
+            printf("____________________________\n");
+            calc_time_experiment("./data/20.txt", 50, 20);
+            printf("____________________________\n");
+            calc_time_experiment("./data/40.txt", 50, 40);
+
+            g_max_collisions = 10;
+            printf("%s\nМаксимальное количество коллизий %zu%s\n", GREEN, g_max_collisions, RESET);
+            printf("____________________________\n");
+            calc_time_experiment("./data/10.txt", 50, 10);
+            printf("____________________________\n");
+            calc_time_experiment("./data/20.txt", 50, 20);
+            printf("____________________________\n");
+            calc_time_experiment("./data/40.txt", 50, 40);
+
+            g_max_collisions = 4;
+            printf("%s\nМаксимальное количество коллизий %zu%s\n", GREEN, g_max_collisions, RESET);
+            printf("____________________________\n");
+            calc_time_experiment("./data/10.txt", 50, 10);
+            printf("____________________________\n");
+            calc_time_experiment("./data/20.txt", 50, 20);
+            printf("____________________________\n");
+            calc_time_experiment("./data/40.txt", 50, 40);
         }
         else if (operation == OP_UNKNOWN)
         {
             printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
-        }    
+        }
         else if (operation == OP_ERROR)
         {
             rc = ERR_OPERATION;

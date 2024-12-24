@@ -304,7 +304,7 @@ void avl_tree_convert_from_string(avl_tree_t **tree, char *string)
     char *ptr = string;
     while (*ptr)
     {
-        data_t data = { .repeat = 0, .value = *ptr };
+        data_t data = {.repeat = 0, .value = *ptr};
         avl_tree_insert(tree, data);
         ptr++;
     }
@@ -509,7 +509,7 @@ void avl_tree_test(void)
         }
         else if (test_operation == TEST_TREE_ADD)
         {
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, ">>Введите один символ для добавления в дерево:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -530,7 +530,7 @@ void avl_tree_test(void)
                 print_warning_message(WARNING_TREE);
                 continue;
             }
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, "Введите один символ для удаления из дерева:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -547,7 +547,7 @@ void avl_tree_test(void)
         }
         else if (test_operation == TEST_TREE_SEARCH)
         {
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -597,13 +597,11 @@ void avl_tree_test(void)
         }
     }
 
-    exit:
+exit:
     avl_tree_free(tree);
 }
 
-
-
-float avl_calculte_search_time(char *filename, size_t exp_count)
+float avl_calculte_search_time(char *filename, size_t exp_count, float *cmp)
 {
     struct timespec start, end;
     float time_del = 0.0;
@@ -624,13 +622,15 @@ float avl_calculte_search_time(char *filename, size_t exp_count)
         return ERR_STRING;
     }
 
+    *cmp = avl_tree_calc_avg_compare(tree);
+
     size_t count = 0;
     for (size_t i = 0; i < exp_count; i++)
     {
         char *ptr = result;
         while (*ptr)
         {
-            data_t data = { .repeat = 0, .value = *ptr };
+            data_t data = {.repeat = 0, .value = *ptr};
             clock_gettime(CLOCK_MONOTONIC_RAW, &start);
             avl_tree_search(tree, data);
             clock_gettime(CLOCK_MONOTONIC_RAW, &end);

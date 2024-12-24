@@ -19,7 +19,7 @@ int bin_tree_show(bst_tree_t *tree);
 void bin_tree_search_reset(bst_tree_t *root);
 size_t bin_tree_calc_memory(bst_tree_t *root);
 float bin_tree_calc_avg_compare(bst_tree_t *root);
-float bst_calculte_search_time(char *filename, size_t exp_count);
+float bst_calculte_search_time(char *filename, size_t exp_count, float *cmp);
 void binary_tree_test(void);
 void bin_tree_convert_from_string(bst_tree_t **tree, char *string);
 

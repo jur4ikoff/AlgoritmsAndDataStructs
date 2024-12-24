@@ -79,7 +79,8 @@ int solve_task(void)
     tree_remove_repeat(&bst_tree);
     bin_tree_show(bst_tree);
     printf("Дерево занимает в памяти %zu байт\n", bin_tree_calc_memory(bst_tree));
-    printf("Среднее количество сравнений %.3f Среднее время поиска: %.3f мкс\n", bin_tree_calc_avg_compare(bst_tree), bst_calculte_search_time(filename, 10));
+    float cmp = 0;
+    printf("Среднее количество сравнений %.3f Среднее время поиска: %.3f мкс\n", bin_tree_calc_avg_compare(bst_tree), bst_calculte_search_time(filename, 10, &cmp));
     printf(">>Нажмите enter");
     fgets(buffer, 2, stdin);
 
@@ -88,7 +89,7 @@ int solve_task(void)
     convert_bst_to_avl(&avl_tree, bst_tree);
     avl_tree_show(avl_tree);
     printf("Дерево занимает в памяти %zu байт\n", avl_tree_calc_memory(avl_tree));
-    printf("Среднее количество сравнений %.3f Среднее время поиска: %.3f мкс\n", avl_tree_calc_avg_compare(avl_tree), avl_calculte_search_time(filename, 10));
+    printf("Среднее количество сравнений %.3f Среднее время поиска: %.3f мкс\n", avl_tree_calc_avg_compare(avl_tree), avl_calculte_search_time(filename, 10, &cmp));
 
     free(filename);
     bin_tree_free(bst_tree);
