@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "calc.h"
 #include <time.h>
 
 size_t g_max_collisions = 4;
@@ -69,10 +70,20 @@ int main(void)
                 return rc;
             }
         }
+        else if (operation == OP_EFFICIENCY)
+        {
+            calc_time_experiment("./data/5.txt", 50, 5);
+            printf("____________________________\n");
+            calc_time_experiment("./data/10.txt", 50, 10);
+            printf("____________________________\n");
+            calc_time_experiment("./data/20.txt", 50, 20);
+            printf("____________________________\n");
+            calc_time_experiment("./data/40.txt", 50, 40);
+        }
         else if (operation == OP_UNKNOWN)
         {
             printf("%sВыбрана неверная операция%s\n", YELLOW, RESET);
-        }
+        }    
         else if (operation == OP_ERROR)
         {
             rc = ERR_OPERATION;

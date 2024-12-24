@@ -467,7 +467,7 @@ float avl_tree_calc_avg_compare(avl_tree_t *root)
 void avl_tree_test(void)
 {
     // Инициализация переменных
-    printf("\nПодпрограмма для тестирования бинарного дерева\n");
+    printf("\nПодпрограмма для тестирования АВЛ дерева\n");
     int test_itteration_count = 0;
     error_t rc = ERR_OK;
     tree_test_menu_t test_operation = TEST_TREE_COUNT;

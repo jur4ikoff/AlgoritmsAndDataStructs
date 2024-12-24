@@ -101,7 +101,7 @@ error_t open_ht_restruct(open_ht_t **ht, size_t prev_size)
         new_ht->table[new_ind].data = data;
     }
 
-    restruct:
+restruct:
     if (need_restruct)
     {
         open_ht_free(&new_ht);
@@ -164,7 +164,7 @@ error_t open_ht_insert(open_ht_t **ht, data_t element, bool *is_restructured)
         }
     }
 
-    err:
+err:
     return rc;
 }
 
@@ -175,15 +175,15 @@ void open_ht_print(open_ht_t *ht)
         printf("%2zu ", i);
         switch (ht->table[i].state)
         {
-            case STATE_BUSY:
-                printf("[Занято] \'%c\'", ht->table[i].data.value);
-                break;
-            case STATE_EMPTY:
-                printf("[Свободно]");
-                break;
-            case STATE_REMOVED:
-                printf("[Удалено]");
-                break;
+        case STATE_BUSY:
+            printf("[Занято] \'%c\'", ht->table[i].data.value);
+            break;
+        case STATE_EMPTY:
+            printf("[Свободно]");
+            break;
+        case STATE_REMOVED:
+            printf("[Удалено]");
+            break;
         }
         printf("\n");
     }
@@ -197,7 +197,7 @@ int open_ht_convert_from_string(open_ht_t **ht, char *string)
     char *ptr = string;
     while (*ptr)
     {
-        data_t data = { .repeat = 0, .value = *ptr };
+        data_t data = {.repeat = 0, .value = *ptr};
         bool is = false;
         open_ht_insert(ht, data, &is);
         (void)is;
@@ -254,7 +254,6 @@ int open_ht_search(open_ht_t *ht, data_t data, size_t *cmp)
 
     return ERR_OK;
 }
-
 
 float open_ht_calc_avg_compare(open_ht_t *ht)
 {
@@ -323,7 +322,7 @@ void open_ht_test(void)
         }
         else if (test_operation == TEST_HT_ADD)
         {
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, ">>Введите один символ для добавления в хэш таблицу:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -356,7 +355,7 @@ void open_ht_test(void)
                 print_warning_message(WARNING_TREE);
                 continue;
             }
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, "Введите один символ для удаления из дерева:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -376,7 +375,7 @@ void open_ht_test(void)
         }
         else if (test_operation == TEST_HT_SEARCH)
         {
-            data_t data = { 0 };
+            data_t data = {0};
             if (input_data(&data, "Введите один символ для поиска в дереве:") != ERR_OK)
             {
                 printf("%sОшибка ввода данных%s\n", YELLOW, RESET);
@@ -422,6 +421,46 @@ void open_ht_test(void)
         }
     }
 
-    exit:
+exit:
     open_ht_free(&hash_table);
+}
+float open_ht_calculte_search_time(char *filename, size_t exp_count, size_t *cmp)
+{
+    struct timespec start, end;
+    float time_del = 0.0;
+    char *result = malloc(MAX_STRING_LEN * sizeof(char));
+    int rc = ERR_OK;
+    if ((rc = input_string_from_file(filename, result)) != ERR_OK)
+    {
+        free(result);
+        return rc;
+    }
+
+    open_ht_t *ht = NULL;
+    open_ht_convert_from_string(&ht, result);
+    if (!ht)
+    {
+        open_ht_free(&ht);
+        free(result);
+        return ERR_STRING;
+    }
+
+    size_t count = 0;
+    for (size_t i = 0; i < exp_count; i++)
+    {
+        char *ptr = result;
+        while (*ptr)
+        {
+            data_t data = {.repeat = 0, .value = *ptr};
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            open_ht_search(ht, data, cmp);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            time_del += (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            count++;
+            ptr++;
+        }
+    }
+
+    free(result);
+    return time_del / count;
 }

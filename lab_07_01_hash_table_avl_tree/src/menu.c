@@ -10,23 +10,23 @@ void print_error_message(int arg)
     printf("%s", RED);
     switch (arg)
     {
-        case ERR_STRING:
-            printf("Ошибка в введенной строке\n");
-            break;
-        case ERR_OPERATION:
-            printf("Выбрана неверная операция\n");
-            break;
-        case ERR_MEMORY_ALLOCATION:
-            printf("Ошибка выделения памяти\n");
-            break;
-        case ERR_DATA_INPUT:
-            printf("Ошибка при вводе данных\n");
-            break;
-        case ERR_FILE:
-            printf("Ошибка при чтении или создании файла\n");
-            break;
-        case ERR_HEAD:
-            printf("Ошибка при передаче параметров в функцию\n");
+    case ERR_STRING:
+        printf("Ошибка в введенной строке\n");
+        break;
+    case ERR_OPERATION:
+        printf("Выбрана неверная операция\n");
+        break;
+    case ERR_MEMORY_ALLOCATION:
+        printf("Ошибка выделения памяти\n");
+        break;
+    case ERR_DATA_INPUT:
+        printf("Ошибка при вводе данных\n");
+        break;
+    case ERR_FILE:
+        printf("Ошибка при чтении или создании файла\n");
+        break;
+    case ERR_HEAD:
+        printf("Ошибка при передаче параметров в функцию\n");
     }
     printf("%s", RESET);
 }
@@ -36,18 +36,18 @@ void print_warning_message(int arg)
     printf("%s", YELLOW);
     switch (arg)
     {
-        case WARNING_TREE:
-            printf("Пустой объект\n");
-            break;
-        case WARNING_ELEMENT_NOT_FOUND:
-            printf("Такого элемента нет в объекте\n");
-            break;
-        case WARNING_OPERATION:
-            printf("Неверный выбор операции\n");
-            break;
-        case WARNING_REPEAT:
-            printf("Элемент существует\n");
-            break;
+    case WARNING_TREE:
+        printf("Пустой объект\n");
+        break;
+    case WARNING_ELEMENT_NOT_FOUND:
+        printf("Такого элемента нет в объекте\n");
+        break;
+    case WARNING_OPERATION:
+        printf("Неверный выбор операции\n");
+        break;
+    case WARNING_REPEAT:
+        printf("Элемент существует\n");
+        break;
     }
     printf("%s", RESET);
 }

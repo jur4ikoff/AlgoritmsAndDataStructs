@@ -64,7 +64,7 @@ void list_free(list_t **head)
     while (temp)
     {
         list_t *next = temp->next;
-        free(temp->data);
+        // free(temp->data);
         free(temp);
         temp = next;
     }

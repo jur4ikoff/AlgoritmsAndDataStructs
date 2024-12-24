@@ -78,7 +78,7 @@ int close_ht_restruct(close_ht_t **ht)
         cur_size = new_size;
     } while (close_ht_check_need_restruct(new_ht));
 
-    err:
+err:
     if (rc != ERR_OK)
     {
         close_ht_clear(new_ht);
@@ -390,6 +390,49 @@ void close_ht_test(void)
         }
     }
 
-    exit:
+exit:
     close_ht_free(&hash_table);
+}
+
+float close_ht_calculte_search_time(char *filename, size_t exp_count, size_t *cmp)
+{
+    struct timespec start, end;
+    float time_del = 0.0;
+    char *result = malloc(MAX_STRING_LEN * sizeof(char));
+    int rc = ERR_OK;
+    if ((rc = input_string_from_file(filename, result)) != ERR_OK)
+    {
+        free(result);
+        return rc;
+    }
+
+    close_ht_t *ht = NULL;
+    close_ht_convert_from_string(&ht, result);
+    if (!ht)
+    {
+        close_ht_free(&ht);
+        free(result);
+        return ERR_STRING;
+    }
+
+    size_t count = 0;
+    for (size_t i = 0; i < exp_count; i++)
+    {
+        char *ptr = result;
+        while (*ptr)
+        {
+            data_t *data = calloc(1, sizeof(data_t));
+            data->value = *ptr;
+            clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+            close_ht_search(ht, data, cmp);
+            clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+            time_del += (end.tv_sec - start.tv_sec) * 1e6f + (end.tv_nsec - start.tv_nsec) / 1e3f;
+            free(data);
+            count++;
+            ptr++;
+        }
+    }
+
+    free(result);
+    return time_del / count;
 }
